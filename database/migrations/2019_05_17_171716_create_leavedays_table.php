@@ -20,7 +20,8 @@ class CreateLeavedaysTable extends Migration
             $table->date('date');
             $table->string('repeat');
 
-            $table->foreign('business_id')->references('id')->on('businesses');
+            $table->unsignedBigInteger('business_id');
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
             
             $table->timestamps();
         });

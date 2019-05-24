@@ -20,8 +20,9 @@ class CreateOpeninghoursTable extends Migration
             $table->string('day');
             $table->timestamp('opentime');
             $table->timestamp('closetime');
-
-            $table->foreign('business_id')->references('id')->on('businesses');
+            
+            $table->unsignedBigInteger('business_id');
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
             
             $table->timestamps();
         });

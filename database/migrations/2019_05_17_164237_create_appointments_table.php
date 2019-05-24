@@ -22,8 +22,11 @@ class CreateAppointmentsTable extends Migration
             $table->string('details');
             $table->boolean('sendreminder');
             
-            $table->foreign('business_id')->references('id')->on('businesses');
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->unsignedBigInteger('business_id');
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
+
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -19,12 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('township');
             $table->string('address');
             $table->string('phonenumber');
-            $table->string('profilepicturepath');
+            $table->string('profilepicturepath')->nullable();
 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            
             $table->rememberToken();
+
             $table->timestamps();
         });
     }
