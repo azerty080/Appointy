@@ -75,6 +75,21 @@ input, textarea {
 
 
 
+.radioGroup {
+	display: flex;
+	flex-direction: column;
+}
+
+.radioInput {
+	display: flex;
+	flex-direction: row;
+	margin: 0px 0px 0px 0px;
+}
+
+.radioInput input {
+	width: auto;
+}
+
 
 
 
