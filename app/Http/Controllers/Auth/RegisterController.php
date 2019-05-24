@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Client;
+use App\Business;
+
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -48,200 +51,186 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $ifClientForm = 'required_if:formType,client';
+        $ifBusinessForm = 'required_if:formType,business';
+
+        $ifContinuousOpen = 'required_if:openingType,continuous';
+        $ifLimitedOpen = 'required_if:openingType,limited';
+
+
+
+
+        $ifMondayClosed = 'required_if:monday_closed,on';
+        $ifTuesdayClosed = 'required_if:tuesday_closed,on';
+        $ifWednesdayClosed = 'required_if:wednesday_closed,on';
+        $ifThursdayClosed = 'required_if:thursday_closed,on';
+        $ifFridayClosed = 'required_if:friday_closed,on';
+        $ifSaturdayClosed = 'required_if:saturday_closed,on';
+        $ifSundayClosed = 'required_if:sunday_closed,on';
+
+
+
+
+
+
+
+
         return Validator::make($data, [
+            /*
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-
-            /*
-
-            'firstname' => ['required', 'string', 'max:255'],
-
-            'lastname' => ['required', 'string', 'max:255'],
-
-            'birthdate' => [],
+            */
+            
+            
+            //Both forms
 
             'township' => ['required', 'string', 'max:255'],
 
             'address' => ['required', 'string', 'max:255'],
 
-            'profilepicture' => [],
+            'profilepicture' => ['required', ],
 
-            'phonenumber' => [],
-
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-
-            'password' => [],
-
-            'confirmpassword' => [],
+            'phonenumber' => ['required', ],
 
 
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'confirmed'],
+
+            //'confirmemail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+
+            'password' => ['required', 'confirmed'],
+
+            // 'confirmpassword' => ['required', ],
 
 
-            */
+                        
 
-            /*
-
-            'firstname' => ['required', 'string', 'max:255'],
-
-            'lastname' => ['required', 'string', 'max:255'],
-
-
-            'township' => ['required', 'string', 'max:255'],
-
-            'address' => ['required', 'string', 'max:255'],
             
-            'description' => ['required', 'string'],
-            
-            'extrainfo' => ['required', 'string'],
+            //Client form
 
+            'firstname' => [$ifClientForm, 'string', 'max:255'],
 
+            'lastname' => [$ifClientForm, 'string', 'max:255'],
 
+            'birthdate' => [$ifClientForm, ],
 
-            'profilepicture' => [],
 
-            'phonenumber' => [],
 
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
 
-            'confirmemail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
 
-            'password' => [],
 
-            'confirmpassword' => [],
+            //Business form
 
+            'name' => [$ifBusinessForm, 'string', 'max:255'],
 
+            'description' => [$ifBusinessForm, 'string'],
 
+            'extrainfo' => [$ifBusinessForm, 'string'],
 
-            <button type="button" onclick="clickContinuous()" id="continuousBtn" class="selected">Doorlopende openingsuren</button>
-            <button type="button" onclick="clickLimited()" id="limitedBtn" class="">Beperkte openingsuren</button>
-            
 
-            <input type="checkbox" name="is_monday_closed" value="is_monday_closed" onclick="clickIsClosed('monday')"> Vrije dag<br>
 
-                <label>Openingsuur</label>
-                <input name="monday_open_morning" type="time" value="06:00">
 
-                <label>Sluitingsuur</label>
-                <input class="limitedInput" name="monday_close_morning" type="time" value="12:00" disabled>
 
-                <label>Openingsuur</label>
-                <input class="limitedInput" name="monday_open_afternoon" type="time" value="13:00" disabled>
 
-                <label>Sluitingsuur</label>
-                <input name="monday_close_afternoon" type="time" value="18:00">
 
 
 
+            'is_monday_closed' => [],
 
- 'preferred_framework' => 'required_if_attribute:uses_framework,==,1'
+            'monday_open_morning' => [$ifBusinessForm, ],
 
+            'monday_close_morning' => [$ifMondayClosed, ],
 
+            'monday_open_afternoon' => [$ifMondayClosed, ],
 
-            <input type="checkbox" name="is_tuesday_closed" value="is_tuesday_closed" onclick="clickIsClosed('tuesday')"> Vrije dag<br>
+            'monday_close_afternoon' => [$ifBusinessForm, ],
 
-                <label>Openingsuur</label>
-                <input name="tuesday_open_morning" type="time" value="06:00">
 
-                <label>Sluitingsuur</label>
-                <input class="limitedInput" name="tuesday_close_morning" type="time" value="12:00" disabled>
 
-                <label>Openingsuur</label>
-                <input class="limitedInput" name="tuesday_open_afternoon" type="time" value="13:00" disabled>
 
-                <label>Sluitingsuur</label>
-                <input name="tuesday_close_afternoon" type="time" value="18:00">
 
+            'is_tuesday_closed' => [],
 
+            'tuesday_open_morning' => [$ifBusinessForm, ],
 
-                
-            <input type="checkbox" name="is_wednesday_closed" value="is_wednesday_closed" onclick="clickIsClosed('wednesday')"> Vrije dag<br>
+            'tuesday_close_morning' => [$ifTuesdayClosed, ],
 
-                <label>Openingsuur</label>
-                <input name="wednesday_open_morning" type="time" value="06:00">
+            'tuesday_open_afternoon' => [$ifTuesdayClosed, ],
 
-                <label>Sluitingsuur</label>
-                <input class="limitedInput" name="wednesday_close_morning" type="time" value="12:00" disabled>
+            'tuesday_close_afternoon' => [$ifBusinessForm, ],
 
-                <label>Openingsuur</label>
-                <input class="limitedInput" name="wednesday_open_afternoon" type="time" value="13:00" disabled>
 
-                <label>Sluitingsuur</label>
-                <input name="wednesday_close_afternoon" type="time" value="18:00">
 
+            'is_wednesday_closed' => [],
 
+            'wednesday_open_morning' => [$ifBusinessForm, ],
 
-                
-            <input type="checkbox" name="is_thursday_closed" value="is_thursday_closed" onclick="clickIsClosed('thursday')"> Vrije dag<br>
+            'wednesday_close_morning' => [$ifWednesdayClosed, ],
 
-                <label>Openingsuur</label>
-                <input name="thursday_open_morning" type="time" value="06:00">
+            'wednesday_open_afternoon' => [$ifWednesdayClosed, ],
 
-                <label>Sluitingsuur</label>
-                <input class="limitedInput" name="thursday_close_morning" type="time" value="12:00" disabled>
+            'wednesday_close_afternoon' => [$ifBusinessForm, ],
 
-                <label>Openingsuur</label>
-                <input class="limitedInput" name="thursday_open_afternoon" type="time" value="13:00" disabled>
 
-                <label>Sluitingsuur</label>
-                <input name="thursday_close_afternoon" type="time" value="18:00">
 
 
+            'is_thursday_closed' => [],
 
+            'thursday_open_morning' => [$ifBusinessForm, ],
 
-            <input type="checkbox" name="is_friday_closed" value="is_friday_closed" onclick="clickIsClosed('friday')"> Vrije dag<br>
+            'thursday_close_morning' => [$ifThursdayClosed, ],
 
-                <label>Openingsuur</label>
-                <input name="friday_open_morning" type="time" value="06:00">
+            'thursday_open_afternoon' => [$ifThursdayClosed, ],
 
-                <label>Sluitingsuur</label>
-                <input class="limitedInput" name="friday_close_morning" type="time" value="12:00" disabled>
+            'thursday_close_afternoon' => [$ifBusinessForm, ],
 
-                <label>Openingsuur</label>
-                <input class="limitedInput" name="friday_open_afternoon" type="time" value="13:00" disabled>
 
-                <label>Sluitingsuur</label>
-                <input name="friday_close_afternoon" type="time" value="18:00">
 
 
+            'is_friday_closed' => [],
 
+            'friday_open_morning' => [$ifBusinessForm, ],
 
+            'friday_close_morning' => [$ifFridayClosed, ],
 
-    
-            <input type="checkbox" name="is_saturday_closed" value="is_saturday_closed" onclick="clickIsClosed('saturday')"> Vrije dag<br>
+            'friday_open_afternoon' => [$ifFridayClosed, ],
 
-                <label>Openingsuur</label>
-                <input name="saturday_open_morning" type="time" value="06:00">
+            'friday_close_afternoon' => [$ifBusinessForm, ],
 
-                <label>Sluitingsuur</label>
-                <input class="limitedInput" name="saturday_close_morning" type="time" value="12:00" disabled>
 
-                <label>Openingsuur</label>
-                <input class="limitedInput" name="saturday_open_afternoon" type="time" value="13:00" disabled>
 
-                <label>Sluitingsuur</label>
-                <input name="saturday_close_afternoon" type="time" value="18:00">
-            
 
 
 
-    
-            <input type="checkbox" name="sunday" value="is_sunday_closed" onclick="clickIsClosed('sunday')"> Vrije dag<br>
-            
-                <label>Openingsuur</label>
-                <input name="sunday_open_morning" type="time" value="06:00">
-                
-                <label>Sluitingsuur</label>
-                <input class="limitedInput" name="sunday_close_morning" type="time" value="12:00" disabled>
-                
-                <label>Openingsuur</label>
-                <input class="limitedInput" name="sunday_open_afternoon" type="time" value="13:00" disabled>
+            'is_saturday_closed' => [],
 
-                <label>Sluitingsuur</label>
-                <input name="sunday_close_afternoon" type="time" value="18:00">
+            'saturday_open_morning' => [$ifBusinessForm, ],
 
-            */
+            'saturday_close_morning' => [$ifSaturdayClosed, ],
+
+            'saturday_open_afternoon' => [$ifSaturdayClosed, ],
+
+            'saturday_close_afternoon' => [$ifBusinessForm, ],
+
+
+
+
+
+            'is_sunday_closed' => [],
+
+            'sunday_open_morning' => [$ifBusinessForm, ],
+
+            'sunday_close_morning' => [$ifSundayClosed, ],
+
+            'sunday_open_afternoon' => [$ifSundayClosed, ],
+
+            'sunday_close_afternoon' => [$ifBusinessForm, ],
+        
         ]);
+
+
+
+            
     }
 
     /**
@@ -252,8 +241,35 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //var_dump($data['formType']);
+        if ($data['formType'] == 'client') {
+            Client::create([
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'birthdate' => $data['birthdate'],
+                
+                'township' => $data['township'],
+                'address' => $data['address'],
+                'phonenumber' => $data['phonenumber'],
+
+                'profilepicture' => $data['profilepicture'], // ????
+
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+        }
+        elseif ($data['formType'] == 'business') {
+
+
+            Business::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+        }
+       
+
         return User::create([
-            'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
