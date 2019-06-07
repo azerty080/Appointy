@@ -4,274 +4,412 @@ namespace App\Http\Controllers\Auth;
 
 use App\Client;
 use App\Business;
+use App\OpeningHour;
 
 use App\User;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\RegisterRequest;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function register()
     {
-        $this->middleware('guest');
+        return view('auth.register');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+
+
+    public function registersubmit(RegisterRequest $request)
     {
-        $ifClientForm = 'required_if:formType,client';
-        $ifBusinessForm = 'required_if:formType,business';
+        $user = new User;
 
-        $ifContinuousOpen = 'required_if:openingType,continuous';
-        $ifLimitedOpen = 'required_if:openingType,limited';
+        $user->township = $request->township;
+        $user->address = $request->address;
+        $user->phonenumber = $request->phonenumber;
+        $user->email = $request->email;
+        $user->password = hash("sha256", $request->password);
 
+        $user->save();
 
 
+        if ($request['formType'] == 'client') {
+            $client = new Client;
 
-        $ifMondayClosed = 'required_if:monday_closed,on';
-        $ifTuesdayClosed = 'required_if:tuesday_closed,on';
-        $ifWednesdayClosed = 'required_if:wednesday_closed,on';
-        $ifThursdayClosed = 'required_if:thursday_closed,on';
-        $ifFridayClosed = 'required_if:friday_closed,on';
-        $ifSaturdayClosed = 'required_if:saturday_closed,on';
-        $ifSundayClosed = 'required_if:sunday_closed,on';
+            $client->firstname = $request->firstname;
+            $client->lastname = $request->lastname;
+            $client->birthdate = $request->birthdate;
+            $client->user_id = $user->id;
 
+            $client->save();
+        }
+        elseif ($request['formType'] == 'business') {
+            $business = new Business;
 
+            $business->name = $request->name;
+            $business->profession = $request->profession;
+            $business->description = $request->description;
+            $business->user_id = $user->id;
 
+            $business->save();
 
 
+            // Monday
+            if ($request['is_monday_closed']) {
+                $openinghour = new OpeningHour;
 
+                $openinghour->dayofweek = 'monday';
+                $openinghour->closed = true;
+                $openinghour->business_id = $business->id;
 
+                $openinghour->save();
 
-        return Validator::make($data, [
-            /*
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            */
-            
-            
-            //Both forms
+            } else {
+                if ($request['openingType'] == 'continuous') {
 
-            'township' => ['required', 'string', 'max:255'],
+                    $openinghour = new OpeningHour;
 
-            'address' => ['required', 'string', 'max:255'],
+                    $openinghour->dayofweek = 'monday';
 
-            'profilepicture' => ['required', ],
+                    $openinghour->opentime = $request->monday_open_morning;
+                    $openinghour->closetime = $request->monday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
-            'phonenumber' => ['required', ],
+                    $openinghour->save();
 
+                } elseif ($request['openingType'] == 'limited') {
 
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'confirmed'],
+                    $openinghour = new OpeningHour;
 
-            //'confirmemail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                    $openinghour->dayofweek = 'monday';
 
-            'password' => ['required', 'confirmed'],
+                    $openinghour->opentime = $request->monday_open_morning;
+                    $openinghour->closetime = $request->monday_close_morning;
+                    $openinghour->business_id = $business->id;
 
-            // 'confirmpassword' => ['required', ],
+                    $openinghour->save();
 
 
-                        
+                    $openinghour = new OpeningHour;
 
-            
-            //Client form
+                    $openinghour->dayofweek = 'monday';
 
-            'firstname' => [$ifClientForm, 'string', 'max:255'],
+                    $openinghour->opentime = $request->monday_open_afternoon;
+                    $openinghour->closetime = $request->monday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
-            'lastname' => [$ifClientForm, 'string', 'max:255'],
+                    $openinghour->save();
 
-            'birthdate' => [$ifClientForm, ],
+                }
+            }
 
 
+            // Tuesday
+            if ($request['is_tuesday_closed']) {
 
+                $openinghour = new OpeningHour;
 
+                $openinghour->dayofweek = 'tuesday';
+                $openinghour->closed = true;
+                $openinghour->business_id = $business->id;
 
+                $openinghour->save();
 
-            //Business form
+            } else {
+                if ($request['openingType'] == 'continuous') {
 
-            'name' => [$ifBusinessForm, 'string', 'max:255'],
+                    $openinghour = new OpeningHour;
 
-            'description' => [$ifBusinessForm, 'string'],
+                    $openinghour->dayofweek = 'tuesday';
 
-            'extrainfo' => [$ifBusinessForm, 'string'],
+                    $openinghour->opentime = $request->tuesday_open_morning;
+                    $openinghour->closetime = $request->tuesday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
+                    $openinghour->save();
 
+                } elseif ($request['openingType'] == 'limited') {
 
+                    $openinghour = new OpeningHour;
 
+                    $openinghour->dayofweek = 'tuesday';
 
+                    $openinghour->opentime = $request->tuesday_open_morning;
+                    $openinghour->closetime = $request->tuesday_close_morning;
+                    $openinghour->business_id = $business->id;
 
+                    $openinghour->save();
 
 
+                    $openinghour = new OpeningHour;
 
-            'is_monday_closed' => [],
+                    $openinghour->dayofweek = 'tuesday';
 
-            'monday_open_morning' => [$ifBusinessForm, ],
+                    $openinghour->opentime = $request->tuesday_open_afternoon;
+                    $openinghour->closetime = $request->tuesday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
-            'monday_close_morning' => [$ifMondayClosed, ],
+                    $openinghour->save();
 
-            'monday_open_afternoon' => [$ifMondayClosed, ],
+                }
+            }
 
-            'monday_close_afternoon' => [$ifBusinessForm, ],
 
+            // Wednesday
+            if ($request['is_wednesday_closed']) {
 
+                $openinghour = new OpeningHour;
 
+                $openinghour->dayofweek = 'wednesday';
+                $openinghour->closed = true;
+                $openinghour->business_id = $business->id;
 
+                $openinghour->save();
 
-            'is_tuesday_closed' => [],
+            } else {
+                if ($request['openingType'] == 'continuous') {
 
-            'tuesday_open_morning' => [$ifBusinessForm, ],
+                    $openinghour = new OpeningHour;
 
-            'tuesday_close_morning' => [$ifTuesdayClosed, ],
+                    $openinghour->dayofweek = 'wednesday';
 
-            'tuesday_open_afternoon' => [$ifTuesdayClosed, ],
+                    $openinghour->opentime = $request->wednesday_open_morning;
+                    $openinghour->closetime = $request->wednesday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
-            'tuesday_close_afternoon' => [$ifBusinessForm, ],
+                    $openinghour->save();
 
+                } elseif ($request['openingType'] == 'limited') {
 
+                    $openinghour = new OpeningHour;
 
-            'is_wednesday_closed' => [],
+                    $openinghour->dayofweek = 'wednesday';
 
-            'wednesday_open_morning' => [$ifBusinessForm, ],
+                    $openinghour->opentime = $request->wednesday_open_morning;
+                    $openinghour->closetime = $request->wednesday_close_morning;
+                    $openinghour->business_id = $business->id;
 
-            'wednesday_close_morning' => [$ifWednesdayClosed, ],
+                    $openinghour->save();
 
-            'wednesday_open_afternoon' => [$ifWednesdayClosed, ],
 
-            'wednesday_close_afternoon' => [$ifBusinessForm, ],
+                    $openinghour = new OpeningHour;
 
+                    $openinghour->dayofweek = 'wednesday';
 
+                    $openinghour->opentime = $request->wednesday_open_afternoon;
+                    $openinghour->closetime = $request->wednesday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
+                    $openinghour->save();
 
-            'is_thursday_closed' => [],
+                }
+            }
 
-            'thursday_open_morning' => [$ifBusinessForm, ],
 
-            'thursday_close_morning' => [$ifThursdayClosed, ],
+            // Thursday
+            if ($request['is_thursday_closed']) {
 
-            'thursday_open_afternoon' => [$ifThursdayClosed, ],
+                $openinghour = new OpeningHour;
 
-            'thursday_close_afternoon' => [$ifBusinessForm, ],
+                $openinghour->dayofweek = 'thursday';
+                $openinghour->closed = true;
+                $openinghour->business_id = $business->id;
 
+                $openinghour->save();
 
+            } else {
+                if ($request['openingType'] == 'continuous') {
 
+                    $openinghour = new OpeningHour;
 
-            'is_friday_closed' => [],
+                    $openinghour->dayofweek = 'thursday';
 
-            'friday_open_morning' => [$ifBusinessForm, ],
+                    $openinghour->opentime = $request->thursday_open_morning;
+                    $openinghour->closetime = $request->thursday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
-            'friday_close_morning' => [$ifFridayClosed, ],
+                    $openinghour->save();
 
-            'friday_open_afternoon' => [$ifFridayClosed, ],
+                } elseif ($request['openingType'] == 'limited') {
 
-            'friday_close_afternoon' => [$ifBusinessForm, ],
+                    $openinghour = new OpeningHour;
 
+                    $openinghour->dayofweek = 'thursday';
 
+                    $openinghour->opentime = $request->thursday_open_morning;
+                    $openinghour->closetime = $request->thursday_close_morning;
+                    $openinghour->business_id = $business->id;
 
+                    $openinghour->save();
 
 
+                    $openinghour = new OpeningHour;
 
-            'is_saturday_closed' => [],
+                    $openinghour->dayofweek = 'thursday';
 
-            'saturday_open_morning' => [$ifBusinessForm, ],
+                    $openinghour->opentime = $request->thursday_open_afternoon;
+                    $openinghour->closetime = $request->thursday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
-            'saturday_close_morning' => [$ifSaturdayClosed, ],
+                    $openinghour->save();
 
-            'saturday_open_afternoon' => [$ifSaturdayClosed, ],
+                }
+            }
 
-            'saturday_close_afternoon' => [$ifBusinessForm, ],
 
+            // Friday
+            if ($request['is_friday_closed']) {
 
+                $openinghour = new OpeningHour;
 
+                $openinghour->dayofweek = 'friday';
+                $openinghour->closed = true;
+                $openinghour->business_id = $business->id;
 
+                $openinghour->save();
 
-            'is_sunday_closed' => [],
+            } else {
+                if ($request['openingType'] == 'continuous') {
 
-            'sunday_open_morning' => [$ifBusinessForm, ],
+                    $openinghour = new OpeningHour;
 
-            'sunday_close_morning' => [$ifSundayClosed, ],
+                    $openinghour->dayofweek = 'friday';
 
-            'sunday_open_afternoon' => [$ifSundayClosed, ],
+                    $openinghour->opentime = $request->friday_open_morning;
+                    $openinghour->closetime = $request->friday_close_afternoon;
+                    $openinghour->business_id = $business->id;
 
-            'sunday_close_afternoon' => [$ifBusinessForm, ],
+                    $openinghour->save();
+
+                } elseif ($request['openingType'] == 'limited') {
+
+                    $openinghour = new OpeningHour;
+
+                    $openinghour->dayofweek = 'friday';
+
+                    $openinghour->opentime = $request->friday_open_morning;
+                    $openinghour->closetime = $request->friday_close_morning;
+                    $openinghour->business_id = $business->id;
+
+                    $openinghour->save();
+
+
+                    $openinghour = new OpeningHour;
+
+                    $openinghour->dayofweek = 'friday';
+
+                    $openinghour->opentime = $request->friday_open_afternoon;
+                    $openinghour->closetime = $request->friday_close_afternoon;
+                    $openinghour->business_id = $business->id;
+
+                    $openinghour->save();
+
+                }
+            }
+
+
+            // Saturday
+            if ($request['is_saturday_closed']) {
+
+                $openinghour = new OpeningHour;
+
+                $openinghour->dayofweek = 'saturday';
+                $openinghour->closed = true;
+                $openinghour->business_id = $business->id;
+
+                $openinghour->save();
+
+            } else {
+                if ($request['openingType'] == 'continuous') {
+
+                    $openinghour = new OpeningHour;
+
+                    $openinghour->dayofweek = 'saturday';
+
+                    $openinghour->opentime = $request->saturday_open_morning;
+                    $openinghour->closetime = $request->saturday_close_afternoon;
+                    $openinghour->business_id = $business->id;
+
+                    $openinghour->save();
+
+                } elseif ($request['openingType'] == 'limited') {
+
+                    $openinghour = new OpeningHour;
+
+                    $openinghour->dayofweek = 'saturday';
+
+                    $openinghour->opentime = $request->saturday_open_morning;
+                    $openinghour->closetime = $request->saturday_close_morning;
+                    $openinghour->business_id = $business->id;
+
+                    $openinghour->save();
+
+
+                    $openinghour = new OpeningHour;
+
+                    $openinghour->dayofweek = 'saturday';
+
+                    $openinghour->opentime = $request->saturday_open_afternoon;
+                    $openinghour->closetime = $request->saturday_close_afternoon;
+                    $openinghour->business_id = $business->id;
+
+                    $openinghour->save();
+
+                }
+            }
+
+
+            // Sunday
+            if ($request['is_sunday_closed']) {
+
+                $openinghour = new OpeningHour;
+
+                $openinghour->dayofweek = 'sunday';
+                $openinghour->closed = true;
+                $openinghour->business_id = $business->id;
+
+                $openinghour->save();
+
+            } else {
+                if ($request['openingType'] == 'continuous') {
+
+                    $openinghour = new OpeningHour;
+
+                    $openinghour->dayofweek = 'sunday';
+
+                    $openinghour->opentime = $request->sunday_open_morning;
+                    $openinghour->closetime = $request->sunday_close_afternoon;
+                    $openinghour->business_id = $business->id;
+
+                    $openinghour->save();
+
+                } elseif ($request['openingType'] == 'limited') {
+
+                    $openinghour = new OpeningHour;
+
+                    $openinghour->dayofweek = 'sunday';
+
+                    $openinghour->opentime = $request->sunday_open_morning;
+                    $openinghour->closetime = $request->sunday_close_morning;
+                    $openinghour->business_id = $business->id;
+
+                    $openinghour->save();
+
+
+                    $openinghour = new OpeningHour;
+
+                    $openinghour->dayofweek = 'sunday';
+
+                    $openinghour->opentime = $request->sunday_open_afternoon;
+                    $openinghour->closetime = $request->sunday_close_afternoon;
+                    $openinghour->business_id = $business->id;
+
+                    $openinghour->save();
+
+                }
+            }
+        }
         
-        ]);
-
-
-
-            
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        //var_dump($data['formType']);
-        if ($data['formType'] == 'client') {
-            Client::create([
-                'firstname' => $data['firstname'],
-                'lastname' => $data['lastname'],
-                'birthdate' => $data['birthdate'],
-                
-                'township' => $data['township'],
-                'address' => $data['address'],
-                'phonenumber' => $data['phonenumber'],
-
-                'profilepicture' => $data['profilepicture'], // ????
-
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-            ]);
-        }
-        elseif ($data['formType'] == 'business') {
-
-
-            Business::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-            ]);
-        }
-       
-
-        return User::create([
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        return redirect('/');
     }
 }
