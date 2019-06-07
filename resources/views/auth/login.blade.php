@@ -6,6 +6,7 @@
 @section('content')
     <h1>Inloggen</h1>
 
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
