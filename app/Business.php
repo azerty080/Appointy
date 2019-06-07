@@ -12,7 +12,7 @@ class Business extends Model
     protected $table = 'businesses';
 
     protected $fillable = [
-        'name', 'description', 'extrainfo'
+        'name', 'profession', 'description'
     ];
 
     public function user()

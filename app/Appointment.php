@@ -17,8 +17,8 @@ class Appointment extends Model
 
 
     public function business() {
-		return $this->belongsTo('App\Business');
-	}
+      	return $this->belongsTo('App\Business');
+    }
 
     public function client() {
 		return $this->belongsTo('App\Client');
