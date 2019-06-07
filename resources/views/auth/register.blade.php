@@ -5,13 +5,8 @@
 
 @section('content')
     <h1>Registreer</h1>
-<!--
-    <button type="button" onclick="clickClient()" id="clientBtn" class="selected">Klant</button>
-    <button type="button" onclick="clickBusiness()" id="businessBtn">Zaak</button>
--->
 
-
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('registersubmit') }}">
         @csrf
 
         <div class="radioGroup">
@@ -62,12 +57,6 @@
                 </div>
             </div>
 
-            <div class="soloInput">
-                <label>Profielfoto</label>
-                <input class="profilepicture" name="profilepicture" type="file">
-            </div>
-
-
 
             <div class="inputGroup">
                 <div class="soloInput">
@@ -77,7 +66,7 @@
 
                 <div class="soloInput">
                     <label>Bevestig email</label>
-                    <input name="confirmemail_confirmation" type="email">
+                    <input name="email_confirmation" type="email">
                 </div>
             </div>
             
@@ -99,6 +88,9 @@
         <div class="businessForm">
             <h2>Zaak account</h2>
 
+            
+     
+
             <div class="inputGroup">
                 <div class="soloGroup">
                     <div class="soloInput">
@@ -108,43 +100,35 @@
 
                     <div class="soloInput">
                         <label>Beschrijving</label>
-                        <textarea name="lastname" rows="4" cols="50"></textarea>
+                        <textarea name="description" rows="4" cols="50"></textarea>
                     </div>
                 </div>
 
 
                 <div class="soloGroup">
-                    <div class="inputGroup">
-                        <div class="soloInput">
-                            <label>Gemeente</label>
-                            <input name="township" type="text">
-                        </div>
-
-                        <div class="soloInput">
-                            <label>Adres</label>
-                            <input name="address" type="text">
-                        </div>
-                    </div>
-
-
                     <div class="soloInput">
-                        <label>Extra informatie</label>
-                        <textarea name="extrainfo" rows="4" cols="50"></textarea>
+                        <label>Beroep</label>
+                        <input class="profession" name="profession" type="text">
                     </div>
                 </div>
             </div>
 
 
+            <div class="inputGroup">
+                <div class="soloInput">
+                    <label>Gemeente</label>
+                    <input name="township" type="text">
+                </div>
 
-            <div class="soloInput">
-                <label>Telefoonnummer</label>
-                <input class="phonenumber" name="phonenumber" type="text">
-            </div>
+                <div class="soloInput">
+                    <label>Adres</label>
+                    <input name="address" type="text">
+                </div>
 
-
-            <div class="soloInput">
-                <label>Profielfoto</label>
-                <input class="profilepicture" name="profilepicture" type="file">
+                <div class="soloInput">
+                    <label>Telefoonnummer</label>
+                    <input class="phonenumber" name="phonenumber" type="text">
+                </div>
             </div>
 
             <div class="inputGroup">
@@ -174,13 +158,12 @@
 
 
 
-
             <h2>Openingsuren</h2>
 
             <div class="openinghours">
                 <div class="radioGroup">
                     <div class="radioInput">
-                        <input type="radio" name="openingType" value="continuous" onclick="clickContinuous()" id="continuousBtn" class="selected" checked="checked"><label for="continuousBtn">openingsuren</label>
+                        <input type="radio" name="openingType" value="continuous" onclick="clickContinuous()" id="continuousBtn" class="selected" checked="checked"><label for="continuousBtn">Doorlopende openingsuren</label>
                     </div>
 
                     <div class="radioInput">
@@ -406,6 +389,10 @@
         }
 
 
+
+        var continuousBtn = document.getElementById("continuousBtn");
+        var limitedBtn = document.getElementById("limitedBtn");
+
         function clickBusiness()
         {
             clientForm.classList.add('hide');
@@ -423,6 +410,13 @@
             {
                 businessInputs[i].disabled = false;
             }
+
+
+            if (continuousBtn.checked) {
+                clickContinuous();
+            } else if (limitedBtn.checked) {
+                clickLimited();
+            }
         }
 
 
@@ -431,18 +425,37 @@
         var continuousBtn = document.getElementById("continuousBtn");
         var limitedBtn = document.getElementById("limitedBtn");
 
-
         var limitedInput = document.getElementsByClassName("limitedInput");
+
 
         function clickContinuous()
         {
             for (let i = 0; i < limitedInput.length; i++)
             {
                 limitedInput[i].classList.add('hide');
-                limitedInput[i].disabled = true;
+
+                var inputDay = limitedInput[i].name.split('_')[0];
+
+                var dayInputs = document.querySelectorAll('#' + inputDay + ' .hoursDiv input');
+                var dayCheckbox = document.getElementById('is_' + inputDay + '_closed');
+            
+                if (dayCheckbox.checked) {
+                    for (let j = 0; j < dayInputs.length; j++)
+                    {
+                        dayInputs[j].disabled = true;
+                    }
+                } else {
+                    for (let k = 0; k < dayInputs.length; k++)
+                    {
+                        if (dayInputs[k].className.includes('limitedInput')) {
+                            limitedInput[i].disabled = true;
+                        } else {
+                            dayInputs[k].disabled = false;
+                        }
+                    }
+                }
             }
             
-
             continuousBtn.classList.add("selected");
             limitedBtn.classList.remove("selected");
         }
@@ -452,7 +465,23 @@
             for (let i = 0; i < limitedInput.length; i++)
             {
                 limitedInput[i].classList.remove('hide');
-                limitedInput[i].disabled = false;
+                
+                var inputDay = limitedInput[i].name.split('_')[0];
+
+                var dayInputs = document.querySelectorAll('#' + inputDay + ' .hoursDiv input');
+                var dayCheckbox = document.getElementById('is_' + inputDay + '_closed');
+
+                if (dayCheckbox.checked) {
+                    for (let j = 0; j < dayInputs.length; j++)
+                    {
+                        dayInputs[j].disabled = true;
+                    }
+                } else {
+                    for (let k = 0; k < dayInputs.length; k++)
+                    {
+                        dayInputs[k].disabled = false;
+                    }
+                }
             }
 
             continuousBtn.classList.remove("selected");
@@ -465,10 +494,26 @@
             var hoursDiv = document.getElementById(day).getElementsByClassName('hoursDiv')[0];
             
             hoursDiv.classList.toggle('hide');
+
+
+            var dayInputs = document.querySelectorAll('#' + day + ' .hoursDiv input');
+            var dayCheckbox = document.getElementById('is_' + day + '_closed');
+            
+            if (dayCheckbox.checked) {
+                for (let i = 0; i < dayInputs.length; i++)
+                {
+                    dayInputs[i].disabled = true;
+                }
+            } else {
+                for (let i = 0; i < dayInputs.length; i++)
+                {
+                    dayInputs[i].disabled = false;
+                }
+            }
         }
 
+    
         clickClient();
-        clickContinuous();
     </script>
     
 @stop
