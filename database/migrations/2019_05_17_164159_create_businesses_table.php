@@ -17,8 +17,8 @@ class CreateBusinessesTable extends Migration
             $table->bigIncrements('id');
             
             $table->string('name');
+            $table->string('profession');
             $table->string('description');
-            $table->string('extrainfo')->nullable();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

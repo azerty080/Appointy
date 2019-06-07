@@ -16,10 +16,10 @@ class CreateOpeninghoursTable extends Migration
         Schema::create('openinghours', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            
-            $table->string('day');
-            $table->timestamp('opentime');
-            $table->timestamp('closetime');
+            $table->string('dayofweek');
+            $table->string('opentime')->nullable();
+            $table->string('closetime')->nullable();
+            $table->boolean('closed')->default(0);
             
             $table->unsignedBigInteger('business_id');
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
