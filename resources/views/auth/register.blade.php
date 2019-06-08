@@ -156,7 +156,14 @@
             </div>
 
 
-
+            <h2>Lengte afspraak</h2>
+            <div class="soloInput">
+                <select class="appointmentduration" name="appointmentduration">
+                    <option value="15">15 min</option>
+                    <option value="30">30 min</option>
+                    <option value="60">1 uur</option>
+                </select>
+            </div>
 
             <h2>Openingsuren</h2>
 
