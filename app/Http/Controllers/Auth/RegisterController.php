@@ -49,6 +49,7 @@ class RegisterController extends Controller
             $business->name = $request->name;
             $business->profession = $request->profession;
             $business->description = $request->description;
+            $business->appointmentduration = $request->appointmentduration;
             $business->user_id = $user->id;
 
             $business->save();
@@ -73,6 +74,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->monday_open_morning;
                     $openinghour->closetime = $request->monday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->monday_open_morning)[0] * 60) + (int)explode(':', $request->monday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->monday_close_afternoon)[0] * 60) + (int)explode(':', $request->monday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -85,6 +88,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->monday_open_morning;
                     $openinghour->closetime = $request->monday_close_morning;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->monday_open_morning)[0] * 60) + (int)explode(':', $request->monday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->monday_close_morning)[0] * 60) + (int)explode(':', $request->monday_close_morning)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -96,6 +101,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->monday_open_afternoon;
                     $openinghour->closetime = $request->monday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->monday_open_afternoon)[0] * 60) + (int)explode(':', $request->monday_open_afternoon)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->monday_close_afternoon)[0] * 60) + (int)explode(':', $request->monday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -124,6 +131,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->tuesday_open_morning;
                     $openinghour->closetime = $request->tuesday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->tuesday_open_morning)[0] * 60) + (int)explode(':', $request->tuesday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->tuesday_close_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -136,6 +145,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->tuesday_open_morning;
                     $openinghour->closetime = $request->tuesday_close_morning;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->tuesday_open_morning)[0] * 60) + (int)explode(':', $request->tuesday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->tuesday_close_morning)[0] * 60) + (int)explode(':', $request->tuesday_close_morning)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -147,6 +158,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->tuesday_open_afternoon;
                     $openinghour->closetime = $request->tuesday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->tuesday_open_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_open_afternoon)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->tuesday_close_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -175,6 +188,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->wednesday_open_morning;
                     $openinghour->closetime = $request->wednesday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->wednesday_open_morning)[0] * 60) + (int)explode(':', $request->wednesday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->wednesday_close_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -187,6 +202,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->wednesday_open_morning;
                     $openinghour->closetime = $request->wednesday_close_morning;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->wednesday_open_morning)[0] * 60) + (int)explode(':', $request->wednesday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->wednesday_close_morning)[0] * 60) + (int)explode(':', $request->wednesday_close_morning)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -198,6 +215,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->wednesday_open_afternoon;
                     $openinghour->closetime = $request->wednesday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->wednesday_open_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_open_afternoon)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->wednesday_close_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -226,6 +245,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->thursday_open_morning;
                     $openinghour->closetime = $request->thursday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->thursday_open_morning)[0] * 60) + (int)explode(':', $request->thursday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->thursday_close_afternoon)[0] * 60) + (int)explode(':', $request->thursday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -238,6 +259,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->thursday_open_morning;
                     $openinghour->closetime = $request->thursday_close_morning;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->thursday_open_morning)[0] * 60) + (int)explode(':', $request->thursday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->thursday_close_morning)[0] * 60) + (int)explode(':', $request->thursday_close_morning)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -249,6 +272,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->thursday_open_afternoon;
                     $openinghour->closetime = $request->thursday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->thursday_open_afternoon)[0] * 60) + (int)explode(':', $request->thursday_open_afternoon)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->thursday_close_afternoon)[0] * 60) + (int)explode(':', $request->thursday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -277,6 +302,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->friday_open_morning;
                     $openinghour->closetime = $request->friday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->friday_open_morning)[0] * 60) + (int)explode(':', $request->friday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->friday_close_afternoon)[0] * 60) + (int)explode(':', $request->friday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -289,6 +316,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->friday_open_morning;
                     $openinghour->closetime = $request->friday_close_morning;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->friday_open_morning)[0] * 60) + (int)explode(':', $request->friday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->friday_close_morning)[0] * 60) + (int)explode(':', $request->friday_close_morning)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -300,6 +329,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->friday_open_afternoon;
                     $openinghour->closetime = $request->friday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->friday_open_afternoon)[0] * 60) + (int)explode(':', $request->friday_open_afternoon)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->friday_close_afternoon)[0] * 60) + (int)explode(':', $request->friday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -328,6 +359,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->saturday_open_morning;
                     $openinghour->closetime = $request->saturday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->saturday_open_morning)[0] * 60) + (int)explode(':', $request->saturday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->saturday_close_afternoon)[0] * 60) + (int)explode(':', $request->saturday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -340,6 +373,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->saturday_open_morning;
                     $openinghour->closetime = $request->saturday_close_morning;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->saturday_open_morning)[0] * 60) + (int)explode(':', $request->saturday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->saturday_close_morning)[0] * 60) + (int)explode(':', $request->saturday_close_morning)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -351,6 +386,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->saturday_open_afternoon;
                     $openinghour->closetime = $request->saturday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->saturday_open_afternoon)[0] * 60) + (int)explode(':', $request->saturday_open_afternoon)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->saturday_close_afternoon)[0] * 60) + (int)explode(':', $request->saturday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -379,6 +416,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->sunday_open_morning;
                     $openinghour->closetime = $request->sunday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->sunday_open_morning)[0] * 60) + (int)explode(':', $request->sunday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->sunday_close_afternoon)[0] * 60) + (int)explode(':', $request->sunday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -391,6 +430,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->sunday_open_morning;
                     $openinghour->closetime = $request->sunday_close_morning;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->sunday_open_morning)[0] * 60) + (int)explode(':', $request->sunday_open_morning)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->sunday_close_morning)[0] * 60) + (int)explode(':', $request->sunday_close_morning)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
@@ -402,6 +443,8 @@ class RegisterController extends Controller
 
                     $openinghour->opentime = $request->sunday_open_afternoon;
                     $openinghour->closetime = $request->sunday_close_afternoon;
+                    $openinghour->opentime_in_min = ((int)explode(':', $request->sunday_open_afternoon)[0] * 60) + (int)explode(':', $request->sunday_open_afternoon)[1];
+                    $openinghour->closetime_in_min = ((int)explode(':', $request->sunday_close_afternoon)[0] * 60) + (int)explode(':', $request->sunday_close_afternoon)[1];
                     $openinghour->business_id = $business->id;
 
                     $openinghour->save();
