@@ -20,6 +20,8 @@ class CreateBusinessesTable extends Migration
             $table->string('profession');
             $table->string('description');
 
+            $table->integer('appointmentduration');
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
