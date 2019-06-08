@@ -42,6 +42,7 @@ class RegisterRequest extends FormRequest
             'name' => 'sometimes|string|max:255',
             'profession' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
+            'appointmentduration' => 'sometimes',
 
 
 
