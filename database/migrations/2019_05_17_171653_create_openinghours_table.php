@@ -19,6 +19,10 @@ class CreateOpeninghoursTable extends Migration
             $table->string('dayofweek');
             $table->string('opentime')->nullable();
             $table->string('closetime')->nullable();
+
+            $table->integer('opentime_in_min')->nullable();
+            $table->integer('closetime_in_min')->nullable();
+
             $table->boolean('closed')->default(0);
             
             $table->unsignedBigInteger('business_id');

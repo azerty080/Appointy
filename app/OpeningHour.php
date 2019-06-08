@@ -12,7 +12,7 @@ class OpeningHour extends Model
     protected $table = 'openinghours';
 
     protected $fillable = [
-        'dayofweek', 'openingtime', 'closetime', 'closed'
+        'dayofweek', 'opentime', 'closetime', 'closed', 'opentime_in_min', 'closetime_in_min'
     ];
 
     public function business()
