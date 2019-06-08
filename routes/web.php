@@ -41,7 +41,9 @@ Route::get('/searchresults', 'HomeController@searchresults')->name('searchresult
 
 Route::get('/zaak/{name}-{id}', 'HomeController@businessdetail')->name('businessdetail');
 
-Route::get('/zaak/{name}-{id}/kalender', 'HomeController@businesscalendar')->name('businesscalendar');
+Route::get('/zaak/{name}-{id}/kalender/{addedweeks}', 'HomeController@businesscalendar')->name('businesscalendar');
+
+Route::get('/zaak/{name}-{id}/{day}-{time}', 'HomeController@appointmentform')->name('appointmentform');
 
 
 
