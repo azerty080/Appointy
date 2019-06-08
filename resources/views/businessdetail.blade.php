@@ -20,6 +20,6 @@
     <p>Email: {{ $business->user->email }}</p>
 
 
-    <a href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id]) }}">Maak een afspraak</a>
+    <a href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
 
 @stop
