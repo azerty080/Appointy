@@ -3,16 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
-    // use SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'appointments';
 
     protected $fillable = [
-        'date', 'time', 'details', 'sendreminder'
+        'date', 'time', 'time_in_min', 'details', 'sendreminder'
     ];
 
 

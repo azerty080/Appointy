@@ -3,16 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Business extends Model
 {
-    // use SoftDeletes;
-
+    use SoftDeletes;
+    
     protected $table = 'businesses';
 
     protected $fillable = [
-        'name', 'profession', 'description', 'appointmentduration'
+        'name', 'profession', 'description', 'appointmentduration', 'allow_guests'
     ];
 
     public function user()

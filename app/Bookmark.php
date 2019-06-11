@@ -3,16 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bookmark extends Model
 {
-    // use SoftDeletes;
-
+    use SoftDeletes;
+  
     protected $table = 'bookmarks';
-
-    // protected $fillable = [];
-
 
     public function business() {
 		return $this->belongsTo('App\Business');
