@@ -16,7 +16,7 @@ class AccountController extends Controller
         if (session()->get('logged_in')) {
 
             $usertype = session()->get('user_type');
-            $id = session()->get('user_id');
+            $id = session()->get('user_data')->id;
 
             $userdata = User::where('id', $id)->first();
             
@@ -32,7 +32,7 @@ class AccountController extends Controller
                 $extradata = Business::where('user_id', $id)->first();
 
                 //$businesshours = OpeningHour::where('business_id', $extradata->id)->get();
-
+                
                 $mondayhours = OpeningHour::where('business_id', $extradata->id)->where('dayofweek', 'monday')->get();
                 $tuesdayhours = OpeningHour::where('business_id', $extradata->id)->where('dayofweek', 'tuesday')->get();
                 $wednesdayhours = OpeningHour::where('business_id', $extradata->id)->where('dayofweek', 'wednesday')->get();
