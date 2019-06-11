@@ -43,95 +43,95 @@
 
 
         <h2>Openingsuren</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Maandag</th>
+                    <th>Dinsdag</th>
+                    <th>Woensdag</th>
+                    <th>Donderdag</th>
+                    <th>Vrijdag</th>
+                    <th>Zaterdag</th>
+                    <th>Zondag</th>
+                </tr>
+            </thead>
 
-        <h3>Maandag</h3>
-        @foreach($mondayhours as $hour)
+            <tbody>
 
-            @if($hour->closed)
-                <p>Gesloten</p>
-            @else
-                <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
-            @endif
+                    <tr>
+                        <td>
+                            @foreach($mondayhours as $hour)
+                                @if($hour->closed)
+                                    <p>Gesloten</p>
+                                @else
+                                    <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                                @endif
+                            @endforeach
+                        </td>
 
-        @endforeach
+                        <td>
+                            @foreach($tuesdayhours as $hour)
+                                @if($hour->closed)
+                                    <p>Gesloten</p>
+                                @else
+                                    <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                                @endif
+                            @endforeach
+                        </td>
 
+                        <td>
+                            @foreach($wednesdayhours as $hour)
+                                @if($hour->closed)
+                                    <p>Gesloten</p>
+                                @else
+                                    <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                                @endif
+                            @endforeach
+                        </td>
 
+                        <td>
+                            @foreach($thursdayhours as $hour)
+                                @if($hour->closed)
+                                    <p>Gesloten</p>
+                                @else
+                                    <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                                @endif
+                            @endforeach
+                        </td>
 
-        <h3>Dinsdag</h3>
-        @foreach($tuesdayhours as $hour)
+                        <td>
+                            @foreach($fridayhours as $hour)
+                                @if($hour->closed)
+                                    <p>Gesloten</p>
+                                @else
+                                    <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                                @endif
+                            @endforeach
+                        </td>
 
-            @if($hour->closed)
-                <p>Gesloten</p>
-            @else
-                <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
-            @endif
+                        <td>
+                            @foreach($saturdayhours as $hour)
+                                @if($hour->closed)
+                                    <p>Gesloten</p>
+                                @else
+                                    <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                                @endif
+                            @endforeach
+                        </td>
 
-        @endforeach
-
-
-
-        <h3>Woensdag</h3>
-        @foreach($wednesdayhours as $hour)
-
-            @if($hour->closed)
-                <p>Gesloten</p>
-            @else
-                <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
-            @endif
-
-        @endforeach
-
-
-
-        <h3>Donderdag</h3>
-        @foreach($thursdayhours as $hour)
-
-            @if($hour->closed)
-                <p>Gesloten</p>
-            @else
-                <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
-            @endif
-
-        @endforeach
-
-
-
-        <h3>Vrijdag</h3>
-        @foreach($fridayhours as $hour)
-
-            @if($hour->closed)
-                <p>Gesloten</p>
-            @else
-                <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
-            @endif
-
-        @endforeach
-
-
-
-        <h3>Zaterdag</h3>
-        @foreach($saturdayhours as $hour)
-
-            @if($hour->closed)
-                <p>Gesloten</p>
-            @else
-                <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
-            @endif
-
-        @endforeach
-
-
-
-        <h3>Zondag</h3>
-        @foreach($sundayhours as $hour)
-
-            @if($hour->closed)
-                <p>Gesloten</p>
-            @else
-                <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
-            @endif
-
-        @endforeach
+                        <td>
+                            @foreach($sundayhours as $hour)
+                                @if($hour->closed)
+                                    <p>Gesloten</p>
+                                @else
+                                    <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
 
 
     @endif
