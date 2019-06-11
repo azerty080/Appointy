@@ -29,6 +29,12 @@
 -->
 
                 @if(session()->has('logged_in'))
+                    <a href="{{ route('appointments') }}">Afspraken</a>
+                    
+                    @if(session()->get('user_type') == 'klant')
+                        <a href="{{ route('bookmarks') }}">Favorieten</a>
+                    @endif
+
                     <a href="{{ route('account') }}">Account</a>
                     <a href="{{ route('logout') }}">Uitloggen</a>
                 @else 
