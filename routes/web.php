@@ -24,6 +24,17 @@ Route::get('/', 'HomeController@index')->name('index');
 Route::redirect('/home', '/');
 
 
+Route::get('/afspraken', 'AppointmentController@appointments')->name('appointments');
+
+
+Route::post('/removeappointment', 'AppointmentController@removeappointment')->name('removeappointment');
+
+
+Route::get('/favorieten', 'BookmarkController@bookmarks')->name('bookmarks');
+
+
+Route::post('/zaak/{name}-{id}/addbookmark', 'BookmarkController@addbookmark')->name('addbookmark');
+Route::post('/zaak/{name}-{id}/removebookmark', 'BookmarkController@removebookmark')->name('removebookmark');
 
 
 
@@ -41,9 +52,22 @@ Route::get('/searchresults', 'HomeController@searchresults')->name('searchresult
 
 Route::get('/zaak/{name}-{id}', 'HomeController@businessdetail')->name('businessdetail');
 
+
+
+// -------
+Route::get('/zaak/{name}-{id}/addbookmark', 'HomeController@addbookmark')->name('addbookmark');
+// -------
+
+
 Route::get('/zaak/{name}-{id}/kalender/{addedweeks}', 'HomeController@businesscalendar')->name('businesscalendar');
 
-Route::get('/zaak/{name}-{id}/{day}-{time}', 'HomeController@appointmentform')->name('appointmentform');
+
+
+
+Route::get('/zaak/{name}-{id}/{day}/{time}', 'AppointmentController@appointmentform')->name('appointmentform');
+
+Route::post('/createappointment', 'AppointmentController@createappointment')->name('createappointment');
+
 
 
 
