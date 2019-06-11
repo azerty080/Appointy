@@ -52,6 +52,12 @@ class RegisterController extends Controller
             $business->appointmentduration = $request->appointmentduration;
             $business->user_id = $user->id;
 
+            if ($request['allow_guests']) {
+                $business->allow_guests = true;
+            } else {
+                $business->allow_guests = false;
+            }
+
             $business->save();
 
 

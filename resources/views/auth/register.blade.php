@@ -156,6 +156,10 @@
             </div>
 
 
+            <div class="checkboxDiv">
+                <input type="checkbox" name="allow_guests" value="true" id="allow_guests"> <label for="allow_guests">Klanten zonder account een afspraak laten maken</label>
+            </div>
+
             <h2>Lengte afspraak</h2>
             <div class="soloInput">
                 <select class="appointmentduration" name="appointmentduration">

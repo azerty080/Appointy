@@ -49,9 +49,13 @@ class LoginController extends Controller
         if ($client) {
             $usertype = 'klant';
             $username = $client->firstname . " " . $client->lastname;
+
+            $userdata = Client::with('user')->where('user_id', $user->id)->first();
         } elseif ($business) {
             $usertype = 'zaak';
             $username = $business->name;
+            
+            $userdata = Business::with('user')->where('user_id', $user->id)->first();
         }
         
 
@@ -59,8 +63,11 @@ class LoginController extends Controller
             
             session(['logged_in' => true]);
             session(['user_type' => $usertype]);
+            /*
             session(['user_id' => $user->id]);
             session(['user_name' => $username]);
+            */
+            session(['user_data' => $userdata]);
 
             return redirect('/')->with('message', 'Je bent ingelogd');
         }
