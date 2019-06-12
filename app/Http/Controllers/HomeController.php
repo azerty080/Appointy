@@ -218,6 +218,7 @@ class HomeController extends Controller
         print($saturdayappointments);
         print($sundayappointments);
 */
+
         $monday = OpeningHour::where('business_id', $id)->where('dayofweek', 'monday')->get();
         $tuesday = OpeningHour::where('business_id', $id)->where('dayofweek', 'tuesday')->get();
         $wednesday = OpeningHour::where('business_id', $id)->where('dayofweek', 'wednesday')->get();
