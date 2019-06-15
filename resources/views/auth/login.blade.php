@@ -1,27 +1,30 @@
 @extends('layouts.app')
 
-@section('title', 'Login')
+@section('title', 'Inloggen')
 
 
 @section('content')
     <h1>Inloggen</h1>
 
+    <div class="contentDiv">
+        <form class="loginForm" method="POST" action="{{ route('login') }}">
+            @csrf
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+            <div class="loginInputs">
+                <div class="loginInputDiv">
+                    <label for="email">Email</label>
+                    <input name="email" type="text">
+                </div>
 
-        <div class="">
-            <label for="email">Email</label>
-            <input name="email" type="text">
-        </div>
+                <div class="loginInputDiv">
+                    <label for="password">Wachtwoord</label>
+                    <input name="password" type="password">
+                </div>
+            </div>
 
-        <div class="">
-            <label for="password">Wachtwoord</label>
-            <input name="password" type="password">
-        </div>
+            <button type="submit">Inloggen</button>
 
-        <button type="submit">Inloggen</button>
-
-    </form>
+        </form>
+    </div>
     
 @stop

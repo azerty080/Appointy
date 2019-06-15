@@ -6,18 +6,24 @@
 @section('content')
     <h1>Zoekresultaten</h1>
 
-    @foreach($businesses as $business)
+    <div class="contentDiv">
+        <div class="searchResults">
+            @foreach($businesses as $business)
 
-        <div>
-            <a href="{{ route('businessdetail', ['name' => $business->name, 'id' => $business->id]) }}">
-                <p>Naam: {{ $business->name }}</p>
-                <p>Beroep: {{ $business->profession }}</p>
-                
-                <p>Gemeente: {{ $business->user->township }}</p>
-                <p>Adres: {{ $business->user->address }}</p>
-            </a>
+                <a class="searchedBusiness" href="{{ route('businessdetail', ['name' => $business->name, 'id' => $business->id]) }}">
+                    <div class="mainInfo">
+                        <h2 class="name">{{ $business->name }}</h2>
+                        <p class="profession">{{ $business->profession }}</p>
+                    </div>
+                    
+                    <div class="locationInfo">
+                        <p class="township">{{ $business->user->township }}</p>
+                        <p class="address">{{ $business->user->address }}</p>
+                    </div>
+                </a>
+
+            @endforeach
         </div>
-
-    @endforeach
+    </div>
 
 @stop

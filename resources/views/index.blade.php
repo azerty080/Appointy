@@ -6,65 +6,56 @@
 @section('content')
     <h1>Home</h1>
 
+    <div class="contentDiv">
+        @if(session()->has('logged_in'))
+            @if(session()->get('account_type') == 'klant')
 
-    @if(session()->has('logged_in'))
-        <h2>Ingelogd als @if(session()->get('user_type') == 'klant') {{ session()->get('user_data')->firstname }} {{ session()->get('user_data')->lastname }} @else {{ session()->get('user_data')->name }} @endif</h2>
+                <h2>Favorieten</h2>
+                @if(count($bookmarks) <= 0)
+                    <p>Je hebt nog geen favorieten toegevoegd</p>
+                @endif
 
-        @if(session()->get('user_type') == 'klant')
+                @foreach($bookmarks as $bookmark)
 
-            @if(count($bookmarks) > 0)
-                <h3>Favorieten</h3>
+                    <div>
+                        <a href="{{ route('businessdetail', ['name' => $bookmark->business->name, 'id' => $bookmark->business_id]) }}">
+                            <p>Naam: {{ $bookmark->business->name }}</p>
+                            <p>Beroep: {{ $bookmark->business->profession }}</p>
+                            
+                            <p>Gemeente: {{ $bookmark->business->user->township }}</p>
+                            <p>Adres: {{ $bookmark->business->user->address }}</p>
+                        </a>
+                    </div>
+
+                @endforeach
+        
+            @elseif(session()->get('account_type') == 'zaak')
+                <h2>Zaak</h2>
+                
             @endif
-
-            @foreach($bookmarks as $bookmark)
-
-                <div>
-                    <a href="{{ route('businessdetail', ['name' => $bookmark->business->name, 'id' => $bookmark->business_id]) }}">
-                        <p>Naam: {{ $bookmark->business->name }}</p>
-                        <p>Beroep: {{ $bookmark->business->profession }}</p>
-                        
-                        <p>Gemeente: {{ $bookmark->business->user->township }}</p>
-                        <p>Adres: {{ $bookmark->business->user->address }}</p>
-                    </a>
-                </div>
-
-            @endforeach
-
         @endif
-    
-    @else 
-        <h2>Ingelogd als gast</h2>
-    @endif
 
 
 
-    @if(session()->get('user_type') == 'klant' || !session()->has('logged_in'))
-        <form method="GET" action="{{ route('searchresults') }}">
-
+        @if(session()->get('account_type') == 'klant' || !session()->has('logged_in'))
             <h2>Zoek zaak</h2>
+
+            <form class="searchForm"method="GET" action="{{ route('searchresults') }}">
+                
+                <input class="name" name="name" type="text" placeholder="Naam van de zaak">
+
+                <div class="lineWrapper">
+                    <div class="line"></div>
+                    <p>OF</p>
+                </div>
+
+                <input class="profession" name="profession" type="text" placeholder="Beroep">
+                
+                <input class="township" name="township" type="text" placeholder="Gemeente">
             
-            <div class="inputGroup">
-                <div class="soloInput">
-                    <label>Naam van de zaak</label>
-                    <input name="name" type="text">
-                </div>
-
-                <p>OF</p>
-
-                <div class="soloInput">
-                    <label>Beroep</label>
-                    <input name="profession" type="text">
-                </div>
-
-                <div class="soloInput">
-                    <label>Gemeente</label>
-                    <input name="township" type="text">
-                </div>
-            </div>
-            
-            <button type="submit">Zoek</button>
-        </form>
-    @endif
-
+                <button type="submit">Zoek</button>
+            </form>
+        @endif
+    </div>
 
 @stop
