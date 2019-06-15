@@ -9,10 +9,10 @@ use App\Bookmark;
 
 class BookmarkController extends Controller
 {
-    public function bookmarks(Request $request)
+    public function bookmarks()
     {
-        if ($request->session()->get('user_type') == 'klant') {
-            $client_id = $request->session()->get('user_data')->id;
+        if (session()->get('account_type') == 'klant') {
+            $client_id = session()->get('account_data')->id;
 
             $bookmarks = Bookmark::with('business.user')->where('client_id', $client_id)->get();
         } else {
@@ -34,7 +34,7 @@ class BookmarkController extends Controller
         $bookmark = new Bookmark();
 
         $bookmark->business_id = $request->business_id;
-        $bookmark->client_id = $request->session()->get('user_data')->id;
+        $bookmark->client_id = session()->get('account_data')->id;
 
         $bookmark->save();
 
@@ -48,7 +48,7 @@ class BookmarkController extends Controller
         $id = $request->id;
         $name = $request->name;
 
-        $bookmark = Bookmark::where('business_id', $request->business_id)->where('client_id', $request->session()->get('user_data')->id);
+        $bookmark = Bookmark::where('business_id', $request->business_id)->where('client_id', session()->get('account_data')->id);
 
         $bookmark->delete();
         

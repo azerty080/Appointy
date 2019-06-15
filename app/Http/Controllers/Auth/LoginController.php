@@ -15,7 +15,7 @@ class LoginController extends Controller
     public function logout()
     {
         if (session('logged_in')) {
-            session()->forget(['logged_in', 'user_type', 'user_id', 'user_name']);
+            session()->forget(['logged_in', 'account_type', 'user_id', 'user_name']);
     
             return redirect('/')->with('message', 'Je bent uitgelogd');
         } else {
@@ -48,12 +48,10 @@ class LoginController extends Controller
         
         if ($client) {
             $usertype = 'klant';
-            $username = $client->firstname . " " . $client->lastname;
 
             $userdata = Client::with('user')->where('user_id', $user->id)->first();
         } elseif ($business) {
             $usertype = 'zaak';
-            $username = $business->name;
             
             $userdata = Business::with('user')->where('user_id', $user->id)->first();
         }
@@ -62,12 +60,8 @@ class LoginController extends Controller
         if (sizeof($user) == 1 && $user->password == $password) {
             
             session(['logged_in' => true]);
-            session(['user_type' => $usertype]);
-            /*
-            session(['user_id' => $user->id]);
-            session(['user_name' => $username]);
-            */
-            session(['user_data' => $userdata]);
+            session(['account_type' => $usertype]);
+            session(['account_data' => $userdata]);
 
             return redirect('/')->with('message', 'Je bent ingelogd');
         }

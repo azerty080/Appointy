@@ -16,13 +16,13 @@ class AppointmentController extends Controller
 {
     public function appointments(Request $request)
     {
-        if ($request->session()->get('user_type') == 'klant') {
-            $client_id = $request->session()->get('user_data')->id;
+        if ($request->session()->get('account_type') == 'klant') {
+            $client_id = $request->session()->get('account_data')->id;
 
             $appointments = Appointment::with('business.user')->where('client_id', $client_id)->orderBy('date', 'asc')->orderBy('time_in_min', 'asc')->get();
 
-        } elseif ($request->session()->get('user_type') == 'zaak') {
-            $business_id = $request->session()->get('user_data')->id;
+        } elseif ($request->session()->get('account_type') == 'zaak') {
+            $business_id = $request->session()->get('account_data')->id;
 
             $appointments = Appointment::with('client.user')->where('business_id', $business_id)->orderBy('date', 'asc')->orderBy('time_in_min', 'asc')->get();
         }
@@ -73,7 +73,7 @@ class AppointmentController extends Controller
             $appointment->phonenumber = $request->phonenumber;
             $appointment->email = $request->email;
         } else {
-            $appointment->client_id = $request->session()->get('user_data')->id;
+            $appointment->client_id = $request->session()->get('account_data')->id;
         }
 
         
