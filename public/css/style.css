@@ -1,9 +1,11 @@
-html {
-    color: #212529;
-    background-color: #F8FAFC;
+html, body {
+    color: #fff;
+    background-color: #18191D;
 
     font-family: "Roboto", "Arial", sans-serif;
-    
+	
+	height: 100%;
+	font-size: 18px;
 }
 
 
@@ -22,35 +24,437 @@ html {
 	font-weight: bold;
 }
 
-
 a {
-    color: #3490DC;
+	color: #fff;
+	text-decoration: none;
+}
+
+nav a:not(.stealthlink), .accountlink {
+	font-size: 24px;
+	color: #fff;
+}
+
+a:hover:not(.stealthlink) {
+    color: #212226;
 }
 
 
-nav a {
-    text-decoration: none;
+h1, h2, h3 {
+	font-family: "Roboto-bold";
+}
+
+h1 {
+	margin: 0 0 50px 0;
+}
+
+h2, h3 {
+	margin: 0;
+}
+
+div h2 {
+	font-size: 1.5em;
 }
 
 
-h3 {
+
+
+
+
+
+
+.miniTitle {
+	font-size: 20px;
+	margin: 0;
+}
+
+body {
+	display: flex;
+	flex-direction: row;
+	margin: 0;
+	padding: 0;
+}
+
+.mainWrapper {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.topbar {
+	margin: 0;
+	width: 100%;
+	height: 90px;
+	min-height: 90px;
+	background-color: #212226;
+}
+
+.logo {
+	/*width: 220px;*/
+	height: 50px;
+	margin: 20px 0px 16px 0px;
+}
+
+nav {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0;
+	flex: 0 0 320px;
+	height: 100%;
+	background-color: #212226;
+	padding: 0;
+}
+
+
+
+nav a:not(.stealthlink), .accountlink {
+	color: #fff;
+	text-align: center;
+	padding: 30px 0;
+	width: 100%;
+}
+
+.currentlink {
+	color: #fff;
+    background-color: #18191D;
+}
+
+nav a:hover:not(.stealthlink) {
+	color: #fff;
+    background-color: #18191D;
+}
+
+
+.logoutlink {
+	font-size: 16px;
+	width: auto;
+	color: #fff;
+	text-align: center;
+	margin-top: 20px;
+}
+
+
+main {
+	margin: 20px;
+	flex: 0 0;
+}
+
+
+.content {
+	margin: 10px 0 0 0;
+	padding: 50px;
+	background-color: #212226;
+	border-radius: 10px;
+}
+
+
+.contentDiv {
+	margin: 0 0 0 40px;
+}
+
+
+/*
+.footer {
+	margin: 0;
+	width: 100%;
+	height: 50px;
+	background-color: #212226;
+}
+*/
+
+
+
+/* ALL BUTTONS */
+button {
+	border: 2px solid #fff;
+	border-radius: 50px;
+	background-color: transparent;
+	color: #fff;
+	padding: 10px 20px;
+	font-size: 20px;
+	height: 50px;
+}
+
+button:hover {
+	background-color: #fff;
+	color: #18191D;
+	cursor: pointer;
+}
+
+
+
+.linkBtn {
+	color: #fff;
+	background-color: #212226;
+	text-align: center;
+	padding: 10px 20px;
+	border: 2px solid #fff;
+	border-radius: 50px;
+	height: 50px;
+}
+
+.linkBtn:hover {
+	color: #212226;
+	background-color: #fff;
+	cursor: pointer;
+}
+
+
+.disabledBtn {
+	border: 2px solid grey;
+	background-color: grey;
+}
+
+.disabledBtn:hover {
+	color: #fff;
+	border: 2px solid grey;
+	background-color: grey;
+	cursor: default;
+}
+
+
+
+
+/* HOME SEARCH BAR */
+.searchForm {
+	margin: 20px 0 0 0;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border: 2px solid #fff;
+	border-radius: 50px;
+	height: 70px;
+}
+
+
+.searchForm input {
+	margin: 0;
+	height: 100%;
+	border: none;
+	background-color: transparent;
+	padding: 0 0 0 30px;
+	font-size: 20px;
+	color: #fff;
+}
+
+.searchForm input::placeholder {
+	color: #C3C3C3;
+}
+
+input:focus {
+	outline-width: 0;
+	background-color: transparent;
+}
+
+.searchForm .name {
+	border-radius: 50px 0 0 50px;
+}
+
+
+.lineWrapper {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	margin: 0;
+	height: 100%;
+}
+
+.line {
+	position: absolute;
+	left: 50%;
+	margin: 0;
+	width: 2px;
+	height: 100%;
+	background-color: #fff;
+}
+
+.searchForm p {
+	position: relative;
+	top: 20%;
+	margin: 0;
+	padding: 10px;
+	border: 2px solid #fff;
+	border-radius: 50px;
+	font-size: 16px;
+	background-color: #212226;
+}
+
+
+.searchForm .profession {
+	border-right: 2px solid #fff;
+}
+
+.searchForm .township {
+	/*  */
+}
+
+.searchForm button {
+	margin: 0 10px 0 0;
+}
+
+
+
+/* Remove autofill background color for inputs */
+@-webkit-keyframes autofill {
+    to {
+        color: #fff;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
+
+
+
+
+
+/* SEARCHRESULTS */
+.searchResults {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+
+.searchedBusiness {
+	color: #fff;
+	background-color: #212226;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 40px;
+	border: 2px solid #fff;
+	border-radius: 50px;
+	width: 40%;
+	margin: 0 40px 40px 0;
+}
+
+.searchedBusiness:hover, .searchedBusiness:hover p {
+	color: #212226;
+	background-color: #fff;
+}
+
+
+.searchedBusiness p {
+	color: #fff;
+	margin: 0 10px 0 0;
+}
+
+
+.mainInfo {
+	margin: 0 0 0 10px;
+}
+
+
+.locationInfo {
+	margin: 0 10px 0 0;
+}
+
+
+
+
+
+/* BUSINESS DETAIL */
+.titleDiv {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 0 0 50px 0;
+}
+
+
+.titleInfo {
+	display: flex;
+	flex-direction: column;
+}
+
+
+.titleInfo h1 {
 	margin: 0;
 }
 
 
 
+.businessDetails, .businessInfo {
+	display: flex;
+	flex-direction: column;
+}
 
-.container {
-	margin: 0 auto;
-	max-width: 1200px;
-	width: 100%;
+.mainBusinessInfo {
+	display: flex;
+	flex-direction: row;	
+	margin: 0 0 20px 0;
+}
+
+
+.details {
+	width: 40%;
+}
+
+.details div {
+	margin: 0 0 20px 0;
+}
+
+.details p {
+	margin: 10px 0 0 20px;
+}
+
+
+.mainBusinessInfo .openingHours {
+	width: 40%;
+}
+
+.mainBusinessInfo .openingHours h2 {
+	margin: 0 0 10px 0;
+}
+
+
+.businessDetailTable {
+	margin: 0 0 0 20px;
+	border-collapse: collapse;
+	height: 80%;
+	width: 80%;
+}
+
+.businessDetailTable, .businessDetailTable th, .businessDetailTable td  {
+	margin: 0 0 0 0;
+	border: 1px solid #fff;
+	text-align: center;
+}
+
+
+.businessDetailTable th {
+	width: 30%;
+}
+
+.businessDetailTable td  {
+	width: 30%;
 }
 
 
 
+
+
+/* FORM STUFF */
 form {
 	width: 100%;
+}
 
+
+form input, form textarea {
+	color: #fff;
+	border: 1px solid #fff;
+	border-radius: 10px;
+	padding: 10px 20px;
+	background-color: transparent;
+	font-size: 18px;
 }
 
 
@@ -59,36 +463,134 @@ form div {
 }
 
 
-
 textarea {
 	resize: none;
 }
 
 
+/*
 input, textarea {
 	padding: 5px 10px;
 	width: 100%;
+	font-size: 18px;
 }
+*/
 
 
-
-
-
-
-.radioGroup {
+/* LOGIN FORM */
+.loginForm {
 	display: flex;
 	flex-direction: column;
 }
 
+
+.loginInputs {
+	display: flex;
+	flex-direction: row;
+}
+
+.loginInputDiv {
+	display: flex;
+	flex-direction: column;
+	margin: 0 20px 0 0;
+	width: 100%;
+}
+
+.loginInputDiv input {
+	width: 80%;
+}
+
+.loginForm button {
+	margin: 20px 0 0 0;
+	width: 150px;
+}
+
+
+
+
+/* REGISTER FORM */
+.radioGroup {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 0 0 40px 0;
+}
+
+
+.radioGroup h2 {
+	margin: 0 20px 0 0;
+}
+
+
 .radioInput {
 	display: flex;
 	flex-direction: row;
-	margin: 0px 0px 0px 0px;
+	margin: 0px 40px 0px 0px;
+	width: 85px;
 }
 
-.radioInput input {
-	width: auto;
+.radioInput label {
+	margin: 0 0 0 0;
+	padding: 10px 20px;
+	border: 2px solid #fff;
+	border-radius: 50px;
 }
+
+input[type="radio"] {
+	display: none;
+}
+
+input[type="radio"]:hover + label {
+	color: #18191D;
+	background-color: #fff;
+	cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+	color: #18191D;
+	background-color: #fff;
+}
+
+
+
+
+.userForm h2 {
+	margin: 0 0 20px 0;
+}
+
+.emailInputs, .passwordInputs {
+	margin: 20px 0 0 0 !important;
+}
+
+
+/*
+
+.monday {
+	color: #fff;
+	background-color: pink;
+}
+
+.tuesday {
+	color: #fff;
+	background-color: orange;
+}
+
+.wednesday {
+	color: #fff;
+	background-color: green;
+}
+
+.thursday {
+	color: #fff;
+	background-color: blue;
+}
+
+.friday {
+	color: #fff;
+	background-color: purple;
+}
+
+*/
 
 
 
