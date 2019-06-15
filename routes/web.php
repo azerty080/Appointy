@@ -15,9 +15,16 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-
-
-
+/*
+Route::get('/sparkpost', function () {
+    Mail::send('email.test', [], function ($message) {
+        $message
+        ->from('example@exaple.com', 'Example')
+        ->to('niels.van.nimmen@gmail.com', 'Niels Van Nimmen')
+        ->subject('hahaha, im the subject now');
+    });
+});
+*/
 
 
 Route::get('/', 'HomeController@index')->name('index');
@@ -37,14 +44,20 @@ Route::post('/zaak/{name}-{id}/addbookmark', 'BookmarkController@addbookmark')->
 Route::post('/zaak/{name}-{id}/removebookmark', 'BookmarkController@removebookmark')->name('removebookmark');
 
 
-
+// Account
 Route::get('/account', 'AccountController@account')->name('account');
 
+Route::get('/account/informatie-bijwerken', 'AccountController@editaccount')->name('editaccount');
+Route::post('/account/updateaccount', 'AccountController@updateaccount')->name('updateaccount');
+
+Route::get('/account/openingsuren-bijwerken', 'AccountController@editopeninghours')->name('editopeninghours');
+Route::post('/account/updateopeninghours', 'AccountController@updateopeninghours')->name('updateopeninghours');
+
+
+Route::post('/account/deleteaccount', 'AccountController@deleteaccount')->name('deleteaccount');
 
 
 
-
-//Route::post('/searchbusiness', 'HomeController@searchbusiness')->name('searchbusiness');
 
 Route::get('/searchresults', 'HomeController@searchresults')->name('searchresults');
 
@@ -64,7 +77,13 @@ Route::get('/zaak/{name}-{id}/kalender/{addedweeks}', 'HomeController@businessca
 
 
 
-Route::get('/zaak/{name}-{id}/{day}/{time}', 'AppointmentController@appointmentform')->name('appointmentform');
+//Route::get('/zaak/{name}-{id}/{day}/{time}', 'AppointmentController@appointmentform')->name('appointmentform');
+Route::post('/zaak/{name}-{id}/afspraak-maken', 'AppointmentController@appointmentform')->name('appointmentform');
+Route::get('/zaak/{name}-{id}/afspraak-maken', 'AppointmentController@appointmentform')->name('appointmentform');
+
+
+
+
 
 Route::post('/createappointment', 'AppointmentController@createappointment')->name('createappointment');
 
