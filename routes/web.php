@@ -15,16 +15,24 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-/*
+
 Route::get('/sparkpost', function () {
+/*
     Mail::send('email.test', [], function ($message) {
         $message
-        ->from('example@exaple.com', 'Example')
+        ->from('appointy@niels.vannimmen.mtantwerp.eu', 'Appointy')
         ->to('niels.van.nimmen@gmail.com', 'Niels Van Nimmen')
         ->subject('hahaha, im the subject now');
     });
-});
 */
+    
+// Mail::to('appointy@niels.vannimmen.mtantwerp.eu')->send(new TestMail());
+
+});
+
+    
+
+
 
 
 Route::get('/', 'HomeController@index')->name('index');
