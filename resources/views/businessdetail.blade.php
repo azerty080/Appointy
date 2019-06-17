@@ -143,13 +143,12 @@
             
             <div class="createAppointment">
                 @if($business->allow_guests)
-                    <a href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
+                    <a class="linkBtn" href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
                 @else
                     @if(session()->has('logged_in'))
-                        <a href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
+                        <a class="linkBtn" href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
                     @else
                         <button class="disabledBtn" disabled>Je moet ingelogd zijn om bij deze zaak een afspraak te maken</button>
-                        <a class="linkBtn">Maak een afspraak</a>
                     @endif
                 @endif
             </div>

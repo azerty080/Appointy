@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <h1>
+    <h1 class="calendarWeek">
         @if($addedweeks != 0)<a href="{{ route('businesscalendar', ['name' => $name, 'id' => $id, 'addedweek' => $addedweeks - 1]) }}"><</a>@endif
         {{ Carbon\Carbon::now()->addWeek($addedweeks)->startOfWeek()->format('d/m/Y') }} - {{ Carbon\Carbon::now()->addWeek($addedweeks)->endOfWeek()->format('d/m/Y') }}
         <a href="{{ route('businesscalendar', ['name' => $name, 'id' => $id, 'addedweek' => $addedweeks + 1]) }}">></a>
@@ -26,7 +26,7 @@
         @endphp
 
 
-        <table>
+        <table class="calendar">
             <thead>
                 <tr>
                     <th></th>
@@ -64,16 +64,14 @@
                     @endphp
                     
                     <tr>
-                        <td>{{ $rowtime->format('H:i') }}</td>
+                        <td class="hour">{{ $rowtime->format('H:i') }}</td>
 
-                        <td>
+                        <td
                             @if((($mondaydate->isToday() && $today->lte($rowtime)) || $mondaydate->isFuture()) && !in_array($i, $mondayhours))
                                 @if(count($monday) == 1)
                                     @if(!$monday[0]->closed)
                                         @if($monday[0]->opentime_in_min <= $i && $i < $monday[0]->closetime_in_min)
-                                            <!--
-                                            <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $mondaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                            class="available">
 
                                             <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
                                                 @csrf
@@ -89,47 +87,48 @@
                                                 <button type="submit">Boek een afspraak</button>
                                             </form>
                                         @else
-                                            o
+                                            ><p>gesloten</p>
                                         @endif
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @else
                                     @if(($monday[0]->opentime_in_min <= $i && $i < $monday[0]->closetime_in_min) || ($monday[1]->opentime_in_min <= $i && $i < $monday[1]->closetime_in_min))
-                                        <!--
-                                        <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $mondaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                        class="available"> 
+                                
+                                        <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
+                                            @csrf
 
-                                            <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
-                                                @csrf
-
-                                                <input name="id" type="number" value="{{ $id }}" hidden>
-                                                
-                                                <input name="name" type="text" value="{{ $name }}" hidden>
-                                                
-                                                <input name="day" type="date" value="{{ $mondaydate->format('Y-m-d') }}" hidden>
-                                                
-                                                <input name="time" type="number" value="{{ $i }}" hidden>
-                                                
-                                                <button type="submit">Boek een afspraak</button>
-                                            </form>
+                                            <input name="id" type="number" value="{{ $id }}" hidden>
+                                            
+                                            <input name="name" type="text" value="{{ $name }}" hidden>
+                                            
+                                            <input name="day" type="date" value="{{ $mondaydate->format('Y-m-d') }}" hidden>
+                                            
+                                            <input name="time" type="number" value="{{ $i }}" hidden>
+                                            
+                                            <button type="submit">Boek een afspraak</button>
+                                        </form>
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @endif
+                            
+                            @elseif(($mondaydate->isToday() && $today->lte($rowtime)) || $mondaydate->isPast())
+                                class="past">
+                            @elseif(in_array($i, $mondayhours))
+                                class="occupied"><p>bezet</p>
                             @else
-                                o
+                                class="past">
                             @endif
                         </td>
 
-                        <td>
+                        <td
                             @if((($tuesdaydate->isToday() && $today->lte($rowtime)) || $tuesdaydate->isFuture()) && !in_array($i, $tuesdayhours))
                                 @if(count($tuesday) == 1)
                                     @if(!$tuesday[0]->closed)
                                         @if($tuesday[0]->opentime_in_min <= $i && $i < $tuesday[0]->closetime_in_min)
-                                            <!--
-                                            <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $tuesdaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                            class="available"> 
 
                                             <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
                                                 @csrf
@@ -145,47 +144,48 @@
                                                 <button type="submit">Boek een afspraak</button>
                                             </form>
                                         @else
-                                            o
+                                            ><p>gesloten</p>
                                         @endif
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @else
                                     @if(($tuesday[0]->opentime_in_min <= $i && $i < $tuesday[0]->closetime_in_min) || ($tuesday[1]->opentime_in_min <= $i && $i < $tuesday[1]->closetime_in_min))
-                                        <!--
-                                        <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $tuesdaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                        class="available">
 
-                                            <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
-                                                @csrf
+                                        <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
+                                            @csrf
 
-                                                <input name="id" type="number" value="{{ $id }}" hidden>
-                                                
-                                                <input name="name" type="text" value="{{ $name }}" hidden>
-                                                
-                                                <input name="day" type="date" value="{{ $tuesdaydate->format('Y-m-d') }}" hidden>
-                                                
-                                                <input name="time" type="number" value="{{ $i }}" hidden>
-                                                
-                                                <button type="submit">Boek een afspraak</button>
-                                            </form>
+                                            <input name="id" type="number" value="{{ $id }}" hidden>
+                                            
+                                            <input name="name" type="text" value="{{ $name }}" hidden>
+                                            
+                                            <input name="day" type="date" value="{{ $tuesdaydate->format('Y-m-d') }}" hidden>
+                                            
+                                            <input name="time" type="number" value="{{ $i }}" hidden>
+                                            
+                                            <button type="submit">Boek een afspraak</button>
+                                        </form>
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @endif
+                            
+                            @elseif(($tuesdaydate->isToday() && $today->lte($rowtime)) || $tuesdaydate->isPast())
+                                class="past">
+                            @elseif(in_array($i, $tuesdayhours))
+                                class="occupied"><p>bezet</p>
                             @else
-                                o
+                                class="past">
                             @endif
                         </td>
                         
-                        <td>
+                        <td
                             @if((($wednesdaydate->isToday() && $today->lte($rowtime)) || $wednesdaydate->isFuture()) && !in_array($i, $wednesdayhours))
                                 @if(count($wednesday) == 1)
                                     @if(!$wednesday[0]->closed)
                                         @if($wednesday[0]->opentime_in_min <= $i && $i < $wednesday[0]->closetime_in_min)
-                                            <!--
-                                            <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $wednesdaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                            class="available">
 
                                             <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
                                                 @csrf
@@ -201,48 +201,49 @@
                                                 <button type="submit">Boek een afspraak</button>
                                             </form>
                                         @else
-                                            o
+                                            ><p>gesloten</p>
                                         @endif
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @else
                                     @if(($wednesday[0]->opentime_in_min <= $i && $i < $wednesday[0]->closetime_in_min) || ($wednesday[1]->opentime_in_min <= $i && $i < $wednesday[1]->closetime_in_min))
-                                        <!--
-                                        <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $wednesdaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                        class="available">
 
-                                            <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
-                                                @csrf
+                                        <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
+                                            @csrf
 
-                                                <input name="id" type="number" value="{{ $id }}" hidden>
-                                                
-                                                <input name="name" type="text" value="{{ $name }}" hidden>
-                                                
-                                                <input name="day" type="date" value="{{ $wednesdaydate->format('Y-m-d') }}" hidden>
-                                                
-                                                <input name="time" type="number" value="{{ $i }}" hidden>
-                                                
-                                                <button type="submit">Boek een afspraak</button>
-                                            </form>
+                                            <input name="id" type="number" value="{{ $id }}" hidden>
+                                            
+                                            <input name="name" type="text" value="{{ $name }}" hidden>
+                                            
+                                            <input name="day" type="date" value="{{ $wednesdaydate->format('Y-m-d') }}" hidden>
+                                            
+                                            <input name="time" type="number" value="{{ $i }}" hidden>
+                                            
+                                            <button type="submit">Boek een afspraak</button>
+                                        </form>
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @endif
+                            
+                            @elseif(($wednesdaydate->isToday() && $today->lte($rowtime)) || $wednesdaydate->isPast())
+                                class="past">
+                            @elseif(in_array($i, $wednesdayhours))
+                                class="occupied"><p>bezet</p>
                             @else
-                                o
+                                class="past">
                             @endif
                         </td>
 
-                        <td>
+                        <td
                             @if((($thursdaydate->isToday() && $today->lte($rowtime)) || $thursdaydate->isFuture()) && !in_array($i, $thursdayhours))
                                 @if(count($thursday) == 1)
                                     @if(!$thursday[0]->closed)
                                         @if($thursday[0]->opentime_in_min <= $i && $i < $thursday[0]->closetime_in_min)
-                                            <!--
-                                            <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $thursdaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
-
+                                            class="available">
+                   
                                             <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
                                                 @csrf
 
@@ -257,48 +258,49 @@
                                                 <button type="submit">Boek een afspraak</button>
                                             </form>
                                         @else
-                                            0
+                                            ><p>gesloten</p>
                                         @endif
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @else
                                     @if(($thursday[0]->opentime_in_min <= $i && $i < $thursday[0]->closetime_in_min) || ($thursday[1]->opentime_in_min <= $i && $i < $thursday[1]->closetime_in_min))
-                                        <!--
-                                        <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $thursdaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                        class="available">
+                        
+                                        <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
+                                            @csrf
 
-                                            <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
-                                                @csrf
-
-                                                <input name="id" type="number" value="{{ $id }}" hidden>
-                                                
-                                                <input name="name" type="text" value="{{ $name }}" hidden>
-                                                
-                                                <input name="day" type="date" value="{{ $thursdaydate->format('Y-m-d') }}" hidden>
-                                                
-                                                <input name="time" type="number" value="{{ $i }}" hidden>
-                                                
-                                                <button type="submit">Boek een afspraak</button>
-                                            </form>
+                                            <input name="id" type="number" value="{{ $id }}" hidden>
+                                            
+                                            <input name="name" type="text" value="{{ $name }}" hidden>
+                                            
+                                            <input name="day" type="date" value="{{ $thursdaydate->format('Y-m-d') }}" hidden>
+                                            
+                                            <input name="time" type="number" value="{{ $i }}" hidden>
+                                            
+                                            <button type="submit">Boek een afspraak</button>
+                                        </form>
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @endif
+                            
+                            @elseif(($thursdaydate->isToday() && $today->lte($rowtime)) || $thursdaydate->isPast())
+                                class="past">
+                            @elseif(in_array($i, $thursdayhours))
+                                class="occupied"><p>bezet</p>
                             @else
-                                o
+                                class="past">
                             @endif
                         </td>
 
-                        <td>
+                        <td
                             @if((($fridaydate->isToday() && $today->lte($rowtime)) || $fridaydate->isFuture()) && !in_array($i, $fridayhours))
                                 @if(count($friday) == 1)
                                     @if(!$friday[0]->closed)
                                         @if($friday[0]->opentime_in_min <= $i && $i < $friday[0]->closetime_in_min)
-                                            <!--
-                                            <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $fridaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
-
+                                            class="available">
+                               
                                             <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
                                                 @csrf
 
@@ -313,48 +315,49 @@
                                                 <button type="submit">Boek een afspraak</button>
                                             </form>
                                         @else
-                                            o
+                                            ><p>gesloten</p>
                                         @endif
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @else
                                     @if(($friday[0]->opentime_in_min <= $i && $i < $friday[0]->closetime_in_min) || ($friday[1]->opentime_in_min <= $i && $i < $friday[1]->closetime_in_min))
-                                        <!--
-                                        <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $fridaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                        class="available">
+                        
+                                        <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
+                                            @csrf
 
-                                            <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
-                                                @csrf
-
-                                                <input name="id" type="number" value="{{ $id }}" hidden>
-                                                
-                                                <input name="name" type="text" value="{{ $name }}" hidden>
-                                                
-                                                <input name="day" type="date" value="{{ $fridaydate->format('Y-m-d') }}" hidden>
-                                                
-                                                <input name="time" type="number" value="{{ $i }}" hidden>
-                                                
-                                                <button type="submit">Boek een afspraak</button>
-                                            </form>
+                                            <input name="id" type="number" value="{{ $id }}" hidden>
+                                            
+                                            <input name="name" type="text" value="{{ $name }}" hidden>
+                                            
+                                            <input name="day" type="date" value="{{ $fridaydate->format('Y-m-d') }}" hidden>
+                                            
+                                            <input name="time" type="number" value="{{ $i }}" hidden>
+                                            
+                                            <button type="submit">Boek een afspraak</button>
+                                        </form>
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @endif
+                            
+                            @elseif(($fridaydate->isToday() && $today->lte($rowtime)) || $fridaydate->isPast())
+                                class="past">
+                            @elseif(in_array($i, $fridayhours))
+                                class="occupied"><p>bezet</p>
                             @else
-                                o
+                                class="past">
                             @endif
                         </td>
 
-                        <td>
+                        <td
                             @if((($saturdaydate->isToday() && $today->lte($rowtime)) || $saturdaydate->isFuture()) && !in_array($i, $saturdayhours))
                                 @if(count($saturday) == 1)
                                     @if(!$saturday[0]->closed)
                                         @if($saturday[0]->opentime_in_min <= $i && $i < $saturday[0]->closetime_in_min)
-                                            <!--
-                                            <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $saturdaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
-
+                                            class="available">
+                                 
                                             <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
                                                 @csrf
 
@@ -369,48 +372,49 @@
                                                 <button type="submit">Boek een afspraak</button>
                                             </form>
                                         @else
-                                            o
+                                            ><p>gesloten</p>
                                         @endif
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @else
                                     @if(($saturday[0]->opentime_in_min <= $i && $i < $saturday[0]->closetime_in_min) || ($saturday[1]->opentime_in_min <= $i && $i < $saturday[1]->closetime_in_min))
-                                        <!--
-                                        <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $saturdaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                        class="available">
+                            
+                                        <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
+                                            @csrf
 
-                                            <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
-                                                @csrf
-
-                                                <input name="id" type="number" value="{{ $id }}" hidden>
-                                                
-                                                <input name="name" type="text" value="{{ $name }}" hidden>
-                                                
-                                                <input name="day" type="date" value="{{ $saturdaydate->format('Y-m-d') }}" hidden>
-                                                
-                                                <input name="time" type="number" value="{{ $i }}" hidden>
-                                                
-                                                <button type="submit">Boek een afspraak</button>
-                                            </form>
+                                            <input name="id" type="number" value="{{ $id }}" hidden>
+                                            
+                                            <input name="name" type="text" value="{{ $name }}" hidden>
+                                            
+                                            <input name="day" type="date" value="{{ $saturdaydate->format('Y-m-d') }}" hidden>
+                                            
+                                            <input name="time" type="number" value="{{ $i }}" hidden>
+                                            
+                                            <button type="submit">Boek een afspraak</button>
+                                        </form>
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @endif
+                            
+                            @elseif(($saturdaydate->isToday() && $today->lte($rowtime)) || $saturdaydate->isPast())
+                                class="past">
+                            @elseif(in_array($i, $saturdayhours))
+                                class="occupied"><p>bezet</p>
                             @else
-                                o
+                                class="past">
                             @endif
                         </td>
 
-                        <td>
+                        <td
                             @if((($sundaydate->isToday() && $today->lte($rowtime)) || $sundaydate->isFuture()) && !in_array($i, $sundayhours))
                                 @if(count($sunday) == 1)
                                     @if(!$sunday[0]->closed)
                                         @if($sunday[0]->opentime_in_min <= $i && $i < $sunday[0]->closetime_in_min)
-                                            <!--
-                                            <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $sundaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
-
+                                            class="available">
+                               
                                             <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
                                                 @csrf
 
@@ -425,36 +429,39 @@
                                                 <button type="submit">Boek een afspraak</button>
                                             </form>
                                         @else
-                                            o
+                                            ><p>gesloten</p>
                                         @endif
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @else
                                     @if(($sunday[0]->opentime_in_min <= $i && $i < $sunday[0]->closetime_in_min) || ($sunday[1]->opentime_in_min <= $i && $i < $sunday[1]->closetime_in_min))
-                                        <!--
-                                        <a href="{{ route('appointmentform', ['name' => $name, 'id' => $id, 'date' => $sundaydate->format('Y-m-d'), 'time' => $i]) }}">Boek een afspraak</a>
-                                            -->
+                                        class="available">
+                            
+                                        <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
+                                            @csrf
 
-                                            <form method="POST" action="{{ route('appointmentform', ['name' => $name, 'id' => $id]) }}">
-                                                @csrf
-
-                                                <input name="id" type="number" value="{{ $id }}" hidden>
-                                                
-                                                <input name="name" type="text" value="{{ $name }}" hidden>
-                                                
-                                                <input name="day" type="date" value="{{ $sundaydate->format('Y-m-d') }}" hidden>
-                                                
-                                                <input name="time" type="number" value="{{ $i }}" hidden>
-                                                
-                                                <button type="submit">Boek een afspraak</button>
-                                            </form>
+                                            <input name="id" type="number" value="{{ $id }}" hidden>
+                                            
+                                            <input name="name" type="text" value="{{ $name }}" hidden>
+                                            
+                                            <input name="day" type="date" value="{{ $sundaydate->format('Y-m-d') }}" hidden>
+                                            
+                                            <input name="time" type="number" value="{{ $i }}" hidden>
+                                            
+                                            <button type="submit">Boek een afspraak</button>
+                                        </form>
                                     @else
-                                        o
+                                        ><p>gesloten</p>
                                     @endif
                                 @endif
+                            
+                            @elseif(($sundaydate->isToday() && $today->lte($rowtime)) || $sundaydate->isPast())
+                                class="past">
+                            @elseif(in_array($i, $sundayhours))
+                                class="occupied"><p>bezet</p>
                             @else
-                                o
+                                class="past">
                             @endif
                         </td>
 
@@ -462,9 +469,6 @@
                     </tr>
                     
                 @endfor
-                <tr>
-                    <td></td>
-                </tr>
             </tbody>
 
         </table>

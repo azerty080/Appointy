@@ -4,7 +4,7 @@ html, body {
 
     font-family: "Roboto", "Arial", sans-serif;
 	
-	height: 100%;
+	min-height: 100%;
 	font-size: 18px;
 }
 
@@ -45,7 +45,18 @@ h1, h2, h3 {
 
 h1 {
 	margin: 0 0 50px 0;
+	font-size: 46px;
 }
+
+h2 {
+	font-size: 36px;
+}
+
+
+h3 {
+	font-size: 24px;
+}
+
 
 h2, h3 {
 	margin: 0;
@@ -74,6 +85,23 @@ body {
 	padding: 0;
 }
 
+
+
+.mainWrapper {
+	min-height: 100vh;
+}
+
+main {
+	
+	min-height: 80%;
+}
+
+.content {
+	min-height: 90%;
+}
+
+	
+
 .mainWrapper {
 	display: flex;
 	flex-direction: column;
@@ -86,7 +114,30 @@ body {
 	height: 90px;
 	min-height: 90px;
 	background-color: #212226;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
+
+.message, .error {
+	margin: 0 20px 0 0;
+	padding: 0px 20px;
+	color: #fff;
+	border-radius: 0;
+}
+
+
+.message {
+	background-color: transparent; /* EDIT */
+	border-bottom: 5px solid #2ecc48;
+}
+
+
+.error {
+	background-color: transparent; /* EDIT */
+	border-bottom: 5px solid #CC0000;
+}
+
 
 .logo {
 	/*width: 220px;*/
@@ -95,15 +146,16 @@ body {
 }
 
 nav {
+	min-height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin: 0;
 	flex: 0 0 320px;
-	height: 100%;
 	background-color: #212226;
 	padding: 0;
 }
+
 
 
 
@@ -230,6 +282,7 @@ button:hover {
 
 .searchForm input {
 	margin: 0;
+	width: 100%;
 	height: 100%;
 	border: none;
 	background-color: transparent;
@@ -283,6 +336,7 @@ input:focus {
 
 
 .searchForm .profession {
+	border-radius: 0;
 	border-right: 2px solid #fff;
 }
 
@@ -369,10 +423,15 @@ input:-webkit-autofill {
 	margin: 0 0 50px 0;
 }
 
+.titleDiv form {
+	width: 50%;
+}
 
 .titleInfo {
 	display: flex;
 	flex-direction: column;
+	width: auto;
+	justify-content: space-between
 }
 
 
@@ -389,7 +448,8 @@ input:-webkit-autofill {
 
 .mainBusinessInfo {
 	display: flex;
-	flex-direction: row;	
+	flex-direction: row;
+	justify-content: space-between;	
 	margin: 0 0 20px 0;
 }
 
@@ -526,7 +586,6 @@ input, textarea {
 	display: flex;
 	flex-direction: row;
 	margin: 0px 40px 0px 0px;
-	width: 85px;
 }
 
 .radioInput label {
@@ -561,6 +620,15 @@ input[type="radio"]:checked + label {
 .emailInputs, .passwordInputs {
 	margin: 20px 0 0 0 !important;
 }
+
+
+
+
+/*
+#che.checkboxDiv {
+	height: 50px;
+}
+*/
 
 
 /*
@@ -619,6 +687,9 @@ input[type="radio"]:checked + label {
 }
 
 
+.textAreaInput {
+	width: 54%;
+}
 
 
 
@@ -640,13 +711,162 @@ input[type="radio"]:checked + label {
 }
 
 .checkboxDiv input {
+	position: absolute;
 	width: auto;
+	opacity: 0;
+	cursor: pointer;
+	width: 0;
+	height: 0;
 }
+
+.checkboxDiv {
+	margin: 20px 0 40px 0;
+	position: relative;
+}
+
+.checkboxDiv label h2 {
+	margin: 0 0 0 40px;
+}
+
+.checkboxDiv h2:hover, .checkboxDiv label:hover {
+	cursor: pointer;
+}
+
+
+
+.checkboxDiv label {
+	margin: 0 0 0 0;
+}
+
+.checkmark {
+	position: absolute;
+	top: 2px;
+	height: 25px;
+	width: 25px;
+	background-color: transparent;
+	border: 2px solid #fff;
+	border-radius: 5px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkboxDiv:hover input ~ .checkmark {
+	background-color: #fff;
+	cursor: pointer;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkboxDiv input:checked ~ .checkmark {
+	background-color: #fff;
+}
+
+
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+/* Show the checkmark when checked */
+.checkboxDiv input:checked ~ .checkmark:after {
+	display: block;
+}
+
+/* Style the checkmark/indicator */
+.allow_guests .checkmark:after {
+	left: 7px;
+	top: 1px;
+	width: 8px;
+	height: 15px;
+	border: solid #18191D;
+	border-width: 0 4px 4px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+
+
+.appointmentduration {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 0 0 50px 0;
+}
+
+.appointmentduration h2 {
+	margin: 0 20px 0 0;
+}
+
+
+.appointmentduration select {
+	padding: 5px;
+	border-radius: 5px;
+}
+
+
+
+.radioGroup h2 {
+	margin: 0 20px 0 0;
+}
+
+.openingHours .radioGroup .radioInput {
+	width: 100%;
+}
+
+
+
+.isClosedDay {
+	margin: 0 0 20px 0;
+}
+
+
+.isClosedDay .checkmark {
+	position: absolute;
+	top: 2px;
+	left: 80px;
+	height: 20px;
+	width: 20px;
+	background-color: transparent;
+	border: 2px solid #fff;
+	border-radius: 5px;
+	margin-right: 50px;
+}
+
+
+
+.isClosedDay h3 {
+	width: 7%;
+}
+
+
+.isClosedDay label {
+	margin: 0 0 0 40px;
+}
+
+/* Style the checkmark/indicator */
+.isClosedDay .checkmark:after {
+	left: 6px;
+	top: 2px;
+	width: 5px;
+	height: 10px;
+	border: solid #18191D;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+
+
+
+
 
 .hoursDiv {
 	display: flex;
 	flex-direction: row;
-	margin: 10px 20px 0px 20px;
+	margin: 0px 20px 0px 20px;
 }
 
 .hoursDiv div {
@@ -665,6 +885,130 @@ input[type="radio"]:checked + label {
 
 
 
+/* CALENDAR */
+.calendarWeek {
+	text-align: center;
+}
+
+
+.calendarWeek a:hover {
+	color: #fff;
+}
+
+.calendar {
+	width: 100%;
+}
+
+.calendar p {
+	margin: 0;
+}
+
+
+.calendar .hour {
+	width: 70px;
+}
+
+.calendar, .calendar th, .calendar td {
+	border-collapse: collapse;
+	border-right: 2px solid #fff;
+	/*border: 2px solid #fff;*/
+}
+
+
+.calendar th {
+	border-bottom: 2px solid #fff;
+}
+
+.calendar td {
+	width: 150px;
+	height: 50px;
+	padding: 0;
+	text-align: center;
+	border-bottom: 1px solid #fff;
+	background-color: transparent;
+}
+
+
+.calendar td button {
+	border-radius: 0;
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+
+	background:none;
+	color:inherit;
+	border:none; 
+	padding:0!important;
+	font: inherit;
+	cursor: pointer;
+}
+
+
+
+.calendar .available {
+	background-color: #2ecc48;
+}
+
+.calendar .available:hover {
+	background-color: #26ab3c;
+}
+
+
+
+
+.calendar .past {
+	background-color: #CC0000;
+}
+
+.calendar .occupied {
+	background-color: #F0953A;
+}
+
+
+
+
+
+
+/* CREATE APPOINTMENT FORM */
+
+
+
+
+.formCheckBox {
+	margin: 0 0 20px 40px;
+}
+
+
+.formCheckBox .checkmark {
+	position: absolute;
+	top: -2px;
+	left: -40px;
+	height: 20px;
+	width: 20px;
+	background-color: transparent;
+	border: 2px solid #fff;
+	border-radius: 5px;
+	margin-right: 50px;
+}
+
+
+.formCheckBox label {
+	margin: 0;
+}
+
+/* Style the checkmark/indicator */
+.formCheckBox .checkmark:after {
+	left: 6px;
+	top: 2px;
+	width: 5px;
+	height: 10px;
+	border: solid #18191D;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
 
 
 
@@ -672,12 +1016,11 @@ input[type="radio"]:checked + label {
 
 
 
-
+#fadeout {
+	opacity: 1;
+	transition: 1s opacity;
+}
 
 .hide {
     display: none;
-}
-
-.selected {
-	background-color: green;
 }

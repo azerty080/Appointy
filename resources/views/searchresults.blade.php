@@ -8,6 +8,10 @@
 
     <div class="contentDiv">
         <div class="searchResults">
+            @if(count($businesses) == 0)
+                <p>Geen zaken gevonden</p>
+            @endif
+
             @foreach($businesses as $business)
 
                 <a class="searchedBusiness" href="{{ route('businessdetail', ['name' => $business->name, 'id' => $business->id]) }}">

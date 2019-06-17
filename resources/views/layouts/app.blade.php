@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>@yield('title')</title>
+        <link rel="icon" href="{{ asset('img/icon.ico') }}"/>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -17,7 +18,7 @@
         
 
         <nav>
- 
+
 <!--
             <a href="/" class="{{ (Route::currentRouteName() == 'index') ? 'currentlink' : '' }}">Home</a>
 -->
@@ -32,6 +33,7 @@
 
             <a href="/" class="stealthlink logolink"><img class="logo" src="{{ asset('img/logo_white.svg') }}" alt="Logo"></a>
 
+            <a href="{{ route('index') }}" class="{{ (Route::currentRouteName() == 'index') ? 'currentlink' : '' }}">Home</a>
 
             @if(session()->has('logged_in'))
             
@@ -39,6 +41,7 @@
 <!--
                 <p>{{ (session()->get('account_type') == 'klant') ? (session()->get('account_data')->firstname . ' ' . session()->get('account_data')->lastname) : session()->get('account_data')->name }}</p>
                 -->
+                
                 <a href="{{ route('appointments') }}" class="{{ (Route::currentRouteName() == 'appointments') ? 'currentlink' : '' }}">Afspraken</a>
                 
                 @if(session()->get('account_type') == 'klant')
@@ -51,17 +54,18 @@
                 <a href="{{ route('login') }}" class="{{ (Route::currentRouteName() == 'login') ? 'currentlink' : '' }}">Inloggen</a>
                 <a href="{{ route('register') }}" class="{{ (Route::currentRouteName() == 'register') ? 'currentlink' : '' }}">Registreren</a>
             @endif
-
         </nav>
 
         <div class="mainWrapper">
             <div class="topbar">
-                <div class="message">
-                    @if(session()->has('message'))
-                        <div class="">
-                            <p>{{ session()->get('message') }}</p>
-                        </div>
-                    @endif
+                <div id="fadeout">
+                @if(session()->has('message'))
+                    <div class="message"><p>{{ session()->get('message') }}</p></div>
+                @endif
+
+                @if(count($errors) > 0)
+                    <div class="error"><p>{{ $errors->first() }}</p></div>
+                @endif
                 </div>
             </div>
 
@@ -72,14 +76,16 @@
                 </div>
             </main>
         </div>
-        
-
-
-
-
-
-        <div class="footer"></div>
-
         @yield('script')
+
+        <script>
+            window.onload = function() {
+                window.setTimeout(fadeout, 8000); //8 seconds
+            }
+
+            function fadeout() {
+                document.getElementById('fadeout').style.opacity = '0';
+            }
+        </script>
     </body>
 </html>
