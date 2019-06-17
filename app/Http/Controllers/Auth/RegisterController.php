@@ -459,6 +459,6 @@ class RegisterController extends Controller
             }
         }
         
-        return redirect('/');
+        return redirect('/')->with('message', 'Account succesvol aangemaakt');
     }
 }

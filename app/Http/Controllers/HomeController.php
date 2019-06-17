@@ -17,12 +17,15 @@ use App\Http\Requests\SearchRequest;
 use Carbon\Carbon;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
+
+
 class HomeController extends Controller
 {
     public function index()
     {
-        Mail::to('niels.van.nimmen@gmail.com')->send(new TestMail());
-        $bookmarks = [];
+        // Mail::to('appointy@niels.vannimmen.mtantwerp.eu')->send(new TestMail());
+
+        
 
         if (session()->get('account_type') == 'klant') {
             $client_id = session()->get('account_data')->id;
@@ -42,13 +45,19 @@ class HomeController extends Controller
         $township = $request->township;
 
         if ($name && $profession && $township) {
-            $businesses = Business::with('user')->where('name', 'LIKE', '%'.$name.'%')->where('profession', 'LIKE', '%'.$profession.'%')->where('township', 'LIKE', '%'.$township.'%')->get();
+            $businesses = Business::with(['user' => function($q) use ($township) {
+                $q->where('township', $township);
+            }])->where('name', 'LIKE', '%'.$name.'%')->where('profession', 'LIKE', '%'.$profession.'%')->get();
         } elseif ($name && $township) {
-            $businesses = Business::with('user')->where('name', 'LIKE', '%'.$name.'%')->where('township', 'LIKE', '%'.$township.'%')->get();
+            $businesses = Business::with(['user' => function($q) use ($township) {
+                $q->where('township', $township);
+            }])->where('name', 'LIKE', '%'.$name.'%')->get();
         } elseif ($profession && $township) {
-            $businesses = Business::with('user')->where('profession', 'LIKE', '%'.$profession.'%')->where('township', 'LIKE', '%'.$township.'%')->get();
+            $businesses = Business::with(['user' => function($q) use ($township) {
+                $q->where('township', $township);
+            }])->where('profession', 'LIKE', '%'.$profession.'%')->get();
         } elseif ($name && $profession) {
-            $businesses = Business::with('user')->where('name', 'LIKE', '%'.$name.'%')->where('township', 'LIKE', '%'.$township.'%')->get();
+            $businesses = Business::with('user')->where('name', 'LIKE', '%'.$name.'%')->where('profession', 'LIKE', '%'.$profession.'%')->get();
         } elseif ($name) {
             $businesses = Business::with('user')->where('name', 'LIKE', '%'.$name.'%')->get();
         } elseif ($profession) {

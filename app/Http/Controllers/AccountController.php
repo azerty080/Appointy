@@ -218,21 +218,7 @@ class AccountController extends Controller
             $id = session()->get('account_data')->id;
  
             if ($usertype == 'zaak') {
-                /*
-                $client = Client::where('user_id', $id)->first();
-
-                Client::where('id', $id)->update([
-                    'firstname' => $request->firstname,
-                    'lastname' => $request->lastname,
-                    'birthdate' => $request->birthdate,
-                ]);
-                
-
-                $business = Business::where('user_id', $id)->first();
-*/
-                //$businesshours = OpeningHour::where('business_id', $extradata->id)->get();
-
-                    
+              
                 // Monday
                 if ($request->is_monday_closed) {
 
@@ -272,13 +258,28 @@ class AccountController extends Controller
                             'closetime_in_min' => ((int)explode(':', $request->monday_close_morning)[0] * 60) + (int)explode(':', $request->monday_close_morning)[1],
                         ]);
                         
-                        OpeningHour::where('id', $request->monday_id_2)->update([
-                            'closed' => false,
-                            'opentime' => $request->monday_open_afternoon,
-                            'closetime' => $request->monday_close_afternoon,
-                            'opentime_in_min' => ((int)explode(':', $request->monday_open_afternoon)[0] * 60) + (int)explode(':', $request->monday_open_afternoon)[1],
-                            'closetime_in_min' => ((int)explode(':', $request->monday_close_afternoon)[0] * 60) + (int)explode(':', $request->monday_close_afternoon)[1],
-                        ]);
+                        if (isset($request->monday_id_2)) {
+                            OpeningHour::where('id', $request->monday_id_2)->update([
+                                'closed' => false,
+                                'opentime' => $request->monday_open_afternoon,
+                                'closetime' => $request->monday_close_afternoon,
+                                'opentime_in_min' => ((int)explode(':', $request->monday_open_afternoon)[0] * 60) + (int)explode(':', $request->monday_open_afternoon)[1],
+                                'closetime_in_min' => ((int)explode(':', $request->monday_close_afternoon)[0] * 60) + (int)explode(':', $request->monday_close_afternoon)[1],
+                            ]);
+                        } else {
+                            $openinghour = new OpeningHour;
+
+                            $openinghour->dayofweek = 'monday';
+        
+                            $openinghour->opentime = $request->monday_open_afternoon;
+                            $openinghour->closetime = $request->monday_close_afternoon;
+                            $openinghour->opentime_in_min = ((int)explode(':', $request->monday_open_afternoon)[0] * 60) + (int)explode(':', $request->monday_open_afternoon)[1];
+                            $openinghour->closetime_in_min = ((int)explode(':', $request->monday_close_afternoon)[0] * 60) + (int)explode(':', $request->monday_close_afternoon)[1];
+                            $openinghour->business_id = $id;
+        
+                            $openinghour->save();
+                        }
+                        
                     }
                 }
 
@@ -321,13 +322,27 @@ class AccountController extends Controller
                             'closetime_in_min' => ((int)explode(':', $request->tuesday_close_morning)[0] * 60) + (int)explode(':', $request->tuesday_close_morning)[1],
                         ]);
                         
-                        OpeningHour::where('id', $request->tuesday_id_2)->update([
-                            'closed' => false,
-                            'opentime' => $request->tuesday_open_afternoon,
-                            'closetime' => $request->tuesday_close_afternoon,
-                            'opentime_in_min' => ((int)explode(':', $request->tuesday_open_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_open_afternoon)[1],
-                            'closetime_in_min' => ((int)explode(':', $request->tuesday_close_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_close_afternoon)[1],
-                        ]);
+                        if (isset($request->tuesday_id_2)) {
+                            OpeningHour::where('id', $request->tuesday_id_2)->update([
+                                'closed' => false,
+                                'opentime' => $request->tuesday_open_afternoon,
+                                'closetime' => $request->tuesday_close_afternoon,
+                                'opentime_in_min' => ((int)explode(':', $request->tuesday_open_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_open_afternoon)[1],
+                                'closetime_in_min' => ((int)explode(':', $request->tuesday_close_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_close_afternoon)[1],
+                            ]);
+                        } else {
+                            $openinghour = new OpeningHour;
+
+                            $openinghour->dayofweek = 'tuesday';
+        
+                            $openinghour->opentime = $request->tuesday_open_afternoon;
+                            $openinghour->closetime = $request->tuesday_close_afternoon;
+                            $openinghour->opentime_in_min = ((int)explode(':', $request->tuesday_open_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_open_afternoon)[1];
+                            $openinghour->closetime_in_min = ((int)explode(':', $request->tuesday_close_afternoon)[0] * 60) + (int)explode(':', $request->tuesday_close_afternoon)[1];
+                            $openinghour->business_id = $id;
+        
+                            $openinghour->save();
+                        }
                     }
                 }
 
@@ -370,13 +385,27 @@ class AccountController extends Controller
                             'closetime_in_min' => ((int)explode(':', $request->wednesday_close_morning)[0] * 60) + (int)explode(':', $request->wednesday_close_morning)[1],
                         ]);
                         
-                        OpeningHour::where('id', $request->wednesday_id_2)->update([
-                            'closed' => false,
-                            'opentime' => $request->wednesday_open_afternoon,
-                            'closetime' => $request->wednesday_close_afternoon,
-                            'opentime_in_min' => ((int)explode(':', $request->wednesday_open_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_open_afternoon)[1],
-                            'closetime_in_min' => ((int)explode(':', $request->wednesday_close_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_close_afternoon)[1],
-                        ]);
+                        if (isset($request->wednesday_id_2)) {
+                            OpeningHour::where('id', $request->wednesday_id_2)->update([
+                                'closed' => false,
+                                'opentime' => $request->wednesday_open_afternoon,
+                                'closetime' => $request->wednesday_close_afternoon,
+                                'opentime_in_min' => ((int)explode(':', $request->wednesday_open_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_open_afternoon)[1],
+                                'closetime_in_min' => ((int)explode(':', $request->wednesday_close_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_close_afternoon)[1],
+                            ]);
+                        } else {
+                            $openinghour = new OpeningHour;
+
+                            $openinghour->dayofweek = 'wednesday';
+        
+                            $openinghour->opentime = $request->wednesday_open_afternoon;
+                            $openinghour->closetime = $request->wednesday_close_afternoon;
+                            $openinghour->opentime_in_min = ((int)explode(':', $request->wednesday_open_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_open_afternoon)[1];
+                            $openinghour->closetime_in_min = ((int)explode(':', $request->wednesday_close_afternoon)[0] * 60) + (int)explode(':', $request->wednesday_close_afternoon)[1];
+                            $openinghour->business_id = $id;
+        
+                            $openinghour->save();
+                        }
                     }
                 }
 
@@ -420,13 +449,27 @@ class AccountController extends Controller
                             'closetime_in_min' => ((int)explode(':', $request->thursday_close_morning)[0] * 60) + (int)explode(':', $request->thursday_close_morning)[1],
                         ]);
                         
-                        OpeningHour::where('id', $request->thursday_id_2)->update([
-                            'closed' => false,
-                            'opentime' => $request->thursday_open_afternoon,
-                            'closetime' => $request->thursday_close_afternoon,
-                            'opentime_in_min' => ((int)explode(':', $request->thursday_open_afternoon)[0] * 60) + (int)explode(':', $request->thursday_open_afternoon)[1],
-                            'closetime_in_min' => ((int)explode(':', $request->thursday_close_afternoon)[0] * 60) + (int)explode(':', $request->thursday_close_afternoon)[1],
-                        ]);
+                        if (isset($request->thursday_id_2)) {
+                            OpeningHour::where('id', $request->thursday_id_2)->update([
+                                'closed' => false,
+                                'opentime' => $request->thursday_open_afternoon,
+                                'closetime' => $request->thursday_close_afternoon,
+                                'opentime_in_min' => ((int)explode(':', $request->thursday_open_afternoon)[0] * 60) + (int)explode(':', $request->thursday_open_afternoon)[1],
+                                'closetime_in_min' => ((int)explode(':', $request->thursday_close_afternoon)[0] * 60) + (int)explode(':', $request->thursday_close_afternoon)[1],
+                            ]);
+                        } else {
+                            $openinghour = new OpeningHour;
+
+                            $openinghour->dayofweek = 'thursday';
+        
+                            $openinghour->opentime = $request->thursday_open_afternoon;
+                            $openinghour->closetime = $request->thursday_close_afternoon;
+                            $openinghour->opentime_in_min = ((int)explode(':', $request->thursday_open_afternoon)[0] * 60) + (int)explode(':', $request->thursday_open_afternoon)[1];
+                            $openinghour->closetime_in_min = ((int)explode(':', $request->thursday_close_afternoon)[0] * 60) + (int)explode(':', $request->thursday_close_afternoon)[1];
+                            $openinghour->business_id = $id;
+        
+                            $openinghour->save();
+                        }
                     }
                 }
 
@@ -469,13 +512,27 @@ class AccountController extends Controller
                             'closetime_in_min' => ((int)explode(':', $request->friday_close_morning)[0] * 60) + (int)explode(':', $request->friday_close_morning)[1],
                         ]);
                         
-                        OpeningHour::where('id', $request->friday_id_2)->update([
-                            'closed' => false,
-                            'opentime' => $request->friday_open_afternoon,
-                            'closetime' => $request->friday_close_afternoon,
-                            'opentime_in_min' => ((int)explode(':', $request->friday_open_afternoon)[0] * 60) + (int)explode(':', $request->friday_open_afternoon)[1],
-                            'closetime_in_min' => ((int)explode(':', $request->friday_close_afternoon)[0] * 60) + (int)explode(':', $request->friday_close_afternoon)[1],
-                        ]);
+                        if (isset($request->friday_id_2)) {
+                            OpeningHour::where('id', $request->friday_id_2)->update([
+                                'closed' => false,
+                                'opentime' => $request->friday_open_afternoon,
+                                'closetime' => $request->friday_close_afternoon,
+                                'opentime_in_min' => ((int)explode(':', $request->friday_open_afternoon)[0] * 60) + (int)explode(':', $request->friday_open_afternoon)[1],
+                                'closetime_in_min' => ((int)explode(':', $request->friday_close_afternoon)[0] * 60) + (int)explode(':', $request->friday_close_afternoon)[1],
+                            ]);
+                        } else {
+                            $openinghour = new OpeningHour;
+
+                            $openinghour->dayofweek = 'friday';
+        
+                            $openinghour->opentime = $request->friday_open_afternoon;
+                            $openinghour->closetime = $request->friday_close_afternoon;
+                            $openinghour->opentime_in_min = ((int)explode(':', $request->friday_open_afternoon)[0] * 60) + (int)explode(':', $request->friday_open_afternoon)[1];
+                            $openinghour->closetime_in_min = ((int)explode(':', $request->friday_close_afternoon)[0] * 60) + (int)explode(':', $request->friday_close_afternoon)[1];
+                            $openinghour->business_id = $id;
+        
+                            $openinghour->save();
+                        }
                     }
                 }
 
@@ -518,13 +575,27 @@ class AccountController extends Controller
                             'closetime_in_min' => ((int)explode(':', $request->saturday_close_morning)[0] * 60) + (int)explode(':', $request->saturday_close_morning)[1],
                         ]);
                         
-                        OpeningHour::where('id', $request->saturday_id_2)->update([
-                            'closed' => false,
-                            'opentime' => $request->saturday_open_afternoon,
-                            'closetime' => $request->saturday_close_afternoon,
-                            'opentime_in_min' => ((int)explode(':', $request->saturday_open_afternoon)[0] * 60) + (int)explode(':', $request->saturday_open_afternoon)[1],
-                            'closetime_in_min' => ((int)explode(':', $request->saturday_close_afternoon)[0] * 60) + (int)explode(':', $request->saturday_close_afternoon)[1],
-                        ]);
+                        if (isset($request->saturday_id_2)) {
+                            OpeningHour::where('id', $request->saturday_id_2)->update([
+                                'closed' => false,
+                                'opentime' => $request->saturday_open_afternoon,
+                                'closetime' => $request->saturday_close_afternoon,
+                                'opentime_in_min' => ((int)explode(':', $request->saturday_open_afternoon)[0] * 60) + (int)explode(':', $request->saturday_open_afternoon)[1],
+                                'closetime_in_min' => ((int)explode(':', $request->saturday_close_afternoon)[0] * 60) + (int)explode(':', $request->saturday_close_afternoon)[1],
+                            ]);
+                        } else {
+                            $openinghour = new OpeningHour;
+
+                            $openinghour->dayofweek = 'saturday';
+        
+                            $openinghour->opentime = $request->saturday_open_afternoon;
+                            $openinghour->closetime = $request->saturday_close_afternoon;
+                            $openinghour->opentime_in_min = ((int)explode(':', $request->saturday_open_afternoon)[0] * 60) + (int)explode(':', $request->saturday_open_afternoon)[1];
+                            $openinghour->closetime_in_min = ((int)explode(':', $request->saturday_close_afternoon)[0] * 60) + (int)explode(':', $request->saturday_close_afternoon)[1];
+                            $openinghour->business_id = $id;
+        
+                            $openinghour->save();
+                        }
                     }
                 }
 
@@ -567,13 +638,27 @@ class AccountController extends Controller
                             'closetime_in_min' => ((int)explode(':', $request->sunday_close_morning)[0] * 60) + (int)explode(':', $request->sunday_close_morning)[1],
                         ]);
                         
-                        OpeningHour::where('id', $request->sunday_id_2)->update([
-                            'closed' => false,
-                            'opentime' => $request->sunday_open_afternoon,
-                            'closetime' => $request->sunday_close_afternoon,
-                            'opentime_in_min' => ((int)explode(':', $request->sunday_open_afternoon)[0] * 60) + (int)explode(':', $request->sunday_open_afternoon)[1],
-                            'closetime_in_min' => ((int)explode(':', $request->sunday_close_afternoon)[0] * 60) + (int)explode(':', $request->sunday_close_afternoon)[1],
-                        ]);
+                        if (isset($request->sunday_id_2)) {
+                            OpeningHour::where('id', $request->sunday_id_2)->update([
+                                'closed' => false,
+                                'opentime' => $request->sunday_open_afternoon,
+                                'closetime' => $request->sunday_close_afternoon,
+                                'opentime_in_min' => ((int)explode(':', $request->sunday_open_afternoon)[0] * 60) + (int)explode(':', $request->sunday_open_afternoon)[1],
+                                'closetime_in_min' => ((int)explode(':', $request->sunday_close_afternoon)[0] * 60) + (int)explode(':', $request->sunday_close_afternoon)[1],
+                            ]);
+                        } else {
+                            $openinghour = new OpeningHour;
+
+                            $openinghour->dayofweek = 'sunday';
+        
+                            $openinghour->opentime = $request->sunday_open_afternoon;
+                            $openinghour->closetime = $request->sunday_close_afternoon;
+                            $openinghour->opentime_in_min = ((int)explode(':', $request->sunday_open_afternoon)[0] * 60) + (int)explode(':', $request->sunday_open_afternoon)[1];
+                            $openinghour->closetime_in_min = ((int)explode(':', $request->sunday_close_afternoon)[0] * 60) + (int)explode(':', $request->sunday_close_afternoon)[1];
+                            $openinghour->business_id = $id;
+        
+                            $openinghour->save();
+                        }
                     }
                 }
 
