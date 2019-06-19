@@ -152,13 +152,14 @@
                 
 
 
-                <div class="checkboxDiv">
-                    <input type="checkbox" name="allow_guests" value="true" id="allow_guests" @if($accountdata->allow_guests) checked @endif><label for="allow_guests">Klanten zonder account een afspraak laten maken</label>
+                <div class="checkboxDiv allow_guests">
+                    <input type="checkbox" name="allow_guests" value="true" id="allow_guests" @if($accountdata->allow_guests) checked @endif> <label for="allow_guests" class="checkmark"></label><label for="allow_guests"><h2>Klanten zonder account een afspraak laten maken</h2></label>
                 </div>
 
-                <h2>Lengte afspraak</h2>
-                <div class="soloInput">
-                    <select class="appointmentduration" name="appointmentduration">
+                <div class="appointmentduration">
+                    <h2>Lengte afspraak</h2>
+
+                    <select name="appointmentduration">
                         <option value="15" @if($accountdata->appointmentduration == 15) selected @endif>15 min</option>
                         <option value="30" @if($accountdata->appointmentduration == 30) selected @endif>30 min</option>
                         <option value="60" @if($accountdata->appointmentduration == 60) selected @endif>1 uur</option>

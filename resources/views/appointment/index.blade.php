@@ -9,66 +9,188 @@
     
     <div class="contentDiv">
         @if(session()->get('account_type') == 'klant')
-            <h2>Afspraken als klant</h2>
+            <h2 class="botmargin">Afspraken als klant</h2>
+
+            @php
+                $clientTodayCounter = 0;
+                $clientTomorrowCounter = 0;
+                $clientLaterCounter = 0;
+                $clientAppointmentCounter = 0;
+            @endphp
 
             @foreach($appointments as $appointment)
+                @if(!Carbon\Carbon::parse($appointment->date)->isPast())
+                    @if($clientTodayCounter == 0)
+                        <h3 class="leftmargin">Vandaag</h3>
+                        @php $clientTodayCounter++ @endphp
+                    @elseif($clientTomorrowCounter == 0)
+                        <h3 class="topmargin leftmargin">Morgen</h3>
+                        @php $clientTomorrowCounter++ @endphp
+                    @elseif($clientLaterCounter == 0)
+                        <h3 class="topmargin leftmargin">Later</h3>
+                        @php $clientLaterCounter++ @endphp
+                    @endif
 
-                <p>{{ $appointment }}</p>
+                    <div class="singleAppointment">
+                        <p>Afspraak op {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
 
-                
-                <p>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }}</p>
-                <p>{{ $appointment->time }}</p>
-
-                <p>{{ $appointment->business->name }}</p>
-                <p>{{ $appointment->business->profession }}</p>
-
-                <form method="POST" action="{{ route('removeappointment') }}">
-                    @csrf
-
-                    <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+                        <p>Bij {{ $appointment->business->name }} op {{ $appointment->business->user->address }} te {{ $appointment->business->user->township }}</p>
+                        
+                        <div class="appointmentLinks">
+                            <a class="linkBtn" href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">Bekijk zaak</a>
                     
-                    <button type="submit">Afspraak annuleren</button>
-                </form>
+                            <h4 onclick="showForm({{ $appointment->id }})" id="deleteAppointment{{ $appointment->id }}" class="deleteAppointment">Afspraak annuleren</h4>
 
+                            <form id="form{{ $appointment->id }}" class="hide" method="POST" action="{{ route('removeappointment') }}">
+                                @csrf
+                                
+                                <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                                <button type="submit">Afspraak annuleren</button>
+                                <a class="linkBtn noBtn" onclick="clickedNo({{ $appointment->id }})">Niet anulleren</a>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    @php $clientAppointmentCounter++ @endphp
+                @endif
             @endforeach
+
+            @if($clientAppointmentCounter == 0)
+                <p>U hebt geen afspraken meer</p>
+            @endif
+
+
 
         @elseif(session()->get('account_type') == 'zaak')
-            <h2>Afspraken als zaak</h2>
+            <h2 class="botmargin">Afspraken als zaak</h2>
+
+            @php
+                $businessTodayCounter = 0;
+                $businessTomorrowCounter = 0;
+                $businessLaterCounter = 0;
+                $businessAppointmentCounter = 0
+            @endphp
+
 
             @foreach($appointments as $appointment)
 
-                <p>Datum: {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }}</p>
-                <p>Tijdstip: {{ $appointment->time }}</p>
+                @if(!Carbon\Carbon::parse($appointment->date)->isPast())
+                    @if($businessTodayCounter == 0)
+                        <h3 class="leftmargin">Vandaag</h3>
+                        @php $businessTodayCounter++ @endphp
+                    @elseif($businessTomorrowCounter == 0)
+                        <h3 class="topmargin leftmargin">Morgen</h3>
+                        @php $businessTomorrowCounter++ @endphp
+                    @elseif($businessLaterCounter == 0)
+                        <h3 class="topmargin leftmargin">Later</h3>
+                        @php $businessLaterCounter++ @endphp
+                    @endif
 
-                <p>Reden voor afspraak: {{ $appointment->details }}</p>                
 
-                @if($appointment->client_id == null)
-                    <p>Naam: {{ $appointment->firstname }} {{ $appointment->lastname }}</p>
-                    <p>Geboortedatum: {{ Carbon\Carbon::parse($appointment->birthdate)->format('d/m/Y') }}</p>
-                    
-                    <p>Email: {{ $appointment->email }}</p>
-                    <p>Telefoonnummer: {{ $appointment->phonenumber }}</p>
-                    
-                    <p>Gemeente: {{ $appointment->township }}</p>
-                    <p>Adres: {{ $appointment->address }}</p>
-                @else
-                    <p>Naam: {{ $appointment->client->firstname }} {{ $appointment->client->lastname }}</p>
-                    <p>Geboortedatum: {{ Carbon\Carbon::parse($appointment->client->birthdate)->format('d/m/Y') }}</p>
-                    
-                    <p>Email: {{ $appointment->client->user->email }}</p>
-                    <p>Telefoonnummer: {{ $appointment->client->user->phonenumber }}</p>
+                    @if($appointment->client_id == null)
+                        <div class="singleAppointment">
+                            <p>Afspraak op {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
 
-                    <p>Gemeente: {{ $appointment->client->user->township }}</p>
-                    <p>Adres: {{ $appointment->client->user->address }}</p>
+                            <p>Met {{ $appointment->firstname }} {{ $appointment->lastname }}</p>
+                            <p>Reden: {{ $appointment->details }}</p>
+
+                            <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">Meer details</h4>
+
+                            <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
+                                <p>Geboortedatum: {{ Carbon\Carbon::parse($appointment->birthdate)->format('d/m/Y') }}</p>
+                                <p>Email: {{ $appointment->email }}</p>
+                                <p>Telefoonnummer: {{ $appointment->phonenumber }}</p>
+
+                                <p>Gemeente: {{ $appointment->township }}</p>
+                                <p>Adres: {{ $appointment->address }}</p>   
+                            </div>
+                            
+                            <h4 onclick="showForm({{ $appointment->id }})" id="deleteAppointment{{ $appointment->id }}" class="deleteAppointment">Afspraak annuleren</h4>
+
+                            <form id="form{{ $appointment->id }}" class="hide" method="POST" action="{{ route('removeappointment') }}">
+                                @csrf
+                                
+                                <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+                                
+                                <button type="submit">Afspraak annuleren</button>
+                                <a class="linkBtn noBtn" onclick="clickedNo({{ $appointment->id }})">Niet anulleren</a>
+                            </form>
+                        </div>
+                    @else
+                        <div class="singleAppointment">
+                            <p>Afspraak op {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+
+                            <p>Met {{ $appointment->client->firstname }} {{ $appointment->client->lastname }}</p>
+                            <p>Reden: {{ $appointment->details }}</p>
+
+                            <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">Meer details</h4>
+
+                            <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
+                                <p>Geboortedatum: {{ Carbon\Carbon::parse($appointment->client->birthdate)->format('d/m/Y') }}</p>
+                                
+                                <p>Email: {{ $appointment->client->user->email }}</p>
+                                <p>Telefoonnummer: {{ $appointment->client->user->phonenumber }}</p>
+
+                                <p>Gemeente: {{ $appointment->client->user->township }}</p>
+                                <p>Adres: {{ $appointment->client->user->address }}</p>  
+                            </div>
+                            
+                            <h4 onclick="showForm({{ $appointment->id }})" id="deleteAppointment{{ $appointment->id }}" class="deleteAppointment">Afspraak annuleren</h4>
+
+                            <form id="form{{ $appointment->id }}" class="hide" method="POST" action="{{ route('removeappointment') }}">
+                                @csrf
+                                
+                                <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+                                
+                                <button type="submit">Annuleer afspraak</button>
+                                <a class="linkBtn noBtn" onclick="clickedNo({{ $appointment->id }})">Niet anulleren</a>
+                            </form>
+                        </div>
+                    @endif
+
+                    @php $businessAppointmentCounter++ @endphp
                 @endif
 
-
-
             @endforeach
+            
+            @if($businessAppointmentCounter == 0)
+                <p>U hebt geen afspraken meer</p>
+            @endif
 
         @else
             <p>Je moet ingelogd zijn om je afspraken te bekijken</p>
         @endif
     </div>    
 
+@stop
+
+
+
+
+
+@section('script')
+    
+    <script>
+        
+        function openDetails(id) {
+            var div = document.getElementById("appointment" + id);
+
+            div.classList.toggle('hide');
+        }
+
+
+        function showForm(id) {
+            var div = document.getElementById("form" + id);
+
+            div.classList.toggle('hide');
+        }
+        
+        function clickedNo(id) {
+            var div = document.getElementById("form" + id);
+
+            div.classList.toggle('hide');
+        }
+    </script>
+    
 @stop

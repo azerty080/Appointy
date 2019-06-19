@@ -47,9 +47,9 @@
 
 
                         <div class="dayDiv" id="monday">
-                            <div class="checkboxDiv">
+                            <div class="checkboxDiv isClosedDay">
                                 <h3>Maandag</h3>
-                                <input type="checkbox" name="is_monday_closed" value="is_monday_closed" id="is_monday_closed" onclick="clickIsClosed('monday')" @if($mondayhours[0]->closed) checked @endif> <label for="is_monday_closed">Vrije dag</label>
+                                <input type="checkbox" name="is_monday_closed" value="is_monday_closed" id="is_monday_closed" onclick="clickIsClosed('monday')" @if($mondayhours[0]->closed) checked @endif> <label for="is_sunday_closed" class="checkmark"></label><label for="is_monday_closed">Vrije dag</label>
                             </div>
 
                             <div class="hoursDiv">
@@ -90,9 +90,9 @@
 
 
                         <div class="dayDiv" id="tuesday">
-                            <div class="checkboxDiv">
+                            <div class="checkboxDiv isClosedDay">
                                 <h3>Dinsdag</h3>
-                                <input type="checkbox" name="is_tuesday_closed" value="is_tuesday_closed" id="is_tuesday_closed" onclick="clickIsClosed('tuesday')" @if($tuesdayhours[0]->closed) checked @endif> <label for="is_tuesday_closed">Vrije dag</label>
+                                <input type="checkbox" name="is_tuesday_closed" value="is_tuesday_closed" id="is_tuesday_closed" onclick="clickIsClosed('tuesday')" @if($tuesdayhours[0]->closed) checked @endif> <label for="is_sunday_closed" class="checkmark"></label><label for="is_tuesday_closed">Vrije dag</label>
                             </div>
 
                             <div class="hoursDiv">
@@ -130,9 +130,9 @@
 
 
                         <div class="dayDiv" id="wednesday">
-                            <div class="checkboxDiv">
+                            <div class="checkboxDiv isClosedDay">
                                 <h3>Woensdag</h3>
-                                <input type="checkbox" name="is_wednesday_closed" value="is_wednesday_closed" id="is_wednesday_closed" onclick="clickIsClosed('wednesday')" @if($wednesdayhours[0]->closed) checked @endif> <label for="is_wednesday_closed">Vrije dag</label>
+                                <input type="checkbox" name="is_wednesday_closed" value="is_wednesday_closed" id="is_wednesday_closed" onclick="clickIsClosed('wednesday')" @if($wednesdayhours[0]->closed) checked @endif> <label for="is_sunday_closed" class="checkmark"></label><label for="is_wednesday_closed">Vrije dag</label>
                             </div>
 
                             <div class="hoursDiv">
@@ -170,9 +170,9 @@
 
 
                         <div class="dayDiv" id="thursday">
-                            <div class="checkboxDiv">
+                            <div class="checkboxDiv isClosedDay">
                                 <h3>Donderdag</h3>
-                                <input type="checkbox" name="is_thursday_closed" value="is_thursday_closed" id="is_thursday_closed" onclick="clickIsClosed('thursday')" @if($thursdayhours[0]->closed) checked @endif> <label for="is_thursday_closed">Vrije dag</label>
+                                <input type="checkbox" name="is_thursday_closed" value="is_thursday_closed" id="is_thursday_closed" onclick="clickIsClosed('thursday')" @if($thursdayhours[0]->closed) checked @endif> <label for="is_sunday_closed" class="checkmark"></label><label for="is_thursday_closed">Vrije dag</label>
                             </div>
 
                             <div class="hoursDiv">
@@ -210,9 +210,9 @@
 
 
                         <div class="dayDiv" id="friday">
-                            <div class="checkboxDiv">
+                            <div class="checkboxDiv isClosedDay">
                                 <h3>Vrijdag</h3>
-                                <input type="checkbox" name="is_friday_closed" value="is_friday_closed" id="is_friday_closed" onclick="clickIsClosed('friday')" @if($fridayhours[0]->closed) checked @endif> <label for="is_friday_closed">Vrije dag</label>
+                                <input type="checkbox" name="is_friday_closed" value="is_friday_closed" id="is_friday_closed" onclick="clickIsClosed('friday')" @if($fridayhours[0]->closed) checked @endif> <label for="is_sunday_closed" class="checkmark"></label><label for="is_friday_closed">Vrije dag</label>
                             </div>
 
                             <div class="hoursDiv">
@@ -251,9 +251,9 @@
 
 
                         <div class="dayDiv" id="saturday">
-                            <div class="checkboxDiv">
+                            <div class="checkboxDiv isClosedDay">
                                 <h3>Zaterdag</h3>
-                                <input type="checkbox" name="is_saturday_closed" value="is_saturday_closed" id="is_saturday_closed" onclick="clickIsClosed('saturday')" @if($saturdayhours[0]->closed) checked @endif> <label for="is_saturday_closed">Vrije dag</label>
+                                <input type="checkbox" name="is_saturday_closed" value="is_saturday_closed" id="is_saturday_closed" onclick="clickIsClosed('saturday')" @if($saturdayhours[0]->closed) checked @endif> <label for="is_sunday_closed" class="checkmark"></label><label for="is_saturday_closed">Vrije dag</label>
                             </div>
 
                             <div class="hoursDiv">
@@ -292,9 +292,9 @@
 
 
                         <div class="dayDiv" id="sunday">
-                            <div class="checkboxDiv">
+                            <div class="checkboxDiv isClosedDay">
                                 <h3>Zondag</h3>
-                                <input type="checkbox" name="is_sunday_closed" value="is_sunday_closed" id="is_sunday_closed" onclick="clickIsClosed('sunday')" @if($sundayhours[0]->closed) checked @endif> <label for="is_sunday_closed">Vrije dag</label>
+                                <input type="checkbox" name="is_sunday_closed" value="is_sunday_closed" id="is_sunday_closed" onclick="clickIsClosed('sunday')" @if($sundayhours[0]->closed) checked @endif> <label for="is_sunday_closed" class="checkmark"></label><label for="is_sunday_closed">Vrije dag</label>
                             </div>
 
                             <div class="hoursDiv">

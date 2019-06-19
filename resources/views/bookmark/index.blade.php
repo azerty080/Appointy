@@ -10,15 +10,18 @@
     <div class="contentDiv">
         @foreach($bookmarks as $bookmark)
 
-            <div>
-                <a href="{{ route('businessdetail', ['name' => $bookmark->business->name, 'id' => $bookmark->business_id]) }}">
-                    <p>Naam: {{ $bookmark->business->name }}</p>
-                    <p>Beroep: {{ $bookmark->business->profession }}</p>
-                    
-                    <p>Gemeente: {{ $bookmark->business->user->township }}</p>
-                    <p>Adres: {{ $bookmark->business->user->address }}</p>
-                </a>
-            </div>
+            <a class="searchedBusiness" href="{{ route('businessdetail', ['name' => $bookmark->business->name, 'id' => $bookmark->business_id]) }}">
+                
+                <div class="mainInfo">
+                    <h2 class="name">{{ $bookmark->business->name }}</h2>
+                    <p class="profession">{{ $bookmark->business->profession }}</p>
+                </div>
+                
+                <div class="locationInfo">
+                    <p class="township">{{ $bookmark->business->user->township }}</p>
+                    <p class="address">{{ $bookmark->business->user->address }}</p>
+                </div>
+            </a>
 
         @endforeach
     </div>
