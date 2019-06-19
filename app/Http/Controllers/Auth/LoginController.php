@@ -15,8 +15,10 @@ class LoginController extends Controller
     public function logout()
     {
         if (session('logged_in')) {
-            session()->forget(['logged_in', 'account_type', 'user_id', 'user_name']);
-    
+            session()->forget('logged_in');
+            session()->forget('account_type');
+            session()->forget('account_data');
+
             return redirect('/')->with('message', 'Je bent uitgelogd');
         } else {
             return redirect('/')->with('message', 'Je moet eerst ingelogd zijn voordat je kan uitloggen');

@@ -18,22 +18,35 @@ use Carbon\Carbon;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // Mail::to('appointy@niels.vannimmen.mtantwerp.eu')->send(new TestMail());
-
+        
+        try {
+            // Mail::to('appointy@niels.vannimmen.mtantwerp.eu')->send(new TestMail());
+            // Mail::to(env('ADMIN_EMAIL'))->send(new BuddySubmission($buddy->name, $buddy->id));
+        }
+        catch(\Exception $e) {
+            Log::error($e);
+        }
         
 
         if (session()->get('account_type') == 'klant') {
             $client_id = session()->get('account_data')->id;
 
-            $bookmarks = Bookmark::with('business.user')->where('client_id', $client_id)->take(10)->get();
+            $bookmarks = Bookmark::with('business.user')->where('client_id', $client_id)->take(4)->get();
+        } elseif (session()->get('account_type') == 'zaak') {
+            $business_id = session()->get('account_data')->id;
+
+            $today = Carbon::now()->format('Y-m-d');
+            
+            $appointments = Appointment::with('client.user')->where('business_id', $business_id)->where('date', $today)->orderBy('time_in_min', 'asc')->get();
         }
 
-        return view('index', compact('bookmarks'));
+        return view('index', compact('bookmarks', 'appointments'));
     }
 
 

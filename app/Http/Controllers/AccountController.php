@@ -11,6 +11,8 @@ use App\OpeningHour;
 
 use App\Http\Requests\UpdateAccountRequest;
 use App\Http\Requests\UpdateOpeningHoursRequest;
+use App\Bookmark;
+use App\Appointment;
 
 class AccountController extends Controller
 {
@@ -682,29 +684,49 @@ class AccountController extends Controller
         if (session()->get('logged_in')) {
 
             $usertype = session()->get('account_type');
-            $id = session()->get('account_data')->id;
+            $account_id = session()->get('account_data')->id;
+            $user_id = session()->get('account_data')->user->id;
 
-            $userdata = User::where('id', $id)->first();
-            
-            if ($usertype == 'klant') {
+            if ($account_id == $request->account_id && $user_id == $request->user_id) {
+                if ($usertype == 'klant') {
                 
-                $extradata = Client::where('user_id', $id)->first();
+                    Client::where('id', $account_id)->delete();
+    
+                    User::where('id', $user_id)->delete();
+    
+                    Bookmark::where('id', $account_id)->delete();
 
-                
-                return view('account.index', compact('userdata', 'extradata'));
+                    Appointment::where('id', $account_id)->delete();
+    
+                    session()->forget('logged_in');
+                    session()->forget('account_type');
+                    session()->forget('account_data');
+                    
+                    return redirect('/')->with('message', 'Account verwijderd');
+    
+                } elseif ($usertype == 'zaak') {
+                    
+                    Business::where('id', $account_id)->delete();
+    
+                    User::where('id', $user_id)->delete();
+                    
+                    Bookmark::where('id', $account_id)->delete();
+    
+                    Appointment::where('id', $account_id)->delete();
+    
+                    Openinghour::where('id', $account_id)->delete();
+                   
+                    session()->forget('logged_in');
+                    session()->forget('account_type');
+                    session()->forget('account_data');
 
-            } elseif ($usertype == 'zaak') {
-                
-                $extradata = Business::where('user_id', $id)->first();
-
-                //$businesshours = OpeningHour::where('business_id', $extradata->id)->get();
-                
-               
-                return view('account.index');
-
-            } else {
-                return redirect('/')->with('message', 'Er ging iets fout');
+                    return redirect('/')->with('message', 'Account verwijderd');
+    
+                } else {
+                    return redirect('/')->with('message', 'Er ging iets fout');
+                }
             }
+            
         } else {
             
             return redirect('/')->with('message', 'Je bent niet ingelogd');
