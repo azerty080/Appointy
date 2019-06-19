@@ -33,10 +33,10 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'Geef je email',
+            'email.required' => 'Je hebt je email niet ingevuld',
             'email.email' => 'Geen geldig email adres',
             'email.exists:users,email' => 'Er is geen account voor dit email',
-            'password.required' => 'Geef je wachtwoord',
+            'password.required' => 'Je hebt je wachtwoord niet ingevuld',
         ];
     }
 }

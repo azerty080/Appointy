@@ -26,7 +26,16 @@ class SearchRequest extends FormRequest
         return [
             'name' => 'required_without:profession',
             'profession' => 'required_without:name',
-            'township' => '',
+        ];
+    }
+
+    
+    
+    public function messages()
+    {
+        return [
+            'name.required_without:profession' => 'Je moet een naam of beroep ingeven',
+            'profession.required_without:name' => 'Je moet een naam of beroep ingeven',
         ];
     }
 }
