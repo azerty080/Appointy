@@ -16,9 +16,13 @@ class EarlierAppointmentMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($clientName, $businessName, $appointmentDate, $appointmentTime, $businessId)
     {
-        //
+        $this->clientName = $clientName;
+        $this->businessName = $businessName;
+        $this->appointmentDate = $appointmentDate;
+        $this->appointmentTime = $appointmentTime;
+        $this->businessId = $businessId;
     }
 
     /**
@@ -28,6 +32,12 @@ class EarlierAppointmentMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.earlierappointment');
+        return $this->from('appointy@niels.vannimmen.mtantwerp.eu')->view('email.earlierappointment')->with([
+            'clientName' => $this->clientName,
+            'businessName' => $this->businessName,
+            'appointmentDate' => $this->appointmentDate,
+            'appointmentTime' => $this->appointmentTime,
+            'businessId' => $this->businessId,
+        ]);;
     }
 }
