@@ -218,6 +218,7 @@ main {
 
 /* ALL BUTTONS */
 button {
+	font-family: "Roboto-regular", sans-serif;
 	border: 2px solid #fff;
 	border-radius: 50px;
 	background-color: transparent;
@@ -236,6 +237,7 @@ button:hover {
 
 
 .linkBtn {
+	font-size: 20px;
 	color: #fff;
 	background-color: #212226;
 	text-align: center;
@@ -1008,6 +1010,128 @@ input[type="radio"]:checked + label {
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
+}
+
+
+
+
+
+
+
+/* Account details */
+.accountInfo {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.accountInfo .details h2 {
+	margin: 0 0 20px 0;
+}
+
+.accountInfo .details .infoGroup {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	margin: 0 0 40px 40px;
+}
+
+.accountInfo .details .infoGroup p {
+	margin: 0 0 0 20px;
+}
+
+.accountInfo .openingHours {
+	width: 40%;
+}
+
+.accountInfo .openingHours h2 {
+	margin: 0 0 20px 0;
+}
+
+.accountInfo .openingHours table {
+	margin: 0 0 60px 0;
+}
+
+
+.deleteClient, .deleteBusiness {
+	margin: 40px 0 20px 20px;
+}
+
+.deleteClient:hover, .deleteBusiness:hover {
+	cursor: pointer;
+}
+
+
+
+
+/* Home Favorites */
+.botmargin {
+	margin: 0 0 20px 0;
+}
+
+
+
+
+/* Afspraken */
+.singleAppointment {
+	width: 35%;
+	margin: 20px 0 0 20px;
+	padding: 10px 20px 20px 20px;
+	border: 2px solid #fff;
+	border-radius: 20px;
+}
+
+.appointmentLinks {
+	display: flex;
+	flex-direction: column;
+	margin: 20px 0 0 0;
+}
+
+.appointmentLinks a {
+	height: auto;
+	width: 40%;
+}
+
+
+.leftmargin {
+	margin-left: 20px;
+}
+
+
+.topmargin {
+	margin-top: 40px;
+}
+
+.showMoreDetails {
+	width: 100px;
+	margin-bottom: 20px;
+}
+
+
+.extraClientInfo {
+	margin: 0 0 20px 20px;
+}
+
+
+.deleteAppointment {
+	width: 180px;
+	margin-bottom: 10px;
+}
+
+.showMoreDetails:hover, .deleteAppointment:hover, .noBtn:hover {
+	cursor: pointer;
+}
+
+.noBtn {
+	margin-left: 20px;
+}
+
+
+
+.appointmentOverview {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 
