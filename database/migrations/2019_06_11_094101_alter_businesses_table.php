@@ -15,6 +15,8 @@ class AlterBusinessesTable extends Migration
     {
         Schema::table('businesses', function (Blueprint $table) {
             $table->boolean('allow_guests');
+            
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +29,8 @@ class AlterBusinessesTable extends Migration
     {
         Schema::table('businesses', function (Blueprint $table) {
             $table->dropColumn('allow_guests');
+            
+            $table->dropColumn('deleted_at');
         });
     }
 }
