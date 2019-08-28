@@ -48,8 +48,8 @@ Route::post('/removeappointment', 'AppointmentController@removeappointment')->na
 Route::get('/favorieten', 'BookmarkController@bookmarks')->name('bookmarks');
 
 
-Route::post('/zaak/{name}-{id}/addbookmark', 'BookmarkController@addbookmark')->name('addbookmark');
-Route::post('/zaak/{name}-{id}/removebookmark', 'BookmarkController@removebookmark')->name('removebookmark');
+Route::post('/zaak/{name}{id}/addbookmark', 'BookmarkController@addbookmark')->name('addbookmark');
+Route::post('/zaak/{name}{id}/removebookmark', 'BookmarkController@removebookmark')->name('removebookmark');
 
 
 // Account
@@ -71,23 +71,23 @@ Route::get('/searchresults', 'HomeController@searchresults')->name('searchresult
 
 
 
-Route::get('/zaak/{name}-{id}', 'HomeController@businessdetail')->name('businessdetail');
+Route::get('/zaak/{name}{id}', 'HomeController@businessdetail')->name('businessdetail');
 
 
 
 // -------
-Route::get('/zaak/{name}-{id}/addbookmark', 'HomeController@addbookmark')->name('addbookmark');
+Route::get('/zaak/{name}{id}/addbookmark', 'HomeController@addbookmark')->name('addbookmark');
 // -------
 
 
-Route::get('/zaak/{name}-{id}/kalender/{addedweeks}', 'HomeController@businesscalendar')->name('businesscalendar');
+Route::get('/zaak/{name}{id}/kalender/{addedweeks}', 'HomeController@businesscalendar')->name('businesscalendar');
 
 
 
 
-//Route::get('/zaak/{name}-{id}/{day}/{time}', 'AppointmentController@appointmentform')->name('appointmentform');
-Route::post('/zaak/{name}-{id}/afspraak-maken', 'AppointmentController@appointmentform')->name('appointmentform');
-Route::get('/zaak/{name}-{id}/afspraak-maken', 'AppointmentController@appointmentform')->name('appointmentform');
+//Route::get('/zaak/{name}{id}/{day}/{time}', 'AppointmentController@appointmentform')->name('appointmentform');
+Route::post('/zaak/{name}{id}/afspraak-maken', 'AppointmentController@appointmentform')->name('appointmentform');
+Route::get('/zaak/{name}{id}/afspraak-maken', 'AppointmentController@appointmentform')->name('appointmentform');
 
 
 
@@ -108,8 +108,23 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 
 Route::get('/register', 'Auth\RegisterController@register')->name('register');
+
+Route::get('/register/klant', 'Auth\RegisterController@registerclient')->name('register-client');
+Route::post('/register/klant', 'Auth\RegisterController@registerclientsubmit')->name('register-client-submit');
+
+Route::get('/register/zaak', 'Auth\RegisterController@registerbusiness')->name('register-business');
+Route::post('/register/zaak', 'Auth\RegisterController@registerbusinesssubmit')->name('register-business-submit');
+
+
 Route::post('/register', 'Auth\RegisterController@registersubmit')->name('registersubmit');
 
+
+
+
+
+Route::get('/autocompletename', 'HomeController@autocompletename')->name('autocompletename');
+Route::get('/autocompleteprofession', 'HomeController@autocompleteprofession')->name('autocompleteprofession');
+Route::get('/autocompletetownship', 'HomeController@autocompletetownship')->name('autocompletetownship');
 
 
 //Auth::routes();
