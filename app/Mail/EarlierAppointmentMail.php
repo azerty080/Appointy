@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+
 class EarlierAppointmentMail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -16,13 +17,12 @@ class EarlierAppointmentMail extends Mailable
      *
      * @return void
      */
-    public function __construct($clientName, $businessName, $appointmentDate, $appointmentTime, $businessId)
+    public function __construct($businessName, $appointmentDate, $appointmentTime, $businessUrl)
     {
-        $this->clientName = $clientName;
         $this->businessName = $businessName;
         $this->appointmentDate = $appointmentDate;
         $this->appointmentTime = $appointmentTime;
-        $this->businessId = $businessId;
+        $this->businessUrl = $businessUrl;
     }
 
     /**
@@ -32,12 +32,14 @@ class EarlierAppointmentMail extends Mailable
      */
     public function build()
     {
-        return $this->from('appointy@niels.vannimmen.mtantwerp.eu')->view('email.earlierappointment')->with([
-            'clientName' => $this->clientName,
+
+        return $this->from('appointy@niels.vannimmen.mtantwerp.eu')->view('email.earlierappointment')
+        ->with([
             'businessName' => $this->businessName,
             'appointmentDate' => $this->appointmentDate,
             'appointmentTime' => $this->appointmentTime,
-            'businessId' => $this->businessId,
-        ]);;
+            'businessUrl' => $this->businessUrl,
+        ])
+        ->subject('Afspraak vrijgekomen');
     }
 }
