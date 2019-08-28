@@ -34,8 +34,8 @@ class LoginRequest extends FormRequest
     {
         return [
             'email.required' => 'Je hebt je email niet ingevuld',
-            'email.email' => 'Geen geldig email adres',
-            'email.exists:users,email' => 'Er is geen account voor dit email',
+            'email.email' => 'Ongeldig email adres',
+            'email.exists' => 'Ongeldig email adres',
             'password.required' => 'Je hebt je wachtwoord niet ingevuld',
         ];
     }
