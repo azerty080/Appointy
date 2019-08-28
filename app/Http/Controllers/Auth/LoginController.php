@@ -21,7 +21,7 @@ class LoginController extends Controller
 
             return redirect('/')->with('message', 'Je bent uitgelogd');
         } else {
-            return redirect('/')->with('message', 'Je moet eerst ingelogd zijn voordat je kan uitloggen');
+            return redirect('/')->with('error', 'Je moet eerst ingelogd zijn voordat je kan uitloggen');
         }
     }
 
@@ -30,7 +30,7 @@ class LoginController extends Controller
     public function login()
     {
         if (session('logged_in')) {
-            return redirect('/')->with('message', 'Je bent al ingelogd');
+            return redirect('/')->with('error', 'Je bent al ingelogd');
         } else {
             return view('auth.login');
         }
@@ -69,7 +69,7 @@ class LoginController extends Controller
         }
         else {
             
-            return redirect()->back()->with('message', 'Inloggen mislukt, probeer nog eens');
+            return redirect()->back()->with('error', 'Inloggen mislukt, probeer nog eens');
         }
     }
 

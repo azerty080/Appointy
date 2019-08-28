@@ -11,8 +11,9 @@ use App\User;
 use App\Business;
 use App\OpeningHour;
 use App\Appointment;
-
+use App\Client;
 use App\Http\Requests\CreateAppointmentRequest;
+use App\Mail\AppointmentMail;
 use App\Mail\EarlierAppointmentMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -49,16 +50,19 @@ class AppointmentController extends Controller
 
             $userAppointments = Appointment::with('client.user')->where('id', '!=', $appointment_id)->where('business_id', $appointment->business_id)->where('notify_if_earlier_appointment', true)->get();
             
+            $businessName = $business->name;
+            $appointmentDate = Carbon::parse($appointment->date)->format('d-m-Y');
+            $appointmentTime = $appointment->time;
+
+            $businessId = $appointment->business_id;
+            $businessUrl = rawurlencode($businessName) . '-' . $businessId;
+            
             foreach ($userAppointments as $userAppointment) {
                 $email = $userAppointment->client->user->email;
                 $clientName = $userAppointment->client->user->firstname . $userAppointment->client->user->lastname;
-                $businessName = $business->name;
-                $appointmentDate = Carbon::parse($appointment->date)->format('d-m-Y');
-                $appointmentTime = $appointment->time;
-                $businessId = $appointment->business_id;
                 
                 try {
-                    Mail::to($email)->send(new EarlierAppointmentMail($clientName, $businessName, $appointmentDate, $appointmentTime, $businessId));
+                    //Mail::to($email)->send(new EarlierAppointmentMail($businessName, $appointmentDate, $appointmentTime, $businessUrl));
                 }
                 catch(\Exception $e) {
                     Log::error($e);
@@ -108,11 +112,11 @@ class AppointmentController extends Controller
                 $appointment->phonenumber = $request->phonenumber;
                 $appointment->email = $request->email;
 
-                //$mailEmail = $request->email;
+                $mailEmail = $request->email;
             } else {
                 $appointment->client_id = $request->session()->get('account_data')->id;
 
-                //$mailEmail = $request->session()->get('account_data')->user->email;
+                $mailEmail = $request->session()->get('account_data')->user->email;
             }
 
             
@@ -125,27 +129,33 @@ class AppointmentController extends Controller
 
             
 
-            
-            if ($request->sendreminder) {
-                $appointment->sendreminder = true;
-            } else {
-                $appointment->sendreminder = false;
-            }
-
 
             if ($request->notify) {
                 $appointment->notify_if_earlier_appointment = true;
             } else {
                 $appointment->notify_if_earlier_appointment = false;
             }
-            /*
+
+
+            $business = Business::with('user')->findOrFail($request->business_id);
+
+            $businessName = $business->name;
+            $date = date('d-m-Y', strtotime($request->time));
+            $time = $request->time;
+
+            $address = $business->user->address . ', ' . $business->user->township;
+            $startdate = $request->date . ' ' . $request->time;
+            $enddate = $request->date . ' ' .  date('h:i', strtotime('+' . $business->appointmentduration . ' minutes', strtotime($request->time)));
+            $description = 'Afspraak bij ' . $business->name . ' (' . $address . ') op ' . $request->date . ' om ' . $date . 'u tot ' . date('h:i', strtotime('+' . $business->appointmentduration . ' minutes', strtotime($request->time))) . 'u';
+            $summary = 'Afspraak ' . $business->name;
+            
             try {
-                Mail::to($mailEmail)->send(new EarlierAppointmentMail($clientName, $businessName, $appointmentDate, $appointmentTime, $businessId));
+                Mail::to('niels.vannimmen@student.kdg.be')->send(new AppointmentMail($address, $startdate, $enddate, $description, $summary, $businessName, $date, $time));
             }
             catch(\Exception $e) {
                 Log::error($e);
             }
-*/
+
             $appointment->save();
 
 

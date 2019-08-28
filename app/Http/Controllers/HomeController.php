@@ -51,11 +51,47 @@ class HomeController extends Controller
 
 
 
+    public function autocompletename(Request $request)
+    {
+        $search = $request->get('term');
+    
+        $result = Business::where('name', 'LIKE', '%'. $search. '%')->get();
+
+        return response()->json($result);
+    }
+
+    public function autocompleteprofession(Request $request)
+    {
+        $search = $request->get('term');
+    
+        $result = Business::where('profession', 'LIKE', '%'. $search. '%')->get()->unique('profession');
+
+        return response()->json($result);
+    }
+
+    public function autocompletetownship(Request $request)
+    {
+        $search = $request->get('term');
+    /*
+        $result = Business::whereHas('users', function ($query) use ($search) {
+            $query->where('township', 'LIKE', '%'. $search. '%');
+        })->get();*/
+
+        $result = User::whereHas('business')->where('township', 'LIKE', '%'. $search. '%')->get()->unique('township');
+
+
+        return response()->json($result);
+    }
+
+
+
+
+
     public function searchresults(SearchRequest $request)
     {
-        $name = $request->name;
-        $profession = $request->profession;
-        $township = $request->township;
+        $name = strtolower($request->name);
+        $profession = strtolower($request->profession);
+        $township = strtolower($request->township);
 
         if ($name && $profession && $township) {
             $businesses = Business::with(['user' => function($q) use ($township) {
@@ -110,6 +146,7 @@ class HomeController extends Controller
                 $isbookmarked = true;
             }
         }
+
         
 
         return view('businessdetail', compact(
