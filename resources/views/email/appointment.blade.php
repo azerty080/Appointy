@@ -481,7 +481,7 @@ body{background-color:#2c1a7e}.logo a:hover,.logo a:focus{color:#fff !important}
         <div class="header" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);" id="emb-email-header-container">
         <!--[if (mso)|(IE)]><table align="center" class="header" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width: 600px"><![endif]-->
           <div class="logo emb-logo-margin-box" style="font-size: 26px;line-height: 32px;Margin-top: 20px;Margin-bottom: 20px;color: #c3ced9;font-family: Roboto,Tahoma,sans-serif;Margin-left: 20px;Margin-right: 20px;" align="center">
-            <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 300px;" src="https://i1.createsend1.com/ei/t/21/202/CD3/085923/csfinal/logo_white.png" alt="" width="300"></div>
+            <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 300px;" src="https://i1.createsend1.com/ei/t/21/202/CD3/060102/csfinal/logo_white.png" alt="" width="300"></div>
           </div>
         <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
         </div>
@@ -499,13 +499,13 @@ body{background-color:#2c1a7e}.logo a:hover,.logo a:focus{color:#fff !important}
             
               <div style="Margin-left: 20px;Margin-right: 20px;">
       <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
-        <h1 style="Margin-top: 0;Margin-bottom: 20px;font-style: normal;font-weight: normal;color: #fff;font-size: 32px;line-height: 40px;font-family: Open Sans,sans-serif;text-align: center;"><strong>Afspraak vrijgekomen</strong></h1>
+        <h1 style="Margin-top: 0;Margin-bottom: 20px;font-style: normal;font-weight: normal;color: #fff;font-size: 32px;line-height: 40px;font-family: Open Sans,sans-serif;text-align: center;"><strong>Afspraak aangemaakt</strong></h1>
       </div>
     </div>
             
               <div style="Margin-left: 20px;Margin-right: 20px;">
       <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
-        <p class="size-14" style="Margin-top: 0;Margin-bottom: 0;font-size: 14px;line-height: 21px;text-align: center;" lang="x-size-14">Er is een vroegere afspraak vrijgekomen bij {{ $businessName }}</p><p class="size-14" style="Margin-top: 20px;Margin-bottom: 20px;font-size: 14px;line-height: 21px;text-align: center;" lang="x-size-14">Deze afspraak is op {{ $appointmentDate }} om {{ $appointmentTime }}u</p>
+        <p class="size-14" style="Margin-top: 0;Margin-bottom: 20px;font-size: 14px;line-height: 21px;text-align: center;" lang="x-size-14">Uw afspraak is succesvol aangemaakt. Bekijk hieronder de details van uw afspraak.</p>
       </div>
     </div>
             
@@ -530,20 +530,14 @@ body{background-color:#2c1a7e}.logo a:hover,.logo a:focus{color:#fff !important}
         
             <div style="Margin-left: 20px;Margin-right: 20px;">
       <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
-        <p style="Margin-top: 0;Margin-bottom: 20px;text-align: center;">Past deze afspraak voor u? Dan kan u een nieuwe afspraak aanmaken via onderstaande knop:</p>
+        <p style="Margin-top: 0;Margin-bottom: 20px;text-align: center;">U kan uw afspraak beheren voor deze doorgaat via onderstaande knop:</p>
       </div>
     </div>
         
             <div style="Margin-left: 20px;Margin-right: 20px;">
       <div class="btn btn--flat btn--large" style="Margin-bottom: 20px;text-align: center;">
-        <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #00c9db;font-family: Open Sans, sans-serif;" href="https://appointy.niels.vannimmen.mtantwerp.eu/{{ $businessUrl }}/kalender/0">AFSPRAAK AANMAKEN</a><![endif]>
-      <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="https://appointy.niels.vannimmen.mtantwerp.eu/{{ $businessUrl }}/kalender/0" style="width:205px" arcsize="9%" fillcolor="#00C9DB" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,11px,0px,11px"><center style="font-size:14px;line-height:24px;color:#FFFFFF;font-family:Open Sans,sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">AFSPRAAK AANMAKEN</center></v:textbox></v:roundrect><![endif]--></div>
-    </div>
-        
-            <div style="Margin-left: 20px;Margin-right: 20px;">
-      <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
-        <p style="Margin-top: 0;Margin-bottom: 0;text-align: center;">Vergeet niet om uw oude afspraak te&nbsp;annuleren als u een nieuwe aanmaakt.</p><p style="Margin-top: 20px;Margin-bottom: 20px;text-align: center;">Het is mogelijk dat deze afspraak niet meer beschikbaar is, dit komt doordat iemand anders u voor was.</p>
-      </div>
+        <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #00c9db;font-family: Open Sans, sans-serif;" href="https://appointy.niels.vannimmen.mtantwerp.eu/afspraken">BEHEER UW AFSPRAAK</a><![endif]>
+      <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="https://appointy.niels.vannimmen.mtantwerp.eu/afspraken" style="width:215px" arcsize="9%" fillcolor="#00C9DB" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,11px,0px,11px"><center style="font-size:14px;line-height:24px;color:#FFFFFF;font-family:Open Sans,sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">BEHEER UW AFSPRAAK</center></v:textbox></v:roundrect><![endif]--></div>
     </div>
         
             <div style="Margin-left: 20px;Margin-right: 20px;">
@@ -555,6 +549,35 @@ body{background-color:#2c1a7e}.logo a:hover,.logo a:focus{color:#fff !important}
         </div>
       </div>
   
+      <div class="layout one-col fixed-width" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;">
+        <div class="layout__inner" style="border-collapse: collapse;display: table;width: 100%;background-color: #2c1a7e;">
+        <!--[if (mso)|(IE)]><table align="center" cellpadding="0" cellspacing="0" role="presentation"><tr class="layout-fixed-width" style="background-color: #2c1a7e;"><td style="width: 600px" class="w560"><![endif]-->
+          <div class="column" style="text-align: left;color: #fff;font-size: 14px;line-height: 21px;font-family: Roboto,Tahoma,sans-serif;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);">
+        
+            <div style="Margin-left: 20px;Margin-right: 20px;">
+      <div style="mso-line-height-rule: exactly;line-height: 10px;font-size: 1px;">&nbsp;</div>
+    </div>
+        
+            <div style="Margin-left: 20px;Margin-right: 20px;">
+      <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
+        <h2 style="Margin-top: 0;Margin-bottom: 16px;font-style: normal;font-weight: normal;color: #fff;font-size: 26px;line-height: 34px;font-family: Open Sans,sans-serif;">Afspraak</h2>
+      </div>
+    </div>
+        
+            <div style="Margin-left: 20px;Margin-right: 20px;">
+      <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
+        <p style="Margin-top: 0;Margin-bottom: 0;">Datum: {{ $date }}</p><p style="Margin-top: 20px;Margin-bottom: 0;">Tijdstip: {{ $time }}u</p><p style="Margin-top: 20px;Margin-bottom: 0;">Bij: {{ $businessName }}</p><p style="Margin-top: 20px;Margin-bottom: 20px;">Adres: {{ $address }}</p>
+      </div>
+    </div>
+        
+            <div style="Margin-left: 20px;Margin-right: 20px;">
+      <div style="mso-line-height-rule: exactly;line-height: 20px;font-size: 1px;">&nbsp;</div>
+    </div>
+        
+          </div>
+        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+        </div>
+      </div>
     </div></td></tr></tbody></table>
   
 <script type="text/javascript" src="https://js.createsend1.com/js/compiled/app/global/polyfill/polyfill.min.js?h=0B93C80B2019062720190801"></script>

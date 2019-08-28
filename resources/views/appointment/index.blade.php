@@ -9,47 +9,102 @@
     
     <div class="contentDiv">
         @if(session()->get('account_type') == 'klant')
-            <h2 class="botmargin">Afspraken als klant</h2>
 
-            @php
-                $clientTodayCounter = 0;
-                $clientTomorrowCounter = 0;
-                $clientLaterCounter = 0;
-                $clientAppointmentCounter = 0;
-            @endphp
+            @php $clientAppointmentCounter = 0; @endphp
+
+            
+            <h2 class="leftmargin">Vandaag</h2>
+            @foreach($appointments as $appointment)
+                @if(!Carbon\Carbon::parse($appointment->date)->isPast())
+                    
+                    
+                    <div class="singleAppointment">
+                        <p>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+
+                        <p>Bij {{ $appointment->business->name }} op {{ $appointment->business->user->address }} te {{ $appointment->business->user->township }}</p>
+                        <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a>
+                    
+                    
+                        <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                            @csrf
+                            
+                            <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                            <div class="form-group">
+                                <button type="submit" class="form-control-submit-button">ANNULEER</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    @php $clientAppointmentCounter++ @endphp
+                @endif
+            @endforeach
+
+
+            
+            <h2 class="topmargin leftmargin">Morgen</h2>
+            @foreach($appointments as $appointment)
+                @if(!Carbon\Carbon::parse($appointment->date)->isPast())
+                    
+                    
+                    <div class="singleAppointment">
+                        <p>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+
+                        <p>Bij {{ $appointment->business->name }} op {{ $appointment->business->user->address }} te {{ $appointment->business->user->township }}</p>
+                        <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a>
+                    
+                    
+                        <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                            @csrf
+                            
+                            <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                            <div class="form-group">
+                                <button type="submit" class="form-control-submit-button">ANNULEER</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    @php $clientAppointmentCounter++ @endphp
+                @endif
+            @endforeach
+
+
+            
+            <h2 class="topmargin leftmargin">Latere afspraken</h2>
+
+
+
 
             @foreach($appointments as $appointment)
                 @if(!Carbon\Carbon::parse($appointment->date)->isPast())
                     @if($clientTodayCounter == 0)
-                        <h3 class="leftmargin">Vandaag</h3>
+                        <h2 class="leftmargin">Vandaag</h2>
                         @php $clientTodayCounter++ @endphp
                     @elseif($clientTomorrowCounter == 0)
-                        <h3 class="topmargin leftmargin">Morgen</h3>
+                        <h2 class="topmargin leftmargin">Morgen</h2>
                         @php $clientTomorrowCounter++ @endphp
                     @elseif($clientLaterCounter == 0)
-                        <h3 class="topmargin leftmargin">Later</h3>
+                        <h2 class="topmargin leftmargin">Later</h2>
                         @php $clientLaterCounter++ @endphp
                     @endif
-
+                    
                     <div class="singleAppointment">
-                        <p>Afspraak op {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+                        <p>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
 
                         <p>Bij {{ $appointment->business->name }} op {{ $appointment->business->user->address }} te {{ $appointment->business->user->township }}</p>
-                        
-                        <div class="appointmentLinks">
-                            <a class="linkBtn" href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">Bekijk zaak</a>
+                        <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a>
                     
-                            <h4 onclick="showForm({{ $appointment->id }})" id="deleteAppointment{{ $appointment->id }}" class="deleteAppointment">Afspraak annuleren</h4>
+                    
+                        <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                            @csrf
+                            
+                            <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
 
-                            <form id="form{{ $appointment->id }}" class="hide" method="POST" action="{{ route('removeappointment') }}">
-                                @csrf
-                                
-                                <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
-
-                                <button type="submit">Afspraak annuleren</button>
-                                <a class="linkBtn noBtn" onclick="clickedNo({{ $appointment->id }})">Niet anulleren</a>
-                            </form>
-                        </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-control-submit-button">ANNULEER</button>
+                            </div>
+                        </form>
                     </div>
                     
                     @php $clientAppointmentCounter++ @endphp
@@ -77,13 +132,13 @@
 
                 @if(!Carbon\Carbon::parse($appointment->date)->isPast())
                     @if($businessTodayCounter == 0)
-                        <h3 class="leftmargin">Vandaag</h3>
+                        <h2 class="leftmargin">Vandaag</h2>
                         @php $businessTodayCounter++ @endphp
                     @elseif($businessTomorrowCounter == 0)
-                        <h3 class="topmargin leftmargin">Morgen</h3>
+                        <h2 class="topmargin leftmargin">Morgen</h2>
                         @php $businessTomorrowCounter++ @endphp
                     @elseif($businessLaterCounter == 0)
-                        <h3 class="topmargin leftmargin">Later</h3>
+                        <h2 class="topmargin leftmargin">Later</h2>
                         @php $businessLaterCounter++ @endphp
                     @endif
 
@@ -106,15 +161,15 @@
                                 <p>Adres: {{ $appointment->address }}</p>   
                             </div>
                             
-                            <h4 onclick="showForm({{ $appointment->id }})" id="deleteAppointment{{ $appointment->id }}" class="deleteAppointment">Afspraak annuleren</h4>
-
-                            <form id="form{{ $appointment->id }}" class="hide" method="POST" action="{{ route('removeappointment') }}">
+                            
+                            <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
                                 @csrf
                                 
                                 <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
-                                
-                                <button type="submit">Afspraak annuleren</button>
-                                <a class="linkBtn noBtn" onclick="clickedNo({{ $appointment->id }})">Niet anulleren</a>
+                                                   
+                                <div class="form-group">
+                                    <button type="submit" class="form-control-submit-button">ANNULEER</button>
+                                </div>
                             </form>
                         </div>
                     @else
@@ -136,15 +191,15 @@
                                 <p>Adres: {{ $appointment->client->user->address }}</p>  
                             </div>
                             
-                            <h4 onclick="showForm({{ $appointment->id }})" id="deleteAppointment{{ $appointment->id }}" class="deleteAppointment">Afspraak annuleren</h4>
-
-                            <form id="form{{ $appointment->id }}" class="hide" method="POST" action="{{ route('removeappointment') }}">
+                            
+                            <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
                                 @csrf
                                 
                                 <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
-                                
-                                <button type="submit">Annuleer afspraak</button>
-                                <a class="linkBtn noBtn" onclick="clickedNo({{ $appointment->id }})">Niet anulleren</a>
+                                                   
+                                <div class="form-group">
+                                    <button type="submit" class="form-control-submit-button">ANNULEER</button>
+                                </div>
                             </form>
                         </div>
                     @endif

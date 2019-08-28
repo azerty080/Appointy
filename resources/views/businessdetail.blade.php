@@ -18,7 +18,7 @@
 
                         <input name="business_id" type="number" value="{{ $business->id }}" hidden>
                         
-                        <button type="submit">Verwijder van favorieten</button>
+                        <button type="submit">VERWIJDER VAN FAVORIETEN</button>
                     </form>
                 @else
                     <form method="POST" action="{{ route('addbookmark', ['name' => $business->name, 'id' => $business->id]) }}">
@@ -26,7 +26,7 @@
 
                         <input name="business_id" type="number" value="{{ $business->id }}" hidden>
                         
-                        <button type="submit">Toevoegen aan favorieten</button>
+                        <button type="submit">TOEVOEGEN AAN FAVORIETEN</button>
                     </form>
                 @endif
             @else
@@ -143,10 +143,10 @@
             
             <div class="createAppointment">
                 @if($business->allow_guests)
-                    <a class="linkBtn" href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
+                    <a class="button-link" href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
                 @else
                     @if(session()->has('logged_in'))
-                        <a class="linkBtn" href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
+                        <a class="button-link" href="{{ route('businesscalendar', ['name' => $business->name, 'id' => $business->id, 'addedweek' => 0]) }}">Maak een afspraak</a>
                     @else
                         <button class="disabledBtn" disabled>Je moet ingelogd zijn om bij deze zaak een afspraak te maken</button>
                     @endif

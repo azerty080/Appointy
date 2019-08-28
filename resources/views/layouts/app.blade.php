@@ -8,74 +8,121 @@
         <link rel="icon" href="{{ asset('img/icon.ico') }}"/>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- JS -->
+        <script src="{{ asset('js/jquery-3.4.1.min.js')}}"></script>
+        <script src="{{ asset('js/jquery-ui.min.js')}}"></script>
 
         <!-- Styles -->
         <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/fontawesome-all.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     </head>
     <body>
         
 
-        <nav>
+    
 
-<!--
-            <a href="/" class="{{ (Route::currentRouteName() == 'index') ? 'currentlink' : '' }}">Home</a>
--->
-<!--
-            @guest
-                <a href="{{ route('login') }}">Login</a>
-                <a href="{{ route('register') }}">Register</a>
-            @else
-                <a href="{{ route('logout') }}">Logout</a>
-            @endguest
--->
+    <nav class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top">
 
-            <a href="/" class="stealthlink logolink"><img class="logo" src="{{ asset('img/logo_white.svg') }}" alt="Logo"></a>
+        <!-- Image Logo -->
 
-            <a href="{{ route('index') }}" class="{{ (Route::currentRouteName() == 'index') ? 'currentlink' : '' }}">Home</a>
+        <a class="navbar-brand logo-image" href="/"><img src="{{ asset('img/logo_white.svg') }}" alt="appointy logo"></a> 
 
-            @if(session()->has('logged_in'))
-            
-                <a class="stealthlink accountlink" href="{{ route('account') }}">{{ (session()->get('account_type') == 'klant') ? (session()->get('account_data')->firstname . ' ' . session()->get('account_data')->lastname) : session()->get('account_data')->name }}</a>
-<!--
-                <p>{{ (session()->get('account_type') == 'klant') ? (session()->get('account_data')->firstname . ' ' . session()->get('account_data')->lastname) : session()->get('account_data')->name }}</p>
-                -->
+        <!-- Mobile Menu Toggle Button -->
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-awesome fas fa-bars"></span>
+            <span class="navbar-toggler-awesome fas fa-times"></span>
+        </button>
+
+        <!-- end of mobile menu toggle button -->
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link page-scroll {{ (Route::currentRouteName() == 'index') ? 'currentlink' : '' }}" href="{{ route('index') }}">HOME</a>
+                </li>
+
                 
-                <a href="{{ route('appointments') }}" class="{{ (Route::currentRouteName() == 'appointments') ? 'currentlink' : '' }}">Afspraken</a>
-                
-                @if(session()->get('account_type') == 'klant')
-                    <a href="{{ route('bookmarks') }}" class="{{ (Route::currentRouteName() == 'bookmarks') ? 'currentlink' : '' }}">Favorieten</a>
-                @endif
 
-                <a href="{{ route('account') }}" class="{{ (Route::currentRouteName() == 'account') ? 'currentlink' : '' }}">Mijn account</a>
-                <a class="stealthlink logoutlink" href="{{ route('logout') }}" class="{{ (Route::currentRouteName() == 'logout') ? 'currentlink' : '' }}">Uitloggen</a>
-            @else
-                <a href="{{ route('login') }}" class="{{ (Route::currentRouteName() == 'login') ? 'currentlink' : '' }}">Inloggen</a>
-                <a href="{{ route('register') }}" class="{{ (Route::currentRouteName() == 'register') ? 'currentlink' : '' }}">Registreren</a>
-            @endif
-        </nav>
+                @if(session()->has('logged_in'))
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll {{ (Route::currentRouteName() == 'appointments') ? 'currentlink' : '' }}" href="{{ route('appointments') }}">AFSPRAKEN</a>
+                    </li>
 
-        <div class="mainWrapper">
-            <div class="topbar">
-                <div id="fadeout">
-                @if(session()->has('message'))
-                    <div class="message"><p>{{ session()->get('message') }}</p></div>
-                @endif
+                    @if(session()->get('account_type') == 'klant')
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll {{ (Route::currentRouteName() == 'bookmarks') ? 'currentlink' : '' }}" href="{{ route('bookmarks') }}">FAVORIETEN</a>
+                        </li>
+                    @endif
 
-                @if(count($errors) > 0)
-                    <div class="error"><p>{{ $errors->first() }}</p></div>
+                    <!-- Dropdown Menu -->
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle page-scroll {{ (Route::currentRouteName() == 'account') ? 'currentlink' : '' }}" href="{{ route('account') }}" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">ACCOUNT</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('account') }}"><span class="item-text">PROFIEL</span></a>
+                            <div class="dropdown-items-divide-hr"></div>
+                            <a class="dropdown-item" href="{{ route('logout') }}"><span class="item-text">UITLOGGEN</span></a>
+                        </div>
+                    </li>
+
+                    <!-- end of dropdown menu -->
+
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll {{ (Route::currentRouteName() == 'login') ? 'currentlink' : '' }}" href="{{ route('login') }}">INLOGGEN</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll {{ (strpos(Route::currentRouteName(), 'register') !== false) ? 'currentlink' : '' }}" href="{{ route('register') }}">REGISTREREN</a>
+                    </li>
                 @endif
+            </ul>
+        </div>
+    </nav>
+    
+
+
+      
+
+        <main>
+            <div id="fadeout">
+                <div class="messages">
+                    @if(session()->has('message'))
+                        <div class="message"><p>{{ session()->get('message') }}</p></div>
+                    @endif
+                    
+                    @if(session()->has('error'))
+                        <div class="error"><p>{{ session()->get('error') }}</p></div>
+                    @endif
+
+                    @if(count($errors) > 0)
+                        <div class="error"><p>{{ $errors->first() }}</p></div>
+                    @endif
                 </div>
             </div>
+            
+            <div class="container">
+                @yield('content')
+            </div>
+        </main>
 
-            <main>
-                <p class="miniTitle">@yield('title')</p>
-                <div class="content">
-                    @yield('content')
-                </div>
-            </main>
-        </div>
+        
+
+
+
+
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        <!-- <script src="{{ asset('js/script.js') }}"></script> -->
+        <script src="{{ asset('js/validator.min.js') }}"></script>
+
+
+
         @yield('script')
 
         <script>
@@ -86,6 +133,25 @@
             function fadeout() {
                 document.getElementById('fadeout').style.opacity = '0';
             }
+
+            $(window).on('scroll load', function() {
+		if ($(".navbar").offset().top > 20) {
+			$(".fixed-top").addClass("top-nav-collapse");
+		} else {
+			$(".fixed-top").removeClass("top-nav-collapse");
+		}
+    });
+/*
+            $(document).ready(function(){
+                $(window).scroll(function(){
+                    var scroll = $(window).scrollTop();
+                    if (scroll > 10) {
+                        $("nav").addClass("collapsed-nav");
+                    } else{
+                        $("nav").removeClass("collapsed-nav");  	
+                    }
+                })
+            })*/
         </script>
     </body>
 </html>

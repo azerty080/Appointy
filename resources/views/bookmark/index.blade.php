@@ -21,6 +21,12 @@
                     <p class="township">{{ $bookmark->business->user->township }}</p>
                     <p class="address">{{ $bookmark->business->user->address }}</p>
                 </div>
+
+                
+                <div class="mobileInfo">
+                    <h3 class="name">{{ $bookmark->business->name }}</h3>
+                    <p>{{ $bookmark->business->profession }} in {{ $bookmark->business->user->township }}</p>
+                </div>
             </a>
 
         @endforeach

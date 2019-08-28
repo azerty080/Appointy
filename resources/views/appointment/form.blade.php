@@ -25,56 +25,71 @@
 
 
     <div class="contentDiv">
-        <form method="POST" action="{{ route('createappointment') }}">
+        <form method="POST" action="{{ route('createappointment') }}" role="form" data-toggle="validator">
             @csrf
 
 
             @if(!session()->get('logged_in'))
-                <div class="inputGroup">
-                    <div class="soloInput">
-                        <label>Voornaam</label>
-                        <input name="firstname" type="text">
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input type="text" class="form-control-input" id="cfirstname" name="firstname" value="{{ old('firstname') }}" required>
+                        <label class="label-control" for="cfirstname">Voornaam</label>
+                        <div class="help-block with-errors"></div>
                     </div>
 
-                    <div class="soloInput">
-                        <label>Achternaam</label>
-                        <input name="lastname" type="text">
+                    <div class="form-group col-md-5">
+                        <input type="text" class="form-control-input" id="clastname" name="lastname" value="{{ old('lastname') }}" required>
+                        <label class="label-control" for="clastname">Achternaam</label>
+                        <div class="help-block with-errors"></div>
                     </div>
                         
-                    <div class="soloInput">
-                        <label>Geboortedatum</label>
-                        <input name="birthdate" type="date">
-                    </div>
-                </div>
-               
-                <div class="inputGroup">
-                    <div class="soloInput">
-                        <label>Gemeente</label>
-                        <input name="township" type="text">
-                    </div>
-
-                    <div class="soloInput">
-                        <label>Adres</label>
-                        <input name="address" type="text">
-                    </div>
-
-                    <div class="soloInput">
-                        <label>Telefoonnummer</label>
-                        <input name="phonenumber" type="text">
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control-input" id="cbirthdate" name="birthdate" value="{{ old('birthdate') }}" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" min="1900-01-01" max="2019-01-01" required>
+                        <label class="label-control" for="cbirthdate">Geboortedatum</label>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
 
+                
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input type="text" class="form-control-input" id="caddress" name="address" value="{{ old('address') }}" required>
+                        <label class="label-control" for="caddress">Adres</label>
+                        <div class="help-block with-errors"></div>
+                    </div>
 
-                <div class="soloInput">
-                    <label>Email</label>
-                    <input name="email" type="text">
+                    <div class="form-group col-md-5">
+                        <input type="text" class="form-control-input" id="ctownship" name="township" value="{{ old('township') }}" required>
+                        <label class="label-control" for="ctownship">Gemeente</label>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control-input" id="cphonenumber" name="phonenumber" value="{{ old('phonenumber') }}" required>
+                        <label class="label-control" for="cphonenumber">Telefoonnummer</label>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input type="email" class="form-control-input" id="cemail" name="email" value="{{ old('email') }}" required>
+                        <label class="label-control" for="cemail">Email</label>
+                        <div class="help-block with-errors"></div>
+                    </div>
                 </div>
             @endif
 
 
-            <div class="soloInput textAreaInput">
-                <label>Reden voor afspraak</label>
-                <textarea name="details" rows="4" cols="50"></textarea>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <textarea class="form-control-textarea" id="cdetails" name="details" required></textarea>
+                    <label class="label-control" for="cdetails">Reden voor afspraak</label>
+                    <div class="help-block with-errors"></div>
+                </div>
             </div>
 
 
@@ -97,19 +112,42 @@
             
 
 
-            <div class="checkboxDiv formCheckBox">
-                <input type="checkbox" name="sendreminder" value="true" id="sendreminder" @if(old('sendreminder')) checked="checked" @endif><label for="sendreminder" class="checkmark"></label><label for="sendreminder">Stuur herinnering via mail</label>
+            <div class="form-group checkbox">
+                <input type="checkbox" id="notify" name="notify" value="notify" @if(old('notify')) checked="checked" @endif>
+                <label for="notify">Stuur email als er een vroegere afspraak vrij komt</label>
+                <div class="help-block with-errors"></div>
             </div>
 
-            <div class="checkboxDiv formCheckBox">
-                <input type="checkbox" name="notify" value="true" id="notify" @if(old('notify')) checked="checked" @endif><label for="notify" class="checkmark"></label><label for="notify">Stuur email als er een vroegere afspraak vrij komt</label>
+
+
+            <div class="form-group">
+                <button type="submit" class="form-control-submit-button">AFSPRAAK AANMAKEN</button>
             </div>
-        
-
-
-            <button type="submit">Afspraak aanmaken</button>
-
         </form>
+
+
+
+        
     </div>
 
+@stop
+
+
+
+
+
+@section('script')
+    
+    <script>
+            
+        $("input, textarea").keyup(function(){
+            if ($(this).val() != '') {
+                $(this).addClass('notEmpty');
+            } else {
+                $(this).removeClass('notEmpty');
+            }
+        });
+
+    </script>
+    
 @stop
