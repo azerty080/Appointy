@@ -12,7 +12,7 @@ class Appointment extends Model
     protected $table = 'appointments';
 
     protected $fillable = [
-        'date', 'time', 'time_in_min', 'details', 'sendreminder'
+        'date', 'time', 'time_in_min', 'details'
     ];
 
 
