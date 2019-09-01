@@ -142,7 +142,7 @@ nav {
 }
 
 .currentlink {
-	color: #00C9DB;
+	color: #00C9DB !important;
 }
 
 nav a {
@@ -329,10 +329,6 @@ input::-webkit-outer-spin-button {
   margin: 0; 
 }
 
-/* Maybe change */
-input {
-	font-style: italic;
-}
 /*--------------------------------------------------------------------------------------------------*/
 
 button:hover {
@@ -369,8 +365,6 @@ form {
 	-moz-border-radius: 50px;
 	-webkit-border-radius: 50px;
 
-
-	
 	padding: 10px 20px;
 
 	transition: all 0.5s ease;
@@ -446,6 +440,7 @@ form {
 
 .searchForm input::placeholder {
 	color: #C3C3C3;
+	font-style: italic;
 }
 
 input:focus {
@@ -604,7 +599,7 @@ input:-webkit-autofill {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin: 0 0 50px 0;
+	margin: 0 0 20px 0;
 }
 
 .titleDiv form {
@@ -618,9 +613,12 @@ input:-webkit-autofill {
 	justify-content: space-between
 }
 
-
 .titleInfo h1 {
 	margin: 0;
+}
+
+.titleInfo p {
+	margin-top: 10px;
 }
 
 
@@ -632,31 +630,23 @@ input:-webkit-autofill {
 
 .mainBusinessInfo {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;	
+	flex-direction: column;
 	margin: 0 0 20px 0;
 }
 
 
-.details {
-	width: 40%;
-}
-
-.details div {
-	margin: 0 0 20px 0;
-}
 
 .details p {
-	margin: 10px 0 0 20px;
+	margin: 10px 0 0 0;
 }
 
 
-.mainBusinessInfo .openingHours {
-	width: 40%;
+.openingHours {
+	width: 100%;
 }
 
-.mainBusinessInfo .openingHours h2 {
-	margin: 0 0 10px 0;
+.openingHours h2 {
+	margin: 0px 0 20px 0;
 }
 
 
@@ -674,22 +664,20 @@ input:-webkit-autofill {
 }
 
 
-.businessDetailTable th {
-	width: 30%;
-}
-
-.businessDetailTable td  {
-	width: 30%;
+.detail-short-table-days {
+	display: none;
 }
 
 
+
+.createAppointment{
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
 
 
 
 /* FORM STUFF */
-form {
-	width: 100%;
-}
 
 
 form input, form textarea {
@@ -886,7 +874,19 @@ input[type="radio"]:hover + label {
 
 
 .dayDiv {
-	margin: 20px 0px 30px 0px;
+	display: flex;
+	flex-direction: row;
+	margin: 20px 0px 40px 0px;
+	padding-bottom: 20px;
+	border-bottom: 1px dashed #fff;
+}
+
+.dayDiv .day-indicator {
+	margin-top: 0;
+}
+
+.day-indicator {
+	margin-right: 40px;
 }
 
 
@@ -1063,7 +1063,15 @@ input[type="radio"]:hover + label {
 .hoursDiv div {
 	display: flex;
 	flex-direction: column;
-	margin: 0px 50px 0px 0px
+	margin: 0px 20px 0px 0px
+}
+
+.time-dividers {
+	margin-top: 50px !important;
+}
+
+.time-dividers span {
+	margin-bottom: 30px;
 }
 
 .hoursDiv input {
@@ -1234,42 +1242,89 @@ input[type="radio"]:hover + label {
 	justify-content: space-between;
 }
 
-.accountInfo .details h2 {
-	margin: 0 0 20px 0;
+
+
+.account-info {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
-.accountInfo .details .infoGroup {
+.info-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.info-item {
 	display: flex;
 	flex-direction: row;
 	align-items: baseline;
-	margin: 0 0 40px 40px;
-}
-
-.accountInfo .details .infoGroup p {
-	margin: 0 0 0 20px;
-}
-
-.accountInfo .openingHours {
-	width: 40%;
-}
-
-.accountInfo .openingHours h2 {
 	margin: 0 0 20px 0;
 }
 
-.accountInfo .openingHours table {
-	margin: 0 0 60px 0;
+.info-item p {
+	margin: 0 0 0 10px;
 }
 
 
+
+.openingHours {
+	margin-top: 40px;
+}
+
+
+.openingHour {
+	display: flex;
+	flex-direction: row;
+}
+
+.openingHour h4, .openingHour p {
+	margin-right: 20px;
+}
+
+
+
 .deleteClient, .deleteBusiness {
-	margin: 40px 0 20px 20px;
+	margin: 20px 0 40px 0;
+	
+	display: inline-block;
+
+	color: #fff;
+	background-color: #2F2C3D;
+	border: 1px solid #fff;
+	border-radius: 50px;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	padding: 10px 20px;
+
+	transition: all 0.5s ease;
+}
+
+.deleteClient.secondBtn, .deleteBusiness.secondBtn {
+	margin: 10px 20px 10px 0;
 }
 
 .deleteClient:hover, .deleteBusiness:hover {
 	cursor: pointer;
+	
+	color: #262431;
+	background-color: #fff;
+	transition: all 0.5s ease;
 }
 
+.deleteClientForm, .deleteBusinessForm {
+	display: flex;
+	flex-direction: row;
+}
+
+
+.business-account .button-link {
+	margin-right: 20px;
+}
+
+.account-info-mobile {
+	display: none;
+}
 
 
 
@@ -1279,16 +1334,84 @@ input[type="radio"]:hover + label {
 }
 
 
-
+.form-control-submit-button {
+	margin-bottom: 40px;
+}
 
 /* Afspraken */
 .singleAppointment {
-	width: 35%;
-	margin: 20px 0 0 20px;
-	padding: 10px 20px 20px 20px;
-	border: 2px solid #fff;
+	width: 100%;
+	margin: 20px 0 0 0;
+	padding: 10px 20px;
+	border: 1px solid #fff;
 	border-radius: 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
+
+.businessAppointment {
+	display: flex;
+	flex-direction: column;
+}
+
+.standardClientInfo {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+.extraClientInfo {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.contactInfo, .otherInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+
+.singleAppointment a {
+	color: #fff;
+	margin-left: 10px;
+	transition: all 0.2s ease;
+}
+
+.singleAppointment a:hover {
+	color: #00C9DB;
+	transition: all 0.2s ease;
+}
+
+
+
+.singleAppointment h3 {
+	display: flex;
+	flex-direction: row;
+}
+
+
+.singleAppointment h4 {
+	margin: 0;
+}
+
+.singleAppointment p {
+	margin: 0;
+}
+
+
+.no-appointments {
+	margin: 20px 0px 0px 20px;
+}
+
+
 
 .appointmentLinks {
 	display: flex;
@@ -1311,10 +1434,6 @@ input[type="radio"]:hover + label {
 	margin-top: 40px;
 }
 
-.showMoreDetails {
-	width: 100px;
-	margin-bottom: 20px;
-}
 
 
 .extraClientInfo {
@@ -1339,8 +1458,7 @@ input[type="radio"]:hover + label {
 
 .appointmentOverview {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+	flex-direction: column;
 }
 
 
@@ -1348,16 +1466,6 @@ input[type="radio"]:hover + label {
 	position: relative;
 }
 
-
-.singleAppointment a {
-	color: #fff;
-	transition: all 0.2s ease;
-}
-
-.singleAppointment a:hover {
-	color: #00C9DB;
-	transition: all 0.2s ease;
-}
 
 
 /* ----------------------------------------------- */
@@ -1483,6 +1591,14 @@ input[type="radio"]:hover + label {
 }
 
 
+.individual-btn-link{
+	margin-bottom: 40px;
+}
+
+.remove-appointment-form button {
+	margin-bottom: 0;
+}
+
 
 /* Max-width with 375px */
 @media (max-width: 375px) {
@@ -1495,6 +1611,31 @@ input[type="radio"]:hover + label {
 	h1 {
 		font-size: 36px;
 	}
+}
+
+/* Max-width with 482px */
+@media (max-width: 482px) {
+	.dayDiv {
+		flex-direction: column;
+	}
+
+	.day-indicator .checkbox {
+		margin-bottom: 0;
+	}
+
+	.form-group.checkbox {
+		word-wrap: break-word;
+	}
+
+
+	.detail-short-table-days {
+		display: block;
+	}
+
+	.detail-long-table-days {
+		display: none;
+	}
+	
 }
 
 /* Max-width with 768px */
@@ -1551,10 +1692,124 @@ input[type="radio"]:hover + label {
 		text-align: center;
 		margin: 0px 5px;
 	}
+
+
+
+	/* Appointments */
+	.singleAppointment {
+		flex-direction: column;
+		justify-content: center;
+	}
+
+		
+	.standardClientInfo {
+		flex-direction: column;
+	}
+
+
+	.extraClientInfo {
+		flex-direction: column;
+	}
+
+	.contactInfo, .otherInfo {
+		flex-direction: column;
+	}
+
+
+	/* Account info */
+	.info-item, .openingHour {
+		flex-direction: column;
+	}
+
+	.info-item p {
+		margin-left: 0;
+		margin-bottom: 10px;
+	}
+
+	.openingHour {
+		margin-bottom: 20px;
+	}
+
+	.openingHour p {
+		margin-bottom: 10px;
+	}
+
+
+	/* Business detail */
+	.createAppointment .disabledBtn {
+		width: 300px;
+		height: 100px;
+	}
+
+	.titleDiv form {
+		width: 100%;
+	}
+
+	.businessDetailTable {
+		width: 100%;
+	}
+
 }
 
 
 
+/* Max-width with 1024px */
+@media (max-width: 1024px) {
+	
+
+
+	/* Appointments */
+	.businessAppointment p, .businessAppointment h4, .businessAppointment h3 {
+		margin: 5px 0;
+	}
+
+	.standardClientInfo {
+		flex-direction: column;
+	}
+
+
+
+	.extraClientInfo {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.contactInfo, .otherInfo {
+		flex-direction: column;
+		text-align: center;
+	}
+
+
+
+	/* Account info */
+	.account-info-mobile {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.business-account, .account-info {
+		display: none;
+	}
+
+	.business-account .account-info {
+		display: flex;
+	}
+
+	.individual-btn-link {
+		display: inline-block;
+		margin-bottom: 40px;
+	}
+
+
+	/* Business detail */
+	.titleDiv {
+		flex-direction: column;
+	}
+
+	.titleInfo h1 {
+		text-align: left;
+	}
+}
 
 
 
