@@ -58,6 +58,9 @@ Route::get('/account', 'AccountController@account')->name('account');
 Route::get('/account/informatie-bijwerken', 'AccountController@editaccount')->name('editaccount');
 Route::post('/account/updateaccount', 'AccountController@updateaccount')->name('updateaccount');
 
+Route::get('/account/wachtwoord-veranderen', 'AccountController@editpassword')->name('editpassword');
+Route::post('/account/updatepassword', 'AccountController@updatepassword')->name('updatepassword');
+
 Route::get('/account/openingsuren-bijwerken', 'AccountController@editopeninghours')->name('editopeninghours');
 Route::post('/account/updateopeninghours', 'AccountController@updateopeninghours')->name('updateopeninghours');
 
