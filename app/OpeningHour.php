@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OpeningHour extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
     
     protected $table = 'openinghours';
 

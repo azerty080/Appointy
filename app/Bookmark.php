@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bookmark extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
   
     protected $table = 'bookmarks';
 

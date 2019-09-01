@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LeaveDay extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
     
     protected $table = 'leavedays';
 
