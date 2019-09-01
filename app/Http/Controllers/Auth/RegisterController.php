@@ -73,7 +73,7 @@ class RegisterController extends Controller
         // User
         $user = new User;
 
-        $user->township = strtolower($request->township);
+        $user->township = ucfirst($request->township);
         $user->address = $request->address;
         $user->phonenumber = $request->phonenumber;
         $user->email = $request->email;
@@ -85,8 +85,8 @@ class RegisterController extends Controller
         // Business
         $business = new Business;
 
-        $business->name = strtolower($request->name);
-        $business->profession = strtolower($request->profession);
+        $business->name = ucfirst($request->name);
+        $business->profession = ucfirst($request->profession);
         $business->description = $request->description;
         $business->appointmentduration = $request->appointmentduration;
         $business->user_id = $user->id;
