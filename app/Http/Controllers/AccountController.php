@@ -10,6 +10,7 @@ use App\Business;
 use App\OpeningHour;
 
 use App\Http\Requests\UpdateAccountRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateOpeningHoursRequest;
 use App\Bookmark;
 use App\Appointment;
@@ -93,6 +94,17 @@ class AccountController extends Controller
 
 
 
+    public function editpassword() {
+        if (session()->get('logged_in')) {
+
+            return view('account.editpassword');
+
+        } else {
+            
+            return redirect('/')->with('message', 'Je bent niet ingelogd');
+        }
+    }
+
     
     public function editopeninghours()
     {
@@ -148,7 +160,6 @@ class AccountController extends Controller
     public function updateaccount(UpdateAccountRequest $request)
     {
         if (session()->get('logged_in')) {
-
             $usertype = session()->get('account_type');
             $id = session()->get('account_data')->id;
             $user_id = session()->get('account_data')->user_id;
@@ -156,13 +167,12 @@ class AccountController extends Controller
             $user = User::where('id', $user_id)->first();
             $checkNewEmail = User::where('id', "!=", $user_id)->where('email', $request->email)->get();
             
-            if (count($checkNewEmail) == 0 && hash("sha256", $request->oldpassword) == $user->password) {
+            if (count($checkNewEmail) == 0) {
                 User::where('id', $user_id)->update([
                     'township' => $request->township,
                     'address' => $request->address,
                     'phonenumber' => $request->phonenumber,
                     'email' => $request->email,
-                    'password' => hash("sha256", $request->password),
                 ]);
             }
             
@@ -212,6 +222,27 @@ class AccountController extends Controller
 
 
     
+    public function updatepassword(UpdatePasswordRequest $request) {
+        if (session()->get('logged_in')) {
+
+            $user_id = session()->get('account_data')->user_id;
+
+            $user = User::where('id', $user_id)->first();
+            
+            if (hash("sha256", $request->oldpassword) == $user->password) {
+                User::where('id', $user_id)->update([
+                    'password' => hash("sha256", $request->password),
+                ]);
+            }
+            
+            return redirect(route('account'));
+        } else {
+            
+            return redirect('/')->with('message', 'Je bent niet ingelogd');
+        }
+    }
+
+    
     public function updateopeninghours(UpdateOpeningHoursRequest $request)
     {
         if (session()->get('logged_in')) {
@@ -229,13 +260,11 @@ class AccountController extends Controller
                     ]);
 
                     if ($request->monday_id_2) {
-                        OpeningHour::where('id', $request->monday_id_2)->update([
-                            'closed' => true,
-                        ]);
+                        OpeningHour::where('id', $request->monday_id_2)->delete();
                     }
 
                 } else {
-                    if ($request->openingType == 'continuous') {
+                    if ($request->openingType) {
 
                         OpeningHour::where('id', $request->monday_id_1)->update([
                             'closed' => false,
@@ -250,7 +279,7 @@ class AccountController extends Controller
                             OpeningHour::where('id', $request->monday_id_2)->delete();
                         }
 
-                    } elseif ($request->openingType == 'limited') {
+                    } else {
 
                         OpeningHour::where('id', $request->monday_id_1)->update([
                             'closed' => false,
@@ -294,13 +323,11 @@ class AccountController extends Controller
                     ]);
 
                     if ($request->tuesday_id_2) {
-                        OpeningHour::where('id', $request->tuesday_id_2)->update([
-                            'closed' => true,
-                        ]);
+                        OpeningHour::where('id', $request->tuesday_id_2)->delete();
                     }
 
                 } else {
-                    if ($request->openingType == 'continuous') {
+                    if ($request->openingType) {
 
                         OpeningHour::where('id', $request->tuesday_id_1)->update([
                             'closed' => false,
@@ -314,7 +341,7 @@ class AccountController extends Controller
                             OpeningHour::where('id', $request->tuesday_id_2)->delete();
                         }
 
-                    } elseif ($request->openingType == 'limited') {
+                    } else {
 
                         OpeningHour::where('id', $request->tuesday_id_1)->update([
                             'closed' => false,
@@ -357,13 +384,11 @@ class AccountController extends Controller
                     ]);
 
                     if ($request->wednesday_id_2) {
-                        OpeningHour::where('id', $request->wednesday_id_2)->update([
-                            'closed' => true,
-                        ]);
+                        OpeningHour::where('id', $request->wednesday_id_2)->delete();
                     }
 
                 } else {
-                    if ($request->openingType == 'continuous') {
+                    if ($request->openingType) {
 
                         OpeningHour::where('id', $request->wednesday_id_1)->update([
                             'closed' => false,
@@ -377,7 +402,7 @@ class AccountController extends Controller
                             OpeningHour::where('id', $request->wednesday_id_2)->delete();
                         }
 
-                    } elseif ($request->openingType == 'limited') {
+                    } else {
 
                         OpeningHour::where('id', $request->wednesday_id_1)->update([
                             'closed' => false,
@@ -421,13 +446,11 @@ class AccountController extends Controller
                     ]);
 
                     if ($request->thursday_id_2) {
-                        OpeningHour::where('id', $request->thursday_id_2)->update([
-                            'closed' => true,
-                        ]);
+                        OpeningHour::where('id', $request->thursday_id_2)->delete();
                     }
 
                 } else {
-                    if ($request->openingType == 'continuous') {
+                    if ($request->openingType) {
 
                         OpeningHour::where('id', $request->thursday_id_1)->update([
                             'closed' => false,
@@ -441,7 +464,7 @@ class AccountController extends Controller
                             OpeningHour::where('id', $request->thursday_id_2)->delete();
                         }
 
-                    } elseif ($request->openingType == 'limited') {
+                    } else {
 
                         OpeningHour::where('id', $request->thursday_id_1)->update([
                             'closed' => false,
@@ -484,13 +507,11 @@ class AccountController extends Controller
                     ]);
 
                     if ($request->friday_id_2) {
-                        OpeningHour::where('id', $request->friday_id_2)->update([
-                            'closed' => true,
-                        ]);
+                        OpeningHour::where('id', $request->friday_id_2)->delete();
                     }
 
                 } else {
-                    if ($request->openingType == 'continuous') {
+                    if ($request->openingType) {
 
                         OpeningHour::where('id', $request->friday_id_1)->update([
                             'closed' => false,
@@ -504,7 +525,7 @@ class AccountController extends Controller
                             OpeningHour::where('id', $request->friday_id_2)->delete();
                         }
 
-                    } elseif ($request->openingType == 'limited') {
+                    } else {
 
                         OpeningHour::where('id', $request->friday_id_1)->update([
                             'closed' => false,
@@ -547,13 +568,11 @@ class AccountController extends Controller
                     ]);
 
                     if ($request->saturday_id_2) {
-                        OpeningHour::where('id', $request->saturday_id_2)->update([
-                            'closed' => true,
-                        ]);
+                        OpeningHour::where('id', $request->saturday_id_2)->delete();
                     }
 
                 } else {
-                    if ($request->openingType == 'continuous') {
+                    if ($request->openingType) {
 
                         OpeningHour::where('id', $request->saturday_id_1)->update([
                             'closed' => false,
@@ -567,7 +586,7 @@ class AccountController extends Controller
                             OpeningHour::where('id', $request->saturday_id_2)->delete();
                         }
 
-                    } elseif ($request->openingType == 'limited') {
+                    } else {
 
                         OpeningHour::where('id', $request->saturday_id_1)->update([
                             'closed' => false,
@@ -610,13 +629,11 @@ class AccountController extends Controller
                     ]);
 
                     if ($request->sunday_id_2) {
-                        OpeningHour::where('id', $request->sunday_id_2)->update([
-                            'closed' => true,
-                        ]);
+                        OpeningHour::where('id', $request->sunday_id_2)->delete();
                     }
 
                 } else {
-                    if ($request->openingType == 'continuous') {
+                    if ($request->openingType) {
 
                         OpeningHour::where('id', $request->sunday_id_1)->update([
                             'closed' => false,
@@ -630,7 +647,7 @@ class AccountController extends Controller
                             OpeningHour::where('id', $request->sunday_id_2)->delete();
                         }
 
-                    } elseif ($request->openingType == 'limited') {
+                    } else {
 
                         OpeningHour::where('id', $request->sunday_id_1)->update([
                             'closed' => false,
