@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+use Carbon\Carbon;
 
 use Ical\Ical;
 
@@ -43,8 +44,8 @@ class AppointmentMail extends Mailable
     {
         try {
             $ical = (new Ical())->setAddress($this->address)
-                ->setDateStart(new \DateTime($this->startdate))
-                ->setDateEnd(new \DateTime($this->enddate))
+                ->setDateStart(new \DateTime(Carbon::parse($this->startdate)->subHours(2)))
+                ->setDateEnd(new \DateTime(Carbon::parse($this->enddate)->subHours(2)))
                 ->setDescription($this->description)
                 ->setSummary($this->summary)
                 ->setFilename(uniqid());
