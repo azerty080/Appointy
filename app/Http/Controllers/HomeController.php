@@ -94,17 +94,27 @@ class HomeController extends Controller
         $township = strtolower($request->township);
 
         if ($name && $profession && $township) {
+
             $businesses = Business::with(['user' => function($q) use ($township) {
                 $q->where('township', $township);
-            }])->where('name', 'LIKE', '%'.$name.'%')->where('profession', 'LIKE', '%'.$profession.'%')->get();
+            }])->has('user')->where('name', 'LIKE', '%'.$name.'%')->where('profession', 'LIKE', '%'.$profession.'%')->get();
+
         } elseif ($name && $township) {
+
+
             $businesses = Business::with(['user' => function($q) use ($township) {
                 $q->where('township', $township);
-            }])->where('name', 'LIKE', '%'.$name.'%')->get();
+            }])->has('user')->where('name', 'LIKE', '%'.$name.'%')->get();
+
+
         } elseif ($profession && $township) {
+
+
             $businesses = Business::with(['user' => function($q) use ($township) {
                 $q->where('township', $township);
-            }])->where('profession', 'LIKE', '%'.$profession.'%')->get();
+            }])->has('user')->where('profession', 'LIKE', '%'.$profession.'%')->get();
+
+
         } elseif ($name && $profession) {
             $businesses = Business::with('user')->where('name', 'LIKE', '%'.$name.'%')->where('profession', 'LIKE', '%'.$profession.'%')->get();
         } elseif ($name) {

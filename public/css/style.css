@@ -475,11 +475,11 @@ input:focus {
 	position: relative;
 	top: 20%;
 	margin: 0;
-	padding: 10px;
+	padding: 8px 10px;
 	border: 2px solid #fff;
 	border-radius: 50px;
 	font-size: 16px;
-	background-color: #212226;
+	background-color: #262431;
 }
 
 
