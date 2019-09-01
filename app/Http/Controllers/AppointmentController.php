@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Log;
 
+use Ical\Ical;
+
 class AppointmentController extends Controller
 {
     public function appointments(Request $request)
@@ -62,7 +64,7 @@ class AppointmentController extends Controller
                 $clientName = $userAppointment->client->user->firstname . $userAppointment->client->user->lastname;
                 
                 try {
-                    //Mail::to($email)->send(new EarlierAppointmentMail($businessName, $appointmentDate, $appointmentTime, $businessUrl));
+                    Mail::to($email)->send(new EarlierAppointmentMail($businessName, $appointmentDate, $appointmentTime, $businessUrl));
                 }
                 catch(\Exception $e) {
                     Log::error($e);
@@ -145,23 +147,24 @@ class AppointmentController extends Controller
 
             $address = $business->user->address . ', ' . $business->user->township;
             $startdate = $request->date . ' ' . $request->time;
-            $enddate = $request->date . ' ' .  date('h:i', strtotime('+' . $business->appointmentduration . ' minutes', strtotime($request->time)));
-            $description = 'Afspraak bij ' . $business->name . ' (' . $address . ') op ' . $request->date . ' om ' . $date . 'u tot ' . date('h:i', strtotime('+' . $business->appointmentduration . ' minutes', strtotime($request->time))) . 'u';
+            $enddate = $request->date . ' ' .  date('H:i', strtotime('+' . $business->appointmentduration . ' minutes', strtotime($request->time)));
+            $description = 'Afspraak bij ' . $business->name . ' (' . $address . ') op ' . $request->date . ' om ' . $request->time . 'u tot ' . date('H:i', strtotime('+' . $business->appointmentduration . ' minutes', strtotime($request->time))) . 'u';
             $summary = 'Afspraak ' . $business->name;
             
             try {
-                Mail::to('niels.vannimmen@student.kdg.be')->send(new AppointmentMail($address, $startdate, $enddate, $description, $summary, $businessName, $date, $time));
+                Mail::to($mailEmail)->send(new AppointmentMail($address, $startdate, $enddate, $description, $summary, $businessName, $date, $time));
             }
             catch(\Exception $e) {
                 Log::error($e);
             }
 
+                
             $appointment->save();
 
 
             return redirect('/')->with('message', 'Afspraak aangemaakt');
         } else {
-            return redirect('/')->with('message', 'Er ging iets fout');
+            return redirect('/')->with('error', 'Er ging iets fout');
         }
     }
 }

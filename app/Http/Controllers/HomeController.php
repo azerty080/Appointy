@@ -193,7 +193,7 @@ class HomeController extends Controller
         $mondayappointments = Appointment::select('time_in_min')->where('business_id', $id)->where('date', $mondaydate)->get();
         $mondayhours = [];
         foreach($mondayappointments as $mondayappointment) {
-            array_push($mondayhours, $mondayappointment->time);
+            array_push($mondayhours, $mondayappointment->time_in_min);
         }
 
         $tuesdayappointments = Appointment::select('time_in_min')->where('business_id', $id)->where('date', $tuesdaydate)->get();

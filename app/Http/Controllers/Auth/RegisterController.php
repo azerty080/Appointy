@@ -111,7 +111,7 @@ class RegisterController extends Controller
             $openinghour->save();
 
         } else {
-            if ($request['openingType'] == 'continuous') {
+            if ($request['openingType']) {
 
                 $openinghour = new OpeningHour;
 
@@ -125,7 +125,7 @@ class RegisterController extends Controller
 
                 $openinghour->save();
 
-            } elseif ($request['openingType'] == 'limited') {
+            } else {
 
                 $openinghour = new OpeningHour;
 
@@ -168,7 +168,7 @@ class RegisterController extends Controller
             $openinghour->save();
 
         } else {
-            if ($request['openingType'] == 'continuous') {
+            if ($request['openingType']) {
 
                 $openinghour = new OpeningHour;
 
@@ -182,7 +182,7 @@ class RegisterController extends Controller
 
                 $openinghour->save();
 
-            } elseif ($request['openingType'] == 'limited') {
+            } else {
 
                 $openinghour = new OpeningHour;
 
@@ -225,7 +225,7 @@ class RegisterController extends Controller
             $openinghour->save();
 
         } else {
-            if ($request['openingType'] == 'continuous') {
+            if ($request['openingType']) {
 
                 $openinghour = new OpeningHour;
 
@@ -239,7 +239,7 @@ class RegisterController extends Controller
 
                 $openinghour->save();
 
-            } elseif ($request['openingType'] == 'limited') {
+            } else {
 
                 $openinghour = new OpeningHour;
 
@@ -282,7 +282,7 @@ class RegisterController extends Controller
             $openinghour->save();
 
         } else {
-            if ($request['openingType'] == 'continuous') {
+            if ($request['openingType']) {
 
                 $openinghour = new OpeningHour;
 
@@ -296,7 +296,7 @@ class RegisterController extends Controller
 
                 $openinghour->save();
 
-            } elseif ($request['openingType'] == 'limited') {
+            } else {
 
                 $openinghour = new OpeningHour;
 
@@ -339,7 +339,7 @@ class RegisterController extends Controller
             $openinghour->save();
 
         } else {
-            if ($request['openingType'] == 'continuous') {
+            if ($request['openingType']) {
 
                 $openinghour = new OpeningHour;
 
@@ -353,7 +353,7 @@ class RegisterController extends Controller
 
                 $openinghour->save();
 
-            } elseif ($request['openingType'] == 'limited') {
+            } else {
 
                 $openinghour = new OpeningHour;
 
@@ -396,7 +396,7 @@ class RegisterController extends Controller
             $openinghour->save();
 
         } else {
-            if ($request['openingType'] == 'continuous') {
+            if ($request['openingType']) {
 
                 $openinghour = new OpeningHour;
 
@@ -410,7 +410,7 @@ class RegisterController extends Controller
 
                 $openinghour->save();
 
-            } elseif ($request['openingType'] == 'limited') {
+            } else {
 
                 $openinghour = new OpeningHour;
 
@@ -453,7 +453,7 @@ class RegisterController extends Controller
             $openinghour->save();
 
         } else {
-            if ($request['openingType'] == 'continuous') {
+            if ($request['openingType']) {
 
                 $openinghour = new OpeningHour;
 
@@ -467,7 +467,7 @@ class RegisterController extends Controller
 
                 $openinghour->save();
 
-            } elseif ($request['openingType'] == 'limited') {
+            } else {
 
                 $openinghour = new OpeningHour;
 
