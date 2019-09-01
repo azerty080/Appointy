@@ -14,8 +14,8 @@
             <a href="{{ route('businesscalendar', ['name' => $name, 'id' => $id, 'addedweek' => $addedweeks + 1]) }}">></a>
         </h1>
     
-    
-        @php $today = Carbon\Carbon::now()->addHours(3) @endphp
+        
+        @php $today = Carbon\Carbon::now()->addHours(1) @endphp
 
         @php
             $mondaydate = Carbon\Carbon::now()->addWeek($addedweeks)->startOfWeek();
@@ -116,7 +116,7 @@
                                     @endif
                                 @endif
                             
-                            @elseif(($mondaydate->isToday() && $today->lte($rowtime)) || $mondaydate->isPast())
+                            @elseif(($mondaydate->isToday() && $today > $rowtime) || $mondaydate->format('Y-m-d') < $today->format('Y-m-d'))
                                 class="past">
                             @elseif(in_array($i, $mondayhours))
                                 class="occupied"><p>bezet</p>
@@ -173,7 +173,7 @@
                                     @endif
                                 @endif
                             
-                            @elseif(($tuesdaydate->isToday() && $today->lte($rowtime)) || $tuesdaydate->isPast())
+                            @elseif(($tuesdaydate->isToday() && $today > $rowtime) || $tuesdaydate->format('Y-m-d') < $today->format('Y-m-d'))
                                 class="past">
                             @elseif(in_array($i, $tuesdayhours))
                                 class="occupied"><p>bezet</p>
@@ -230,7 +230,7 @@
                                     @endif
                                 @endif
                             
-                            @elseif(($wednesdaydate->isToday() && $today->lte($rowtime)) || $wednesdaydate->isPast())
+                            @elseif(($wednesdaydate->isToday() && $today > $rowtime) || $wednesdaydate->format('Y-m-d') < $today->format('Y-m-d'))
                                 class="past">
                             @elseif(in_array($i, $wednesdayhours))
                                 class="occupied"><p>bezet</p>
@@ -287,7 +287,7 @@
                                     @endif
                                 @endif
                             
-                            @elseif(($thursdaydate->isToday() && $today->lte($rowtime)) || $thursdaydate->isPast())
+                            @elseif(($thursdaydate->isToday() && $today > $rowtime) || $thursdaydate->format('Y-m-d') < $today->format('Y-m-d'))
                                 class="past">
                             @elseif(in_array($i, $thursdayhours))
                                 class="occupied"><p>bezet</p>
@@ -344,7 +344,7 @@
                                     @endif
                                 @endif
                             
-                            @elseif(($fridaydate->isToday() && $today->lte($rowtime)) || $fridaydate->isPast())
+                            @elseif(($fridaydate->isToday() && $today > $rowtime) || $fridaydate->format('Y-m-d') < $today->format('Y-m-d'))
                                 class="past">
                             @elseif(in_array($i, $fridayhours))
                                 class="occupied"><p>bezet</p>
@@ -401,7 +401,7 @@
                                     @endif
                                 @endif
                             
-                            @elseif(($saturdaydate->isToday() && $today->lte($rowtime)) || $saturdaydate->isPast())
+                            @elseif(($saturdaydate->isToday() && $today > $rowtime) || $saturdaydate->format('Y-m-d') < $today->format('Y-m-d'))
                                 class="past">
                             @elseif(in_array($i, $saturdayhours))
                                 class="occupied"><p>bezet</p>
@@ -458,7 +458,7 @@
                                     @endif
                                 @endif
                             
-                            @elseif(($sundaydate->isToday() && $today->lte($rowtime)) || $sundaydate->isPast())
+                            @elseif(($sundaydate->isToday() && $today > $rowtime) || $sundaydate->format('Y-m-d') < $today->format('Y-m-d'))
                                 class="past">
                             @elseif(in_array($i, $sundayhours))
                                 class="occupied"><p>bezet</p>
@@ -479,7 +479,7 @@
         
 
         
-        @php $today = Carbon\Carbon::now()->addHours(3) @endphp
+        @php $today = Carbon\Carbon::now()->addHours(1) @endphp
 
         @php
             $calendardate = Carbon\Carbon::now()->addDays($addedweeks);
@@ -518,7 +518,7 @@
                     @break
             @endswitch
 
-            {{ Carbon\Carbon::now()->addDays($addedweeks)->format('d/m/Y') }}
+            {{ Carbon\Carbon::now()->addDays($addedweeks)->format('d/m') }}
             
             <a href="{{ route('businesscalendar', ['name' => $name, 'id' => $id, 'addedweek' => $addedweeks + 1]) }}">></a>
         </h1>
@@ -645,7 +645,7 @@
                                             @endif
                                         @endif
                                     
-                                    @elseif(($calendardate->isToday() && $today->lte($rowtime)) || $calendardate->isPast())
+                                    @elseif(($calendardate->isToday() && $today > $rowtime) || $calendardate->format('Y-m-d') < $today->format('Y-m-d'))
                                         class="past">
                                     @elseif(in_array($i, $mondayhours))
                                         class="occupied"><p>bezet</p>
@@ -706,7 +706,7 @@
                                             @endif
                                         @endif
                                     
-                                    @elseif(($calendardate->isToday() && $today->lte($rowtime)) || $calendardate->isPast())
+                                    @elseif(($calendardate->isToday() && $today > $rowtime) || $calendardate->format('Y-m-d') < $today->format('Y-m-d'))
                                         class="past">
                                     @elseif(in_array($i, $tuesdayhours))
                                         class="occupied"><p>bezet</p>
@@ -768,7 +768,7 @@
                                             @endif
                                         @endif
                                     
-                                    @elseif(($calendardate->isToday() && $today->lte($rowtime)) || $calendardate->isPast())
+                                    @elseif(($calendardate->isToday() && $today > $rowtime) || $calendardate->format('Y-m-d') < $today->format('Y-m-d'))
                                         class="past">
                                     @elseif(in_array($i, $wednesdayhours))
                                         class="occupied"><p>bezet</p>
@@ -830,7 +830,7 @@
                                             @endif
                                         @endif
                                     
-                                    @elseif(($calendardate->isToday() && $today->lte($rowtime)) || $calendardate->isPast())
+                                    @elseif(($calendardate->isToday() && $today > $rowtime) || $calendardate->format('Y-m-d') < $today->format('Y-m-d'))
                                         class="past">
                                     @elseif(in_array($i, $thursdayhours))
                                         class="occupied"><p>bezet</p>
@@ -892,7 +892,7 @@
                                             @endif
                                         @endif
                                     
-                                    @elseif(($calendardate->isToday() && $today->lte($rowtime)) || $calendardate->isPast())
+                                    @elseif(($calendardate->isToday() && $today > $rowtime) || $calendardate->format('Y-m-d') < $today->format('Y-m-d'))
                                         class="past">
                                     @elseif(in_array($i, $fridayhours))
                                         class="occupied"><p>bezet</p>
@@ -953,7 +953,7 @@
                                             @endif
                                         @endif
                                     
-                                    @elseif(($calendardate->isToday() && $today->lte($rowtime)) || $calendardate->isPast())
+                                    @elseif(($calendardate->isToday() && $today > $rowtime) || $calendardate->format('Y-m-d') < $today->format('Y-m-d'))
                                         class="past">
                                     @elseif(in_array($i, $saturdayhours))
                                         class="occupied"><p>bezet</p>
@@ -1013,7 +1013,7 @@
                                             @endif
                                         @endif
                                     
-                                    @elseif(($calendardate->isToday() && $today->lte($rowtime)) || $calendardate->isPast())
+                                    @elseif(($calendardate->isToday() && $today > $rowtime) || $calendardate->format('Y-m-d') < $today->format('Y-m-d'))
                                         class="past">
                                     @elseif(in_array($i, $sundayhours))
                                         class="occupied"><p>bezet</p>

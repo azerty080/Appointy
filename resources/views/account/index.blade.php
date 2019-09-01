@@ -6,217 +6,361 @@
 @section('content')
     <h1>Account</h1>
 
-    <div class="contentDiv accountInfo">
-        <div class="details">
-            
+    <div class="contentdiv">
+        
+
+        @if(session()->get('account_type') == 'klant')
+
             <h2>Account informatie</h2>
 
-            @if(session()->get('account_type') == 'klant')
+            <div class="account-info">
+                <div class="info-group">
+                    <div class="info-item">
+                        <h3>Voornaam:</h3>
+                        <p>{{ $userdata->firstname }}</p>
+                    </div>
 
-                <div class="infoGroup">
-                    <h3>Naam:</h3>
-                    <p>{{ $userdata->firstname }} {{ $userdata->lastname }}</p>
+                    <div class="info-item">
+                        <h3>Adres:</h3>
+                        <p>{{ $userdata->user->address }}</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>Email:</h3>
+                        <p>{{ $userdata->user->email }}</p>
+                    </div>
                 </div>
 
-                <div class="infoGroup">
+                
+                <div class="info-group">
+                    <div class="info-item">
+                        <h3>Achternaam:</h3>
+                        <p>{{ $userdata->lastname }}</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>Gemeente:</h3>
+                        <p>{{ $userdata->user->township }}</p>
+                    </div>
+                </div>
+
+                
+                <div class="info-group">
+                    <div class="info-item">
+                        <h3>Geboortedatum:</h3>
+                        <p>{{ Carbon\Carbon::parse($userdata->birthdate)->format('d-m-Y') }}</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>Telefoonnummer:</h3>
+                        <p>{{ $userdata->user->phonenumber }}</p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="account-info-mobile">
+                <div class="info-item">
+                    <h3>Voornaam:</h3>
+                    <p>{{ $userdata->firstname }}</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>Achternaam:</h3>
+                    <p>{{ $userdata->lastname }}</p>
+                </div>
+
+                <div class="info-item">
                     <h3>Geboortedatum:</h3>
-                    <p>Geboortedatum: {{ $userdata->birthdate }}</p>
+                    <p>{{ Carbon\Carbon::parse($userdata->birthdate)->format('d-m-Y') }}</p>
                 </div>
 
-                <div class="infoGroup">
-                    <h3>Gemeente:</h3>
-                    <p>{{ $userdata->user->township }}</p>
-                </div>
-
-                <div class="infoGroup">
+                <div class="info-item">
                     <h3>Adres:</h3>
                     <p>{{ $userdata->user->address }}</p>
                 </div>
 
-                <div class="infoGroup">
-                    <h3>Telefoonnummer:</h3>
-                    <p>{{ $userdata->user->phonenumber }}</p>
+                <div class="info-item">
+                    <h3>Gemeente:</h3>
+                    <p>{{ $userdata->user->township }}</p>
                 </div>
 
-                <div class="infoGroup">
+                <div class="info-item">
                     <h3>Email:</h3>
                     <p>{{ $userdata->user->email }}</p>
                 </div>
-
-                <a class="linkBtn" href="{{ route('editaccount') }}">Accountinformatie aanpassen</a>
-
-
-                <h4 onclick="showDeleteClient()" id="deleteClient" class="deleteClient">Account verwijderen</h4>
-
-                <form id="deleteClientForm" class="hide" method="POST" action="{{ route('deleteaccount') }}">
-                    @csrf
-                    
-                    <input name="user_id" type="number" value="{{ $userdata->user->id }}" hidden>
-                    <input name="account_id" type="number" value="{{ $userdata->id }}" hidden>
-
-                    <button type="submit">Verwijder account</button>
-                    <a class="linkBtn noBtn" onclick="clickedNo('deleteClientForm')">Niet verwijderen</a>
-                </form>
-
-
-            @elseif(session()->get('account_type') == 'zaak')
-
             
-                <div class="infoGroup">
-                    <h3>Naam:</h3>
+                <div class="info-item">
+                    <h3>Telefoonnummer:</h3>
+                    <p>{{ $userdata->user->phonenumber }}</p>
+                </div>
+            </div>
+
+            <div class="individual-btn-link">
+                <a class="button-link" href="{{ route('editaccount') }}">ACCOUNTINFO AANPASSEN</a>
+            </div>
+            
+            <div class="individual-btn-link">
+                <a class="button-link" href="{{ route('editpassword') }}">WACHTWOORD VERANDEREN</a>
+            </div>
+
+            <h4 onclick="showDeleteClient()" id="deleteClient" class="deleteClient">ACCOUNT VERWIJDEREN</h4>
+
+            <form id="deleteClientForm" class="hide" method="POST" action="{{ route('deleteaccount') }}">
+                @csrf
+                
+                <input name="user_id" type="number" value="{{ $userdata->user->id }}" hidden>
+                <input name="account_id" type="number" value="{{ $userdata->id }}" hidden>
+
+
+                <button type="submit" class="form-control-submit-button deleteClient secondBtn">VERWIJDER ACCOUNT</button>
+                
+                <button type="button" class="deleteClient secondBtn noBtn" onclick="clickedNo('deleteClientForm')">ANNULEER</button>
+            </form>
+
+
+        @elseif(session()->get('account_type') == 'zaak')
+
+            <div class="business-account">
+
+                <div class="account-info">
+                    <div class="info-group">
+                        <div class="info-item">
+                            <h4>Naam:</h4>
+                            <p>{{ $userdata->name }}</p>
+                        </div>
+
+                        <div class="info-item">
+                            <h4>Adres:</h4>
+                            <p>{{ $userdata->user->address }}</p>
+                        </div>
+                    </div>
+
+                    
+                    <div class="info-group">
+                        <div class="info-item">
+                            <h4>Beroep:</h4>
+                            <p>{{ $userdata->profession }}</p>
+                        </div>
+
+                        <div class="info-item">
+                            <h4>Gemeente:</h4>
+                            <p>{{ $userdata->user->township }}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="info-item">
+                            <h4>Email:</h4>
+                            <p>{{ $userdata->user->email }}</p>
+                        </div>
+
+                        <div class="info-item">
+                            <h4>Telefoonnummer:</h4>
+                            <p>{{ $userdata->user->phonenumber }}</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="info-group">
+                    <div class="info-item">
+                            <h4>Beschrijving:</h4>
+                            <p>{{ $userdata->description }}</p>
+                        </div>
+
+                    <div class="info-item">
+                        <h4>Duurtijd afspraak:</h4>
+                        <p>{{ $userdata->appointmentduration }} minuten</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h4>Niet ingelogde gebruikers toelaten:</h4>
+                        <p>@if($userdata->allow_guests) JA @else NEE @endif</p>
+                    </div>
+                </div>
+
+                <a class="button-link" href="{{ route('editaccount') }}">ACCOUNTINFO AANPASSEN</a>
+                
+                <a class="button-link" href="{{ route('editpassword') }}">WACHTWOORD VERANDEREN</a>
+            </div>
+
+
+            <div class="account-info-mobile">
+                <div class="info-item">
+                    <h4>Naam:</h4>
                     <p>{{ $userdata->name }}</p>
                 </div>
 
-                <div class="infoGroup">
-                    <h3>Beroep:</h3>
+                <div class="info-item">
+                    <h4>Beroep:</h4>
                     <p>{{ $userdata->profession }}</p>
                 </div>
 
-                <div class="infoGroup">
-                    <h3>Beschrijving:</h3>
-                    <p>{{ $userdata->description }}</p>
-                </div>
-
-                <div class="infoGroup">
-                    <h3>Gemeente:</h3>
-                    <p>{{ $userdata->user->township }}</p>
-                </div>
-
-                <div class="infoGroup">
-                    <h3>Adres:</h3>
+                <div class="info-item">
+                    <h4>Adres:</h4>
                     <p>{{ $userdata->user->address }}</p>
                 </div>
 
-                <div class="infoGroup">
-                    <h3>Telefoonnummer:</h3>
-                    <p>{{ $userdata->user->phonenumber }}</p>
+                <div class="info-item">
+                    <h4>Gemeente:</h4>
+                    <p>{{ $userdata->user->township }}</p>
                 </div>
 
-                <div class="infoGroup">
-                    <h3>Email:</h3>
+
+                <div class="info-item">
+                    <h4>Email:</h4>
                     <p>{{ $userdata->user->email }}</p>
                 </div>
 
-                <div class="infoGroup">
-                    <h3>Niet ingelogde gebruikers toelaten:</h3>
-                    <p>@if($userdata->allow_guests) JA @else NEE @endif</p>
+                <div class="info-item">
+                    <h4>Telefoonnummer:</h4>
+                    <p>{{ $userdata->user->phonenumber }}</p>
                 </div>
 
-                <div class="infoGroup">
-                    <h3>Duurtijd afspraak:</h3>
+                <div class="info-item">
+                    <h4>Beschrijving:</h4>
+                    <p>{{ $userdata->description }}</p>
+                </div>
+
+                <div class="info-item">
+                    <h4>Duurtijd afspraak:</h4>
                     <p>{{ $userdata->appointmentduration }} minuten</p>
                 </div>
 
-                <a class="linkBtn" href="{{ route('editaccount') }}">Accountinformatie aanpassen</a>
+                <div class="info-item">
+                    <h4>Niet ingelogde gebruikers toelaten:</h4>
+                    <p>@if($userdata->allow_guests) JA @else NEE @endif</p>
+                </div>
 
+                <div class="individual-btn-link">
+                    <a class="button-link" href="{{ route('editaccount') }}">ACCOUNTINFO AANPASSEN</a>
+                </div>
                 
-                <h4 onclick="showDeleteBusiness()" id="deleteBusiness" class="deleteBusiness">Account verwijderen</h4>
-
-                <form id="deleteBusinessForm" class="hide" method="POST" action="{{ route('deleteaccount') }}">
-                    @csrf
-                    
-                    <input name="user_id" type="number" value="{{ $userdata->user->id }}" hidden>
-                    <input name="account_id" type="number" value="{{ $userdata->id }}" hidden>
-
-                    <button type="submit">Verwijder account</button>
-                    <a class="linkBtn noBtn" onclick="clickedNo('deleteBusinessForm')">Niet verwijderen</a>
-                </form>
+                <div class="individual-btn-link">
+                    <a class="button-link" href="{{ route('editpassword') }}">WACHTWOORD VERANDEREN</a>
+                </div>
             </div>
+
 
             <div class="openingHours">
                 <h2>Openingsuren</h2>
                 
-                <table class="businessDetailTable">
-
-                    <tr>
-                        <th>Maandag</th>
-                        @foreach($mondayhours as $hour)
-                            @if($hour->closed)
-                                <td colspan="2">Gesloten</td>
-                            @else
-                                <td>{{ $hour->opentime }} - {{ $hour->closetime }}</td>
-                            @endif
-                        @endforeach
-                    </tr>
-
-                    <tr>
-                        <th>Dinsdag</th>
-                        @foreach($tuesdayhours as $hour)
-                            @if($hour->closed)
-                                <td colspan="2">Gesloten</td>
-                            @else
-                                <td>{{ $hour->opentime }} - {{ $hour->closetime }}</td>
-                            @endif
-                        @endforeach
-                    </tr>
-
-                    <tr>
-                        <th>Woensdag</th>
-                        @foreach($wednesdayhours as $hour)
-                            @if($hour->closed)
-                                <td colspan="2">Gesloten</td>
-                            @else
-                                <td>{{ $hour->opentime }} - {{ $hour->closetime }}</td>
-                            @endif
-                        @endforeach
-                    </tr>
-
-                    <tr>
-                        <th>Donderdag</th>
-                        @foreach($thursdayhours as $hour)
-                            @if($hour->closed)
-                                <td colspan="2">Gesloten</td>
-                            @else
-                                <td>{{ $hour->opentime }} - {{ $hour->closetime }}</td>
-                            @endif
-                        @endforeach
-                    </tr>
-
-                    <tr>
-                        <th>Vrijdag</th>
-                        @foreach($fridayhours as $hour)
-                            @if($hour->closed)
-                                <td colspan="2">Gesloten</td>
-                            @else
-                                <td>{{ $hour->opentime }} - {{ $hour->closetime }}</td>
-                            @endif
-                        @endforeach
-                    </tr>
-
-                    <tr>
-                        <th>Zaterdag</th>
-                        @foreach($saturdayhours as $hour)
-                            @if($hour->closed)
-                                <td colspan="2">Gesloten</td>
-                            @else
-                                <td>{{ $hour->opentime }} - {{ $hour->closetime }}</td>
-                            @endif
-                        @endforeach
-                    </tr>
-
-                    <tr>
-                        <th>Zondag</th>
-                        @foreach($sundayhours as $hour)
-                            @if($hour->closed)
-                                <td colspan="2">Gesloten</td>
-                            @else
-                                <td>{{ $hour->opentime }} - {{ $hour->closetime }}</td>
-                            @endif
-                        @endforeach
-                    </tr>
-                </table>
+            
+                <div class="openingHour">
+                    <h4>Maandag:</h4>
+                    @foreach($mondayhours as $hour)
+                        @if($hour->closed)
+                            <p colspan="2">Gesloten</p>
+                        @else
+                            <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                        @endif
+                    @endforeach
+                </div>
+            
                 
-                <a class="linkBtn" href="{{ route('editopeninghours') }}">Openingsuren aanpassen</a>
+
+                <div class="openingHour">
+                    <h4>Dinsdag:</h4>
+                    @foreach($tuesdayhours as $hour)
+                        @if($hour->closed)
+                            <p colspan="2">Gesloten</p>
+                        @else
+                            <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                        @endif
+                    @endforeach
+                </div>
+            
+                
+
+                <div class="openingHour">
+                    <h4>Woensdag:</h4>
+                    @foreach($wednesdayhours as $hour)
+                        @if($hour->closed)
+                            <p colspan="2">Gesloten</p>
+                        @else
+                            <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                        @endif
+                    @endforeach
+                </div>
+            
+                
+
+                <div class="openingHour">
+                    <h4>Donderdag:</h4>
+                    @foreach($thursdayhours as $hour)
+                        @if($hour->closed)
+                            <p colspan="2">Gesloten</p>
+                        @else
+                            <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                        @endif
+                    @endforeach
+                </div>
+            
+                
+
+                <div class="openingHour">
+                    <h4>Vrijdag:</h4>
+                    @foreach($fridayhours as $hour)
+                        @if($hour->closed)
+                            <p colspan="2">Gesloten</p>
+                        @else
+                            <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                        @endif
+                    @endforeach
+                </div>
+            
+                
+
+                <div class="openingHour">
+                    <h4>Zaterdag:</h4>
+                    @foreach($saturdayhours as $hour)
+                        @if($hour->closed)
+                            <p colspan="2">Gesloten</p>
+                        @else
+                            <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                        @endif
+                    @endforeach
+                </div>
+            
+                
+                <div class="openingHour">
+                    <h4>Zondag:</h4>
+                    @foreach($sundayhours as $hour)
+                        @if($hour->closed)
+                            <p colspan="2">Gesloten</p>
+                        @else
+                            <p>{{ $hour->opentime }} - {{ $hour->closetime }}</p>
+                        @endif
+                    @endforeach
+                </div>
+
+                <a class="button-link" href="{{ route('editopeninghours') }}">OPENINGSUREN AANPASSEN</a>
             </div>
+
+
+            
+            <h4 onclick="showDeleteBusiness()" id="deleteBusiness" class="deleteBusiness">ACCOUNT VERWIJDEREN</h4>
+    
+                
+            <form id="deleteBusinessForm" class="hide" method="POST" action="{{ route('deleteaccount') }}">
+                @csrf
+                
+                <h3>Ben je zeker dat je dit account wil verwijderen?</h3>
+                <input name="user_id" type="number" value="{{ $userdata->user->id }}" hidden>
+                <input name="account_id" type="number" value="{{ $userdata->id }}" hidden>
+
+                <button type="submit" class="form-control-submit-button deleteBusiness secondBtn">VERWIJDER ACCOUNT</button>
+           
+                <button type="button" class="deleteBusiness secondBtn noBtn" onclick="clickedNo('deleteBusinessForm')">ANNULEER</button>
+            </form>
 
         </div>
 
 
-        @endif
-    </div>
+    @endif
 
 
-    
 
 @stop
 

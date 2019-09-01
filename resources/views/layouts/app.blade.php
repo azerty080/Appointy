@@ -63,7 +63,7 @@
                     <!-- Dropdown Menu -->
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle page-scroll {{ (Route::currentRouteName() == 'account') ? 'currentlink' : '' }}" href="{{ route('account') }}" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">ACCOUNT</a>
+                        <a class="nav-link dropdown-toggle page-scroll {{ (Route::currentRouteName() == 'account') ? 'currentlink' : '' }}" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">ACCOUNT</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('account') }}"><span class="item-text">PROFIEL</span></a>
                             <div class="dropdown-items-divide-hr"></div>
@@ -135,12 +135,12 @@
             }
 
             $(window).on('scroll load', function() {
-		if ($(".navbar").offset().top > 20) {
-			$(".fixed-top").addClass("top-nav-collapse");
-		} else {
-			$(".fixed-top").removeClass("top-nav-collapse");
-		}
-    });
+                if ($(".navbar").offset().top > 20) {
+                    $(".fixed-top").addClass("top-nav-collapse");
+                } else {
+                    $(".fixed-top").removeClass("top-nav-collapse");
+                }
+            });
 /*
             $(document).ready(function(){
                 $(window).scroll(function(){

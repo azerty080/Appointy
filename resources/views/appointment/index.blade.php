@@ -5,213 +5,385 @@
 
 @section('content')
 
-    <h1>Gemaakte afspraken</h1>
+
+    @if(session()->get('account_type') == 'klant')
+        <h1>Gemaakte afspraken</h1>
+    @else(session()->get('account_type') == 'business')
+        <h1>Afspraken</h1>
+    @endif
+    
+    @php
+        $today = Carbon\Carbon::now()->format('Y-m-d');
+        $tomorrow = Carbon\Carbon::now()->addDays(1)->format('Y-m-d');
+    @endphp
+    
     
     <div class="contentDiv">
         @if(session()->get('account_type') == 'klant')
 
-            @php $clientAppointmentCounter = 0; @endphp
+            @php
+                $clientCounterToday = 0;
+                $clientCounterTomorrow = 0;
+                $clientCounterLater = 0;
+            @endphp
 
             
-            <h2 class="leftmargin">Vandaag</h2>
+            
+            
+            <h2>Vandaag {{ Carbon\Carbon::parse($today)->format('d/m/Y') }}</h2>
             @foreach($appointments as $appointment)
-                @if(!Carbon\Carbon::parse($appointment->date)->isPast())
-                    
+            
+                @if($appointment->date == $today)
                     
                     <div class="singleAppointment">
-                        <p>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+                        <h3>{{ $appointment->time }} <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a></h3>
+                        
 
-                        <p>Bij {{ $appointment->business->name }} op {{ $appointment->business->user->address }} te {{ $appointment->business->user->township }}</p>
-                        <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a>
-                    
+                        <p>{{ $appointment->business->user->address }}, {{ $appointment->business->user->township }}</p>
+                        
                     
                         <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
                             @csrf
                             
                             <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
 
-                            <div class="form-group">
-                                <button type="submit" class="form-control-submit-button">ANNULEER</button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    @php $clientAppointmentCounter++ @endphp
-                @endif
-            @endforeach
-
-
-            
-            <h2 class="topmargin leftmargin">Morgen</h2>
-            @foreach($appointments as $appointment)
-                @if(!Carbon\Carbon::parse($appointment->date)->isPast())
-                    
-                    
-                    <div class="singleAppointment">
-                        <p>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
-
-                        <p>Bij {{ $appointment->business->name }} op {{ $appointment->business->user->address }} te {{ $appointment->business->user->township }}</p>
-                        <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a>
-                    
-                    
-                        <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
-                            @csrf
+                            <button type="submit" class="form-control-submit-button">ANNULEER</button>
                             
-                            <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
-
-                            <div class="form-group">
-                                <button type="submit" class="form-control-submit-button">ANNULEER</button>
-                            </div>
                         </form>
                     </div>
                     
-                    @php $clientAppointmentCounter++ @endphp
+                    @php $clientCounterToday++ @endphp
                 @endif
             @endforeach
 
-
-            
-            <h2 class="topmargin leftmargin">Latere afspraken</h2>
-
-
-
-
-            @foreach($appointments as $appointment)
-                @if(!Carbon\Carbon::parse($appointment->date)->isPast())
-                    @if($clientTodayCounter == 0)
-                        <h2 class="leftmargin">Vandaag</h2>
-                        @php $clientTodayCounter++ @endphp
-                    @elseif($clientTomorrowCounter == 0)
-                        <h2 class="topmargin leftmargin">Morgen</h2>
-                        @php $clientTomorrowCounter++ @endphp
-                    @elseif($clientLaterCounter == 0)
-                        <h2 class="topmargin leftmargin">Later</h2>
-                        @php $clientLaterCounter++ @endphp
-                    @endif
-                    
-                    <div class="singleAppointment">
-                        <p>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
-
-                        <p>Bij {{ $appointment->business->name }} op {{ $appointment->business->user->address }} te {{ $appointment->business->user->township }}</p>
-                        <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a>
-                    
-                    
-                        <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
-                            @csrf
-                            
-                            <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
-
-                            <div class="form-group">
-                                <button type="submit" class="form-control-submit-button">ANNULEER</button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    @php $clientAppointmentCounter++ @endphp
-                @endif
-            @endforeach
-
-            @if($clientAppointmentCounter == 0)
-                <p>U hebt geen afspraken meer</p>
+            @if($clientCounterToday == 0)
+                <p class="no-appointments">U hebt geen afspraken vandaag</p>
             @endif
+
+            
+
+
+            <h2 class="topmargin">Morgen {{ Carbon\Carbon::parse($tomorrow)->format('d/m/Y') }}</h2>
+            @foreach($appointments as $appointment)
+                @if($appointment->date == $tomorrow)
+                    
+                    
+                    <div class="singleAppointment">
+                        <h3>{{ $appointment->time }} <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a></h3>
+                        
+
+                        <p>{{ $appointment->business->user->address }}, {{ $appointment->business->user->township }}</p>
+                        
+                    
+                        <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                            @csrf
+                            
+                            <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                            <button type="submit" class="form-control-submit-button">ANNULEER</button>
+                            
+                        </form>
+                    </div>
+                    
+                    @php $clientCounterTomorrow++ @endphp
+                @endif
+            @endforeach
+
+            @if($clientCounterTomorrow == 0)
+                <p class="no-appointments">U hebt geen afspraken morgen</p>
+            @endif
+
+
+
+            
+            <h2 class="topmargin">Latere afspraken</h2>
+            @foreach($appointments as $appointment)
+                @if($appointment->date > $tomorrow)
+                
+                    
+                    <div class="singleAppointment">
+                        <h3>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} {{ $appointment->time }} <a href="{{ route('businessdetail', ['name' => $appointment->business->name, 'id' => $appointment->business->id]) }}">{{ $appointment->business->name }}</a></h3>
+                        
+
+                        <p>{{ $appointment->business->user->address }}, {{ $appointment->business->user->township }}</p>
+                        
+                    
+                        <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                            @csrf
+                            
+                            <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                            <button type="submit" class="form-control-submit-button">ANNULEER</button>
+                            
+                        </form>
+                    </div>
+                    
+                    @php $clientCounterLater++ @endphp
+                @endif
+            @endforeach
+
+            @if($clientCounterLater == 0)
+                <p class="no-appointments">U hebt geen afspraken meer</p>
+            @endif
+
+
 
 
 
         @elseif(session()->get('account_type') == 'zaak')
-            <h2 class="botmargin">Afspraken als zaak</h2>
 
             @php
-                $businessTodayCounter = 0;
-                $businessTomorrowCounter = 0;
-                $businessLaterCounter = 0;
-                $businessAppointmentCounter = 0
+                $businessCounterToday = 0;
+                $businessCounterTomorrow = 0;
+                $businessCounterLater = 0;
             @endphp
 
 
+            <h2>Vandaag {{ Carbon\Carbon::parse($today)->format('d/m/Y') }}</h2>
             @foreach($appointments as $appointment)
-
-                @if(!Carbon\Carbon::parse($appointment->date)->isPast())
-                    @if($businessTodayCounter == 0)
-                        <h2 class="leftmargin">Vandaag</h2>
-                        @php $businessTodayCounter++ @endphp
-                    @elseif($businessTomorrowCounter == 0)
-                        <h2 class="topmargin leftmargin">Morgen</h2>
-                        @php $businessTomorrowCounter++ @endphp
-                    @elseif($businessLaterCounter == 0)
-                        <h2 class="topmargin leftmargin">Later</h2>
-                        @php $businessLaterCounter++ @endphp
-                    @endif
-
+            
+                @if($appointment->date == $today)
 
                     @if($appointment->client_id == null)
-                        <div class="singleAppointment">
-                            <p>Afspraak op {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+                        <div class="singleAppointment businessAppointment">
+                            <div class="standardClientInfo">
+                                <h3>{{ $appointment->time }}</h3>
 
-                            <p>Met {{ $appointment->firstname }} {{ $appointment->lastname }}</p>
-                            <p>Reden: {{ $appointment->details }}</p>
+                                <p>{{ $appointment->firstname }} {{ $appointment->lastname }}</p>
+                                <p>Reden: {{ $appointment->details }}</p>
 
-                            <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">Meer details</h4>
-
-                            <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
-                                <p>Geboortedatum: {{ Carbon\Carbon::parse($appointment->birthdate)->format('d/m/Y') }}</p>
-                                <p>Email: {{ $appointment->email }}</p>
-                                <p>Telefoonnummer: {{ $appointment->phonenumber }}</p>
-
-                                <p>Gemeente: {{ $appointment->township }}</p>
-                                <p>Adres: {{ $appointment->address }}</p>   
+                                <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">MEER DETAILS</h4>
+                                
+                                <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                                    @csrf
+                                    
+                                    <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+                                                        
+                                    <button type="submit" class="form-control-submit-button">ANNULEER AFSPRAAK</button>
+                                </form>
                             </div>
                             
-                            
-                            <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
-                                @csrf
-                                
-                                <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
-                                                   
-                                <div class="form-group">
-                                    <button type="submit" class="form-control-submit-button">ANNULEER</button>
+                            <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
+                                <div class="contactInfo">
+                                    <p>Email: {{ $appointment->email }}</p>
+                                    <p>Tel. {{ $appointment->phonenumber }}</p>
                                 </div>
-                            </form>
+
+                                <div class="otherInfo">
+                                    <p>Geboortejaar: {{ Carbon\Carbon::parse($appointment->birthdate)->format('Y') }}</p>
+                                    <p>Adres: {{ $appointment->address }}, {{ $appointment->township }}</p>  
+                                </div>
+                            </div>
                         </div>
                     @else
-                        <div class="singleAppointment">
-                            <p>Afspraak op {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+                        <div class="singleAppointment businessAppointment">
+                            <div class="standardClientInfo">
+                                <h3>{{ $appointment->time }}</h3>
 
-                            <p>Met {{ $appointment->client->firstname }} {{ $appointment->client->lastname }}</p>
+
+                                <p>{{ $appointment->client->firstname }} {{ $appointment->client->lastname }}</p>
+                                <p>Reden: {{ $appointment->details }}</p>
+
+                                <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">MEER DETAILS</h4>
+
+                                <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                                    @csrf
+                                    
+                                    <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                                    <button type="submit" class="form-control-submit-button">ANNULEER AFSPRAAK</button>
+                                </form>
+                            </div>
+
+                            
+                            <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
+                                <div class="contactInfo">
+                                    <p>Email: {{ $appointment->client->user->email }}</p>
+                                    <p>Tel. {{ $appointment->client->user->phonenumber }}</p>
+                                </div>
+
+                                <div class="otherInfo">
+                                    <p>Geboortejaar: {{ Carbon\Carbon::parse($appointment->client->birthdate)->format('Y') }}</p>
+                                    <p>Adres: {{ $appointment->client->user->address }}, {{ $appointment->client->user->township }}</p>  
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    
+                    
+                    @php $businessCounterToday++ @endphp
+                @endif
+            @endforeach
+
+            @if($businessCounterToday == 0)
+                <p class="no-appointments">U hebt geen afspraken vandaag</p>
+            @endif
+
+            
+
+
+            <h2 class="topmargin">Morgen {{ Carbon\Carbon::parse($tomorrow)->format('d/m/Y') }}</h2>
+            @foreach($appointments as $appointment)
+                @if($appointment->date == $tomorrow)
+                    
+                    
+                @if($appointment->client_id == null)
+                    <div class="singleAppointment businessAppointment">
+                        <div class="standardClientInfo">
+                            <h3>{{ $appointment->time }}</h3>
+
+                            <p>{{ $appointment->firstname }} {{ $appointment->lastname }}</p>
                             <p>Reden: {{ $appointment->details }}</p>
 
-                            <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">Meer details</h4>
+                            <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">MEER DETAILS</h4>
 
-                            <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
-                                <p>Geboortedatum: {{ Carbon\Carbon::parse($appointment->client->birthdate)->format('d/m/Y') }}</p>
-                                
-                                <p>Email: {{ $appointment->client->user->email }}</p>
-                                <p>Telefoonnummer: {{ $appointment->client->user->phonenumber }}</p>
-
-                                <p>Gemeente: {{ $appointment->client->user->township }}</p>
-                                <p>Adres: {{ $appointment->client->user->address }}</p>  
-                            </div>
-                            
-                            
                             <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
                                 @csrf
                                 
                                 <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
-                                                   
-                                <div class="form-group">
-                                    <button type="submit" class="form-control-submit-button">ANNULEER</button>
-                                </div>
+                                                    
+                                <button type="submit" class="form-control-submit-button">ANNULEER AFSPRAAK</button>
                             </form>
                         </div>
-                    @endif
 
-                    @php $businessAppointmentCounter++ @endphp
+                        <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
+                            <div class="contactInfo">
+                                <p>Email: {{ $appointment->email }}</p>
+                                <p>Tel. {{ $appointment->phonenumber }}</p>
+                            </div>
+
+                            <div class="otherInfo">
+                                <p>Geboortejaar: {{ Carbon\Carbon::parse($appointment->birthdate)->format('Y') }}</p>
+                                <p>Adres: {{ $appointment->address }}, {{ $appointment->township }}</p>  
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="singleAppointment businessAppointment">
+                        <div class="standardClientInfo">
+                            <h3>{{ $appointment->time }}</h3>
+
+                            <p>{{ $appointment->client->firstname }} {{ $appointment->client->lastname }}</p>
+                            <p>Reden: {{ $appointment->details }}</p>
+
+                            <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">MEER DETAILS</h4>
+
+                            <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                                @csrf
+                                
+                                <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                                <button type="submit" class="form-control-submit-button">ANNULEER AFSPRAAK</button>
+                            </form>
+                        </div>
+
+                        
+                        <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
+                            <div class="contactInfo">
+                                <p>Email: {{ $appointment->client->user->email }}</p>
+                                <p>Tel. {{ $appointment->client->user->phonenumber }}</p>
+                            </div>
+
+                            <div class="otherInfo">
+                                <p>Geboortejaar: {{ Carbon\Carbon::parse($appointment->client->birthdate)->format('Y') }}</p>
+                                <p>Adres: {{ $appointment->client->user->address }}, {{ $appointment->client->user->township }}</p>  
+                            </div>
+                        </div>
+                    </div>
                 @endif
-
+                
+                    
+                    
+                    @php $businessCounterTomorrow++ @endphp
+                @endif
             @endforeach
-            
-            @if($businessAppointmentCounter == 0)
-                <p>U hebt geen afspraken meer</p>
+
+            @if($businessCounterTomorrow == 0)
+                <p class="no-appointments">U hebt geen afspraken morgen</p>
             @endif
+
+
+
+            
+            <h2 class="topmargin">Latere afspraken</h2>
+            @foreach($appointments as $appointment)
+                @if($appointment->date > $tomorrow)
+                
+                    
+                @if($appointment->client_id == null)
+                    <div class="singleAppointment businessAppointment">
+                        <div class="standardClientInfo">
+                            <h3>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} {{ $appointment->time }}</h3>
+
+                            <p>{{ $appointment->firstname }} {{ $appointment->lastname }}</p>
+                            <p>Reden: {{ $appointment->details }}</p>
+
+                            <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">MEER DETAILS</h4>
+
+                            <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                                @csrf
+                                
+                                <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+                                                    
+                                <button type="submit" class="form-control-submit-button">ANNULEER AFSPRAAK</button>
+                            </form>
+                        </div>
+                  
+                        <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
+                            <div class="contactInfo">
+                                <p>Email: {{ $appointment->email }}</p>
+                                <p>Tel. {{ $appointment->phonenumber }}</p>
+                            </div>
+
+                            <div class="otherInfo">
+                                <p>Geboortejaar: {{ Carbon\Carbon::parse($appointment->birthdate)->format('Y') }}</p>
+                                <p>Adres: {{ $appointment->address }}, {{ $appointment->township }}</p>  
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="singleAppointment businessAppointment">
+                        <div class="standardClientInfo">
+                            <h3>{{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} {{ $appointment->time }}</h3>
+
+                            <p>{{ $appointment->client->firstname }} {{ $appointment->client->lastname }}</p>
+                            <p>Reden: {{ $appointment->details }}</p>
+
+                            <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">MEER DETAILS</h4>
+
+                            <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                                @csrf
+                                
+                                <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                                <button type="submit" class="form-control-submit-button">ANNULEER AFSPRAAK</button>
+                            </form>
+                        </div>
+
+                        <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
+                            <div class="contactInfo">
+                                <p>Email: {{ $appointment->client->user->email }}</p>
+                                <p>Tel. {{ $appointment->client->user->phonenumber }}</p>
+                            </div>
+
+                            <div class="otherInfo">
+                                <p>Geboortejaar: {{ Carbon\Carbon::parse($appointment->client->birthdate)->format('Y') }}</p>
+                                <p>Adres: {{ $appointment->client->user->address }}, {{ $appointment->client->user->township }}</p>  
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
+                
+                    
+                    @php $businessCounterLater++ @endphp
+                @endif
+            @endforeach
+
+            @if($businessCounterLater == 0)
+                <p class="no-appointments">U hebt geen afspraken meer</p>
+            @endif
+
 
         @else
             <p>Je moet ingelogd zijn om je afspraken te bekijken</p>

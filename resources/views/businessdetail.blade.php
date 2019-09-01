@@ -9,6 +9,7 @@
             <div class="titleInfo">
                 <h1>{{ $business->name }}</h1>
                 <h3>{{ $business->profession }}</h3>
+                <p>{{ $business->description }}</p>
             </div>
 
             @if(session()->has('logged_in'))
@@ -29,30 +30,17 @@
                         <button type="submit">TOEVOEGEN AAN FAVORIETEN</button>
                     </form>
                 @endif
-            @else
-                <button class="disabledBtn" disabled>Je moet ingelogd zijn om favorieten toe te voegen</button>
             @endif
         </div>
 
         <div class="contentDiv businessInfo">
             <div class="mainBusinessInfo">
                 <div class="details">
-                    <div>
-                        <h2>Beschrijving</h2>
-                        <p>{{ $business->description }}</p>
-                    </div>
+                    <p>Adres: {{ $business->user->address }}, {{ $business->user->township }}</p>
+                    
+                    <p>Email: {{ $business->user->email }}</p>
 
-                    <div>
-                    <h2>Locatie</h2>
-                        <p>Gemeente: {{ $business->user->township }}</p>
-                        <p>Adres: {{ $business->user->address }}</p>
-                    </div>
-
-                    <div>
-                    <h2>Contact</h2>
-                        <p>Telefoonnummer: {{ $business->user->phonenumber }}</p>
-                        <p>Email: {{ $business->user->email }}</p>
-                    </div>
+                    <p>Telefoonnummer: {{ $business->user->phonenumber }}</p>
                 </div>
 
                 
@@ -62,7 +50,8 @@
                     <table class="businessDetailTable">
 
                         <tr>
-                            <th>Maandag</th>
+                            <th class="detail-long-table-days">Maandag</th>
+                            <th class="detail-short-table-days">Ma</th>
                             @foreach($mondayhours as $hour)
                                 @if($hour->closed)
                                     <td colspan="2">Gesloten</td>
@@ -73,7 +62,8 @@
                         </tr>
 
                         <tr>
-                            <th>Dinsdag</th>
+                            <th class="detail-long-table-days">Dinsdag</th>
+                            <th class="detail-short-table-days">Di</th>
                             @foreach($tuesdayhours as $hour)
                                 @if($hour->closed)
                                     <td colspan="2">Gesloten</td>
@@ -84,7 +74,8 @@
                         </tr>
 
                         <tr>
-                            <th>Woensdag</th>
+                            <th class="detail-long-table-days">Woensdag</th>
+                            <th class="detail-short-table-days">Wo</th>
                             @foreach($wednesdayhours as $hour)
                                 @if($hour->closed)
                                     <td colspan="2">Gesloten</td>
@@ -95,7 +86,8 @@
                         </tr>
 
                         <tr>
-                            <th>Donderdag</th>
+                            <th class="detail-long-table-days">Donderdag</th>
+                            <th class="detail-short-table-days">Do</th>
                             @foreach($thursdayhours as $hour)
                                 @if($hour->closed)
                                     <td colspan="2">Gesloten</td>
@@ -106,7 +98,8 @@
                         </tr>
 
                         <tr>
-                            <th>Vrijdag</th>
+                            <th class="detail-long-table-days">Vrijdag</th>
+                            <th class="detail-short-table-days">Vr</th>
                             @foreach($fridayhours as $hour)
                                 @if($hour->closed)
                                     <td colspan="2">Gesloten</td>
@@ -117,7 +110,8 @@
                         </tr>
 
                         <tr>
-                            <th>Zaterdag</th>
+                            <th class="detail-long-table-days">Zaterdag</th>
+                            <th class="detail-short-table-days">Za</th>
                             @foreach($saturdayhours as $hour)
                                 @if($hour->closed)
                                     <td colspan="2">Gesloten</td>
@@ -128,7 +122,8 @@
                         </tr>
 
                         <tr>
-                            <th>Zondag</th>
+                            <th class="detail-long-table-days">Zondag</th>
+                            <th class="detail-short-table-days">Zo</th>
                             @foreach($sundayhours as $hour)
                                 @if($hour->closed)
                                     <td colspan="2">Gesloten</td>

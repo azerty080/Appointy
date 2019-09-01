@@ -100,45 +100,73 @@
                     @foreach($appointments as $appointment)
                         
                         @if($appointment->client_id == null)
-                            <div class="singleAppointment">
-                                <p>Afspraak op {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+                            <div class="singleAppointment businessAppointment">
+                                <div class="standardClientInfo">
+                                    <h3>{{ $appointment->time }}</h3>
 
-                                <p>Met {{ $appointment->firstname }} {{ $appointment->lastname }}</p>
-                                <p>Reden: {{ $appointment->details }}</p>
+                                    <p>{{ $appointment->firstname }} {{ $appointment->lastname }}</p>
+                                    <p>Reden: {{ $appointment->details }}</p>
 
-                                <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">Meer details</h4>
-
+                                    <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">MEER DETAILS</h4>
+                                    
+                                    <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                                        @csrf
+                                        
+                                        <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+                                                            
+                                        <button type="submit" class="form-control-submit-button">ANNULEER AFSPRAAK</button>
+                                    </form>
+                                </div>
+                                
                                 <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
-                                    <p>Geboortedatum: {{ Carbon\Carbon::parse($appointment->birthdate)->format('d/m/Y') }}</p>
-                                    <p>Email: {{ $appointment->email }}</p>
-                                    <p>Telefoonnummer: {{ $appointment->phonenumber }}</p>
+                                    <div class="contactInfo">
+                                        <p>Email: {{ $appointment->email }}</p>
+                                        <p>Tel. {{ $appointment->phonenumber }}</p>
+                                    </div>
 
-                                    <p>Gemeente: {{ $appointment->township }}</p>
-                                    <p>Adres: {{ $appointment->address }}</p>   
+                                    <div class="otherInfo">
+                                        <p>Geboortejaar: {{ Carbon\Carbon::parse($appointment->birthdate)->format('Y') }}</p>
+                                        <p>Adres: {{ $appointment->address }}, {{ $appointment->township }}</p>  
+                                    </div>
                                 </div>
                             </div>
                         @else
-                            <div class="singleAppointment">
-                                <p>Afspraak op {{ Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }} om {{ $appointment->time }}</p>
+                            <div class="singleAppointment businessAppointment">
+                                <div class="standardClientInfo">
+                                    <h3>{{ $appointment->time }}</h3>
 
-                                <p>Met {{ $appointment->client->firstname }} {{ $appointment->client->lastname }}</p>
-                                <p>Reden: {{ $appointment->details }}</p>
 
-                                <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">Meer details</h4>
+                                    <p>{{ $appointment->client->firstname }} {{ $appointment->client->lastname }}</p>
+                                    <p>Reden: {{ $appointment->details }}</p>
 
+                                    <h4 onclick="openDetails({{ $appointment->id }})" class="showMoreDetails">MEER DETAILS</h4>
+
+                                    <form class="remove-appointment-form" method="POST" action="{{ route('removeappointment') }}">
+                                        @csrf
+                                        
+                                        <input name="appointment_id" type="number" value="{{ $appointment->id }}" hidden>
+
+                                        <button type="submit" class="form-control-submit-button">ANNULEER AFSPRAAK</button>
+                                    </form>
+                                </div>
+
+                                
                                 <div class="extraClientInfo hide"  id="appointment{{ $appointment->id }}">
-                                    <p>Geboortedatum: {{ Carbon\Carbon::parse($appointment->client->birthdate)->format('d/m/Y') }}</p>
-                                    
-                                    <p>Email: {{ $appointment->client->user->email }}</p>
-                                    <p>Telefoonnummer: {{ $appointment->client->user->phonenumber }}</p>
+                                    <div class="contactInfo">
+                                        <p>Email: {{ $appointment->client->user->email }}</p>
+                                        <p>Tel. {{ $appointment->client->user->phonenumber }}</p>
+                                    </div>
 
-                                    <p>Gemeente: {{ $appointment->client->user->township }}</p>
-                                    <p>Adres: {{ $appointment->client->user->address }}</p>  
+                                    <div class="otherInfo">
+                                        <p>Geboortejaar: {{ Carbon\Carbon::parse($appointment->client->birthdate)->format('Y') }}</p>
+                                        <p>Adres: {{ $appointment->client->user->address }}, {{ $appointment->client->user->township }}</p>  
+                                    </div>
                                 </div>
                             </div>
-
-                            @php $clientAppointmentCounter++ @endphp
                         @endif
+                        
+                        
+                        @php $clientAppointmentCounter++ @endphp
                     @endforeach
                 </div>
 

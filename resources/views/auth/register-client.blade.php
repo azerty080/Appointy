@@ -12,12 +12,6 @@
     <form id="register-client-form" method="POST" action="{{ route('register-client-submit') }}" role="form" data-toggle="validator">
         @csrf
 
-
-
-
-
-        
-        <!-- Part 1 Client -->
         <div class="form-row">
             <div class="form-group col-md-4">
                 <input type="text" class="form-control-input" id="cfirstname" name="firstname" value="{{ old('firstname') }}" required>
@@ -38,13 +32,6 @@
             </div>
         </div>
 
-
-
-
-
-
-
-        <!-- Part 2 Client -->
         <div class="form-row">
             <div class="form-group col-md-4">
                 <input type="text" class="form-control-input" id="caddress" name="address" value="{{ old('address') }}" required>
@@ -65,12 +52,6 @@
             </div>
         </div>
 
-
-
-
-
-
-        <!-- Part 3 Client -->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <input type="email" class="form-control-input" id="cemail" name="email" value="{{ old('email') }}" required>
@@ -85,11 +66,6 @@
             </div>
         </div>
         
-
-
-
-        
-        <!-- Part 4 Client -->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <input type="password" class="form-control-input" id="cpassword" name="password" required>
@@ -103,10 +79,6 @@
                 <div class="help-block with-errors"></div>
             </div>
         </div>
-
-
-
-
 
         <div class="form-group">
             <button type="submit" class="form-control-submit-button">REGISTREER</button>
