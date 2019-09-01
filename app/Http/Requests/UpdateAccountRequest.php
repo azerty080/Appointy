@@ -29,9 +29,6 @@ class UpdateAccountRequest extends FormRequest
              'address' => 'required|string|max:255',
              'phonenumber' => 'required',
              'email' => 'required|string|email|max:255',
-             'oldpassword' => 'required',
-             'password' => 'sometimes|confirmed',
- 
              
              //Client form
              'firstname' => 'sometimes|string|max:255',
@@ -68,12 +65,8 @@ class UpdateAccountRequest extends FormRequest
             'email.email' => 'Het ingegeven email is geen geldig email adres',
             'email.max:255' => 'Je email mag niet meer dag 255 karakters bevatten',
 
-            'oldpassword.required' => 'Je hebt je huidig wachtwoord niet ingevuld',
 
-            'password.sometimes' => 'Je hebt geen nieuw wachtwoord ingegeven',
-            'password.confirmed' => 'Je hebt je nieuw wachtwoord niet bevestigd',
-
-
+            
             //Client form
             'firstname.sometimes' => 'Je hebt geen voornaam ingegeven',
             'firstname.string' => 'Je hebt geen voornaam ingegeven',
